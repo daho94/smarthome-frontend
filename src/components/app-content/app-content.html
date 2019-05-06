@@ -1,11 +1,11 @@
 
-<section class="app-content">
+<section class="app-content" id="kek">
   <grid-layout
   :layout.sync="layout"
   :col-num="12"
   :row-height="30"
-  :is-draggable="true"
-  :is-resizable="true"
+  :is-draggable="isEditMode"
+  :is-resizable="isEditMode"
   :is-mirrored="false"
   :vertical-compact="true"
   :margin="[10, 10]"
@@ -18,10 +18,13 @@
           :h="item.h"
           :i="item.i"
     >
-    <component
-    v-bind:is="item.c"
-    class=""
-    ></component>
+    <base-widget
+      :isEditMode="isEditMode"
+    >
+      <component
+      v-bind:is="item.c"
+      ></component>
+  </base-widget>
     </grid-item>
   </grid-layout>
 </section>

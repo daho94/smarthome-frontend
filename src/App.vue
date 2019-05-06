@@ -1,19 +1,30 @@
 <template>
-  <div id="app">
-    <HeaderBar/>
-    <AppContent/>
+  <div id="app">   
+    <section class="header-bar">
+      <h1>header-bar Component</h1>
+      <button v-on:click="toggleEditMode">Edit</button>
+    </section>
+    <AppContent :isEditMode="isEditMode"/>
   </div>
 </template>
 
 <script>
-import HeaderBar from './components/header-bar'
 import AppContent from './components/app-content'
 
 export default {
   name: 'app',
   components: {
-    HeaderBar,
-    AppContent
+    AppContent,
+  },
+  data() {
+    return {
+      isEditMode: false,
+    }
+  },
+  methods: {
+    toggleEditMode: function () {
+      this.isEditMode = !this.isEditMode
+  }
   }
 }
 </script>
@@ -28,5 +39,9 @@ export default {
 }
 html, body, #app, section.section {
   height: 100%;
+}
+.header-bar {
+  height: 60px;
+  background-color: aquamarine;
 }
 </style>

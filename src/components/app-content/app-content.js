@@ -1,5 +1,6 @@
 import VueGridLayout from 'vue-grid-layout'
 import SocketWidget from '../socket-widget'
+import BaseWidget from '../base-widget'
 
 var testLayout = [
   {"x":0,"y":0,"w":2,"h":2,"i":"0","c": "SocketWidget", "props": "..."},
@@ -16,8 +17,11 @@ export default {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
     SocketWidget: SocketWidget,
+    BaseWidget: BaseWidget,
   },
-  props: [],
+  props: {
+    isEditMode: Boolean
+  },
   data () {
     return {
       layout: testLayout,
