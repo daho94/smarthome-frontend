@@ -37,6 +37,9 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+body {
+  width: 100%;
+}
 html, body, #app, section.section {
   height: 100%;
 }

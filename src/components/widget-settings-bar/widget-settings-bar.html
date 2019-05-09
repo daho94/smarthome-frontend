@@ -1,10 +1,13 @@
-
-<section class="widget-settings-bar">
-  Settings
+<portal to="settings-bar"><section class="widget-settings-bar">
+Settings
   <ul>
-    <li v-for="(val, param) in settings">
-      {{ param }}: {{ val }}
+    <li v-for="(val, key) in settings" v-bind:key="key">
+      {{ key }} 
+      <input v-if="settings[key].type == 'input'" v-model="settings[key].val" placeholder="settings[key].val">
+      <input v-if="settings[key].type == 'checkbox'" type="checkbox" v-model="settings[key].val" placeholder="settings[key].val">
     </li>
+    <li><button v-on:click="remove">Remove Widget</button></li>
   </ul>
 </section>
+</portal>
 

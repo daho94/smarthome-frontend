@@ -1,7 +1,7 @@
 export default {
   name: 'widget-settings-bar',
   components: {},
-  props: ["settings"],
+  props: ["settings", "widgetId"],
   data () {
     return {
 
@@ -11,15 +11,10 @@ export default {
 
   },
   mounted () {
-    var current = this.$el
-    if(!current) {
-      return
-    }
-    var content = this.$root.$el.getElementsByClassName('app-content')[0]
-    current.parentNode.removeChild(current)
-    content.appendChild(current)
   },
   methods: {
-
+    remove() {
+      this.$parent.$emit("remove", this.widgetId)
+    }
   }
 }

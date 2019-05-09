@@ -1,5 +1,6 @@
 
 <section class="app-content" id="kek">
+  <portal-target name="settings-bar"></portal-target>
   <grid-layout
   :layout.sync="layout"
   :col-num="12"
@@ -20,9 +21,13 @@
     >
     <base-widget
       :isEditMode="isEditMode"
+      :widgetId="item.i"
+      :settings="item.settings"
+      @remove="removeWidget"
     >
       <component
       v-bind:is="item.c"
+      v-bind:class="{ showTitle: item.settings.showTitle.val }"
       ></component>
   </base-widget>
     </grid-item>
