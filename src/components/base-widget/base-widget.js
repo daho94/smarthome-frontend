@@ -7,7 +7,7 @@ export default {
   props: {
     height: Number,
     width: Number,
-    isEditMode: Boolean,
+    isEditLayout: Boolean,
     widgetId: String,
     settings: Object,
   },
@@ -27,15 +27,15 @@ export default {
   },
 
   watch: {
-    isEditMode() {      
-      if(!this.isEditMode) {
+    isEditLayout() {      
+      if(!this.isEditLayout) {
         this.settingsOpen = false
       }
     }
   },
   methods: {
     openSettings: function() {
-      if(this.isEditMode) {
+      if(this.isEditLayout) {
         this.settingsOpen = true
       }
     },

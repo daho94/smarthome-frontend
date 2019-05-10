@@ -1,12 +1,12 @@
 
 <section class="app-content" id="kek">
-  <portal-target name="settings-bar"></portal-target>
+  <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
   <grid-layout
   :layout.sync="layout"
   :col-num="12"
   :row-height="30"
-  :is-draggable="isEditMode"
-  :is-resizable="isEditMode"
+  :is-draggable="isEditLayout"
+  :is-resizable="isEditLayout"
   :is-mirrored="false"
   :vertical-compact="true"
   :margin="[10, 10]"
@@ -20,7 +20,7 @@
           :i="item.i"
     >
     <base-widget
-      :isEditMode="isEditMode"
+      :isEditLayout="isEditLayout"
       :widgetId="item.i"
       :settings="item.settings"
       @remove="removeWidget"
