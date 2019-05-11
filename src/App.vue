@@ -1,10 +1,13 @@
 <template>
-  <div id="app">   
+  <div id="app"  >   
     <section class="header-bar">
       <h1>header-bar Component</h1>
       <button class="header-button" v-on:click="isEditLayout = !isEditLayout">Edit</button>
-      <portal v-if="isEditLayout" to="settings-bar">
-        <widget-library />
+      <portal v-if="isEditLayout" to="settings-bar" >
+        <widget-library 
+          :layout="layout"
+          @addWidget="addWidget"
+        />
       </portal>
     </section>
     <AppContent 
@@ -34,7 +37,7 @@ var testLayout = [
   {"x":0,"y":0,"w":2,"h":2,"i":"0","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
   {"x":2,"y":0,"w":2,"h":4,"i":"1","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
   {"x":4,"y":0,"w":2,"h":5,"i":"2","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-  // {"x":6,"y":0,"w":2,"h":3,"i":"3","c": "SocketWidget", "settings": { ...baseSettings }},
+  // {"x":0,"y":0,"w":2,"h":3,"i":"3","c": "SocketWidget", "settings": { ...baseSettings }},
   // {"x":8,"y":0,"w":2,"h":3,"i":"4","c": "SocketWidget", "settings": { ...baseSettings }},
 ]
 
@@ -53,6 +56,9 @@ export default {
   computed: {
   },
   methods: {
+    addWidget: function(component) {
+      debugger 
+    }
   }
 }
 </script>
