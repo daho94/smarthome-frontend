@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     removeWidget(id) {
-      this.layout = this.layout.filter(item => item.i != id)
+      // this.layout = this.layout.filter(item => item.i != id)
+      this.$emit('removeWidget', id)
     }
   }
 }

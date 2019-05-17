@@ -18,7 +18,7 @@ export default {
     }
   },
   components: {
-    WidgetSettingsBar: WidgetSettingsBar
+    WidgetSettingsBar,
   },
   computed: {
 

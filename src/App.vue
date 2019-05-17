@@ -13,6 +13,7 @@
     <AppContent 
       :layout="layout" 
       :isEditLayout="isEditLayout"
+      @removeWidget="removeWidget"
       />
   </div>
 </template>
@@ -20,7 +21,10 @@
 <script>
 import AppContent from './components/app-content'
 import cloneDeep from 'lodash/cloneDeep'
+import maxBy from 'lodash/maxBy'
 import WidgetLibrary from './components/widget-library'
+import uuidv4 from 'uuid/v4';
+
 
 let baseSettings = {
   title: {
@@ -34,11 +38,9 @@ let baseSettings = {
 }
 
 var testLayout = [
-  {"x":0,"y":0,"w":2,"h":2,"i":"0","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-  {"x":2,"y":0,"w":2,"h":4,"i":"1","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-  {"x":4,"y":0,"w":2,"h":5,"i":"2","c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-  // {"x":0,"y":0,"w":2,"h":3,"i":"3","c": "SocketWidget", "settings": { ...baseSettings }},
-  // {"x":8,"y":0,"w":2,"h":3,"i":"4","c": "SocketWidget", "settings": { ...baseSettings }},
+  {"x":0,"y":0,"w":2,"h":2,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
+  {"x":2,"y":0,"w":2,"h":4,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
+  {"x":4,"y":0,"w":2,"h":5,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
 ]
 
 export default {
@@ -57,7 +59,13 @@ export default {
   },
   methods: {
     addWidget: function(component) {
-      debugger 
+      let wLowest = maxBy(this.layout, w => w.y+ w.h)
+      this.layout.push(
+        {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":2,"i":uuidv4(),"c": component, "settings": cloneDeep(baseSettings)},
+      )
+    },
+    removeWidget(id) {
+      this.layout = this.layout.filter(item => item.i != id)
     }
   }
 }
