@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 Vue.use(PortalVue)
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://192.168.178.36:8443',
+  connection: 'https://192.168.178.36:8449',
   vuex: {
     store,
     router,

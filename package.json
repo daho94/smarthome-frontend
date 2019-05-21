@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev": "vue-cli-service build --watch --mode development --dest '../smarthome-backend/server/web/'",
+    "dev": "vue-cli-service build --watch --mode development --dest E:/dev/web/smarthome-backend/server/web/",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

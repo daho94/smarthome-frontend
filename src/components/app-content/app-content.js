@@ -14,6 +14,7 @@ export default {
     isEditMode: Boolean,
     isEditLayout: Boolean,
     layout: Array,
+    isDashboardMenu: Boolean,
   },
   data () {
     return {}

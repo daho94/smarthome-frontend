@@ -1,7 +1,5 @@
 <template>
-  <div id="app">   
-  <router-view></router-view>
-  </div>
+  <router-view id="app"></router-view>
 </template>
 
 <script>
@@ -29,9 +27,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #2c3e50;
 }
 body {
   width: 100%;
+  margin: 0px;
 }
 html, body, #app, section.section {
   height: 100%;
