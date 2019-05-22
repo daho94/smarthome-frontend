@@ -4,7 +4,7 @@
       header-bar Component
       <button class="header-button button-kek" v-on:click="openDashboardMenu">Dashboards</button>
       <button class="header-button button-left" v-on:click="isEditLayout = !isEditLayout">Edit</button>
-      <button class="header-button button-lefter">Save</button>
+      <button v-if="isEditLayout" class="header-button button-lefter" v-on:click="saveDashboard">Save</button>
       <portal v-if="isEditLayout" to="settings-bar" >
         <widget-library 
           :layout="layout"
@@ -34,7 +34,7 @@ import maxBy from 'lodash/maxBy'
 import WidgetLibrary from '../components/widget-library'
 import DashboardMenu from '../components/dashboard-menu'
 import uuidv4 from 'uuid/v4'
-import { getDashboards, getDashboard, getDefaultDashboard } from '../calls/dashboard'
+import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard } from '../calls/dashboard'
 
 let baseSettings = {
   title: {
@@ -70,12 +70,23 @@ export default {
   },
   created: function() {
     let self = this;
-    getDefaultDashboard().then(dashboard => {
-      self.layout = dashboard.settings
-    })
+    let dashboardId = this.$route.params.dashboardId;
+    if (!dashboardId) {
+      getDefaultDashboard().then(dashboard => {
+        this.$router.replace({ name: 'dashboard', params: { dashboardId: dashboard.id }})
+      })
+    } else {
+      this.changeDashboard(parseInt(dashboardId))
+    }
+
     getDashboards().then(dashboards => {
       self.dashboards = dashboards
     })
+  },
+  watch: {
+    '$route' (to, _from) {
+      this.changeDashboard(parseInt(to.params.dashboardId))
+    }
   },
   computed: {
   },
@@ -104,6 +115,14 @@ export default {
     loadDashboards() {
       getDashboards().then(dashboards => {
         this.dashboards = dashboards
+      })
+    },
+    saveDashboard() {
+      let self = this
+      saveDashboard(parseInt(this.$route.params.dashboardId), this.layout).then(success => {
+        if(success) {
+          self.isEditLayout = false
+        }
       })
     }
   }

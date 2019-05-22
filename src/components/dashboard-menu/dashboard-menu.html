@@ -2,9 +2,16 @@
 <section class="dashboard-menu">
   <h1>dashboard-menu Component</h1>
   <ul>
-    <li v-for="dashboard in dashboards" v-on:click="changeDashboard(dashboard.id)">
-      {{ dashboard.name }}
-    </li>
+      <router-link  
+        tag="li" 
+        v-for="dashboard in dashboards" 
+        :to="{ name: 'dashboard', params: { dashboardId: dashboard.id}}"
+        active-class="dashboard-active"
+        exact-active-class
+        >
+          {{ dashboard.name }}
+        </router-link>
+
   </ul>
 </section>
 

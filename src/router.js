@@ -13,9 +13,8 @@ export const router = new Router({
   routes: [
     { path: '/', component: Home },
     { path: '/login', component: Login },
-
-    // otherwise redirect to home
-    // { path: '*', redirect: '/' }
+    { path: '/:dashboardId', name: 'dashboard', component: Home },
+    { path: '*', redirect: '/' },
   ]
 });
 

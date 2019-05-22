@@ -41,11 +41,24 @@ function getDefaultDashboard() {
     };
 
     return fetch(`${ENTRYPOINT}/single`, requestOptions)
-
         .then(handleResponse)
         .then(data => {
             return data
         })
+}
+
+function saveDashboard(id, settings) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ id, settings }),
+    };
+
+    return fetch(`${ENTRYPOINT}/single`, requestOptions)
+    .then(response => {
+        return response.ok
+    })
 }
 
 function handleResponse(response) {
@@ -59,4 +72,4 @@ function handleResponse(response) {
     return response.json()
 }
 
-export { getDashboards, getDashboard, getDefaultDashboard }
+export { getDashboards, getDashboard, getDefaultDashboard, saveDashboard }
