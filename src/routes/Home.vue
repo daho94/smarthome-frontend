@@ -2,9 +2,10 @@
   <div>   
     <section class="header-bar">
       header-bar Component
-      <button class="header-button button-kek" v-on:click="openDashboardMenu">Dashboards</button>
+      <button v-if="!isEditLayout" class="header-button button-kek" v-on:click="openDashboardMenu">Dashboards</button>
       <button class="header-button button-left" v-on:click="isEditLayout = !isEditLayout">Edit</button>
       <button v-if="isEditLayout" class="header-button button-lefter" v-on:click="saveDashboard">Save</button>
+      <button v-if="isEditLayout" v-on:click="restoreDashboard">Cancel</button>
       <portal v-if="isEditLayout" to="settings-bar" >
         <widget-library 
           :layout="layout"
@@ -23,6 +24,7 @@
       :isEditLayout="isEditLayout"
       :isDashboardMenu="isDashboardMenu"
       @removeWidget="removeWidget"
+      @updateSettings="updateSettings"
       />
   </div>
 </template>
@@ -47,12 +49,6 @@ let baseSettings = {
   }
 }
 
-// var testLayout = [
-//   {"x":0,"y":0,"w":2,"h":2,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-//   {"x":2,"y":0,"w":2,"h":4,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-//   {"x":4,"y":0,"w":2,"h":5,"i":uuidv4(),"c": "SocketWidget", "settings": cloneDeep(baseSettings)},
-// ]
-
 export default {
   name: 'home',
   components: {
@@ -63,13 +59,13 @@ export default {
   data() {
     return {
       layout: [],
+      layoutBackup: [],
       isEditLayout: false,
       isDashboardMenu: false,
       dashboards: [],
     }
   },
   created: function() {
-    let self = this;
     let dashboardId = this.$route.params.dashboardId;
     if (!dashboardId) {
       getDefaultDashboard().then(dashboard => {
@@ -78,13 +74,9 @@ export default {
     } else {
       this.changeDashboard(parseInt(dashboardId))
     }
-
-    getDashboards().then(dashboards => {
-      self.dashboards = dashboards
-    })
   },
   watch: {
-    '$route' (to, _from) {
+    '$route' (to) {
       this.changeDashboard(parseInt(to.params.dashboardId))
     }
   },
@@ -103,6 +95,7 @@ export default {
     changeDashboard(id) {
       getDashboard(id).then(dashboard => {
         this.layout = dashboard.settings
+        this.layoutBackup = cloneDeep(this.layout)
       })
     },
     openDashboardMenu() {
@@ -124,6 +117,14 @@ export default {
           self.isEditLayout = false
         }
       })
+    },
+    restoreDashboard() {
+      this.layout = cloneDeep(this.layoutBackup)
+      this.isEditLayout = false
+    },
+    updateSettings(id, settings) {
+      let widget = this.layout.filter(item => item.i === id)[0]
+      widget.settings = settings
     }
   }
 }

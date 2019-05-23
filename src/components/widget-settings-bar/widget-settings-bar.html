@@ -1,12 +1,14 @@
 <portal to="settings-bar"><section class="widget-settings-bar">
 Settings
   <ul>
-    <li v-for="(val, key) in settings" v-bind:key="key">
+    <li v-for="(val, key) in settingsCopy" v-bind:key="key">
       {{ key }} 
-      <input v-if="settings[key].type == 'input'" v-model="settings[key].val" placeholder="settings[key].val">
-      <input v-if="settings[key].type == 'checkbox'" type="checkbox" v-model="settings[key].val" placeholder="settings[key].val">
+      <input v-if="settingsCopy[key].type == 'input'" v-model="settingsCopy[key].val" placeholder="settings[key].val">
+      <input v-if="settingsCopy[key].type == 'checkbox'" type="checkbox" v-model="settingsCopy[key].val" placeholder="settingsCopy[key].val">
     </li>
     <li><button v-on:click="remove">Remove Widget</button></li>
+    <li v-if="settingsChanged"><button  v-on:click="confirm">Confirm</button></li>
+    <li v-if="settingsChanged"><button  v-on:click="cancel">Cancel</button></li>
   </ul>
 </section>
 </portal>

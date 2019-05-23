@@ -1,5 +1,5 @@
 
-<section class="app-content" id="kek">
+<section class="app-content" v-bind:class="{ 'settings-right-open': isEditLayout}" id="kek">
   <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
   <portal-target  v-show="isDashboardMenu" class="dashboard-menu" name="dashboard-menu"></portal-target>
   <grid-layout
@@ -25,6 +25,7 @@
       :widgetId="item.i"
       :settings="item.settings"
       @remove="removeWidget"
+      @update="updateSettings"
     >
       <component
       v-bind:is="item.c"

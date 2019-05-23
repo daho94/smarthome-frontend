@@ -29,6 +29,9 @@ export default {
     removeWidget(id) {
       // this.layout = this.layout.filter(item => item.i != id)
       this.$emit('removeWidget', id)
+    },
+    updateSettings(id, settings) {
+      this.$emit('updateSettings', id, settings)
     }
   }
 }
