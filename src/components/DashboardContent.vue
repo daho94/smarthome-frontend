@@ -1,7 +1,6 @@
 <template>
     <section class="dashboard-content" v-bind:class="{ 'settings-right-open': isEditLayout}" id="kek">
     <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
-    <portal-target  v-show="isDashboardMenu" class="dashboard-menu" name="dashboard-menu"></portal-target>
     <grid-layout
     :layout.sync="layout"
     :col-num="12"
@@ -54,7 +53,6 @@ export default {
     isEditMode: Boolean,
     isEditLayout: Boolean,
     layout: Array,
-    isDashboardMenu: Boolean,
   },
   data () {
     return {}
@@ -77,32 +75,17 @@ export default {
 </script>
 
 <style>
-.dashboard-content {
-    height: calc(100% - 60px);
-}
 .settings-right-open {
     width: calc(100% - 250px);
 }
 .settings-bar {
     position: absolute;
     right: 0;
-    top: 60px;
-    height: calc(100% - 60px);
+    height: 100%;
     min-width: 250px;
     max-width: 250px;
     z-index: 10;
-    background-color: antiquewhite;
+    background-color: #212529;
 
-}
-
-.dashboard-menu {
-    position: absolute;
-    left: 0;
-    top: 60px;
-    height: calc(100% - 60px);
-    min-width: 250px;
-    max-width: 250px;
-    z-index: 10;
-    background-color: antiquewhite;
 }
 </style>

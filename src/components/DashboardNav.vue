@@ -1,17 +1,18 @@
 <template>
     <section class="dashboard-nav">
-        <h1>dashboard-menu Component</h1>
-        <ul>
-            <router-link  
-                tag="li" 
-                v-for="dashboard in dashboards" v-bind:key="dashboard.id"
+        <b-list-group class="no-bg">
+            <b-list-group-item v-for="dashboard in dashboards" v-bind:key="dashboard.id" class="no-bg cursor-pointer">
+                 <router-link 
+                 tag="i" 
+                class="material-icons dashboard-icon dashboard-hover md-36"
                 :to="{ name: 'dashboard', params: { dashboardId: dashboard.id}}"
                 active-class="dashboard-active"
                 exact-active-class
                 >
-                {{ dashboard.name }}
+                    dashboard
                 </router-link>
-        </ul>
+            </b-list-group-item>
+        </b-list-group>
     </section>
 </template>
 
@@ -40,10 +41,16 @@ export default {
 </script>
 
 <style>
-.dashboard-nav {
-
+.cursor-pointer:hover {
+    color: grey;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.no-bg {
+    background: none !important;
 }
 .dashboard-active {
-    background-color: green;
+    color: green;
 }
 </style>

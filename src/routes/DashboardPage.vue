@@ -1,31 +1,36 @@
 <template>
-  <div>   
-    <section class="header-bar">
-      header-bar Component
-      <button v-if="!isEditLayout" class="header-button button-kek" v-on:click="openDashboardMenu">Dashboards</button>
-      <button class="header-button button-left" v-on:click="isEditLayout = !isEditLayout">Edit</button>
-      <button v-if="isEditLayout" class="header-button button-lefter" v-on:click="saveDashboard">Save</button>
-      <button v-if="isEditLayout" v-on:click="restoreDashboard">Cancel</button>
-      <portal v-if="isEditLayout" to="settings-bar" >
-        <widget-library 
-          :layout="layout"
-          @addWidget="addWidget"
+  <div class="bg-main container-fluid">
+    <div class="row">
+      <div class="col-1 border-right border-bottom">
+      </div>
+      <div class="col-11 border-bottom">
+        <section class="dashboard-header">
+          header-bar Component
+          <button class="header-button button-left" v-on:click="isEditLayout = !isEditLayout">Edit</button>
+          <button v-if="isEditLayout" class="header-button button-lefter" v-on:click="saveDashboard">Save</button>
+          <button v-if="isEditLayout" v-on:click="restoreDashboard">Cancel</button>
+          <portal v-if="isEditLayout" to="settings-bar" >
+            <widget-library 
+              :layout="layout"
+              @addWidget="addWidget"
+            />
+          </portal>
+        </section>
+      </div>
+    </div>
+    <div class="row dashboard-content">
+      <div class="col-1 border-right">
+        <dashboard-nav :dashboards="dashboards" @changeDashboard="changeDashboard"/>
+      </div>
+      <div class="col-11">
+        <dashboard-content 
+        :layout="layout" 
+        :isEditLayout="isEditLayout"
+        @removeWidget="removeWidget"
+        @updateSettings="updateSettings"
         />
-      </portal>
-      <portal v-if="isDashboardMenu" to="dashboard-menu">
-        <dashboard-nav
-          :dashboards="dashboards"
-          @changeDashboard="changeDashboard"
-        />
-      </portal>
-    </section>
-    <dashboard-content 
-      :layout="layout" 
-      :isEditLayout="isEditLayout"
-      :isDashboardMenu="isDashboardMenu"
-      @removeWidget="removeWidget"
-      @updateSettings="updateSettings"
-      />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,7 +66,6 @@ export default {
       layout: [],
       layoutBackup: [],
       isEditLayout: false,
-      isDashboardMenu: false,
       dashboards: [],
     }
   },
@@ -74,6 +78,7 @@ export default {
     } else {
       this.changeDashboard(parseInt(dashboardId))
     }
+    this.loadDashboards()
   },
   watch: {
     '$route' (to) {
@@ -104,13 +109,6 @@ export default {
         this.layout = dashboard.settings
         this.layoutBackup = cloneDeep(this.layout)
       })
-    },
-    openDashboardMenu() {
-      let menuOpen = this.isDashboardMenu;
-      if (!menuOpen) {
-        this.loadDashboards()
-      }
-      this.isDashboardMenu = !menuOpen
     },
     loadDashboards() {
       getDashboards().then(dashboards => {
@@ -152,8 +150,16 @@ export default {
 .button-lefter {
   left: 20%;
 }
-.header-bar {
+.dashboard-header {
   height: 60px;
-  background-color: aquamarine;
+}
+.boder-right {
+  border-right: 1px solid #c3c0c087; 
+}
+.border-bottom {
+  border-bottom: 1px solid #c3c0c087; 
+}
+.dashboard-content {
+    height: calc(100% - 61px);
 }
 </style>
