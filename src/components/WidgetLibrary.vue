@@ -1,3 +1,4 @@
+<script>
 import groupBy from 'lodash/groupBy'
 
 const categories = {
@@ -8,7 +9,6 @@ const categories = {
 
 
 export default {
-  name: 'widget-library',
   components: {},
   props: ["layout"],
   data () {
@@ -16,19 +16,19 @@ export default {
       library: [{
         category: categories.CONTROL,
         tags: ['control', 'socket'],
-        component: 'socket-widget',
+        component: 'widget-socket',
         name: 'Socket', //ToDo Make this multi lingual
       },
       {
         category: categories.CONTROL,
         tags: ['control', 'socket'],
-        component: 'socket-widget',
+        component: 'widget-socket',
         name: 'Socket', //ToDo Make this multi lingual
       },
       {
         category: categories.STUFF,
         tags: ['control', 'socket'],
-        component: 'socket-widget',
+        component: 'widget-socket',
         name: 'Socket', //ToDo Make this multi lingual
       }
     ]
@@ -70,3 +70,10 @@ export default {
     return createElement('div', [createElement('h1', 'Library'), createElement('ul', [children])])
   }
 }
+
+</script>
+
+<style>
+.widget-library {
+}
+</style>

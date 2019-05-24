@@ -13,13 +13,13 @@
         />
       </portal>
       <portal v-if="isDashboardMenu" to="dashboard-menu">
-        <dashboard-menu
+        <dashboard-nav
           :dashboards="dashboards"
           @changeDashboard="changeDashboard"
         />
       </portal>
     </section>
-    <AppContent 
+    <dashboard-content 
       :layout="layout" 
       :isEditLayout="isEditLayout"
       :isDashboardMenu="isDashboardMenu"
@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import AppContent from '../components/app-content'
+import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
 import maxBy from 'lodash/maxBy'
-import WidgetLibrary from '../components/widget-library'
-import DashboardMenu from '../components/dashboard-menu'
+import WidgetLibrary from '../components/WidgetLibrary'
+import DashboardNav from '../components/DashboardNav'
 import uuidv4 from 'uuid/v4'
 import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard } from '../calls/dashboard'
 
@@ -50,11 +50,11 @@ let baseSettings = {
 }
 
 export default {
-  name: 'home',
+  // name: 'dashboard',
   components: {
-    AppContent,
+    DashboardContent,
     WidgetLibrary,
-    DashboardMenu,
+    DashboardNav,
   },
   data() {
     return {
@@ -85,6 +85,13 @@ export default {
   methods: {
     addWidget: function(component) {
       let wLowest = maxBy(this.layout, w => w.y + w.h)
+      // if dashboard is empty...
+      if (!wLowest) {
+        wLowest = {
+          y: 0,
+          h: 0,
+        }  
+      }
       this.layout.push(
         {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":2,"i":uuidv4(),"c": component, "settings": cloneDeep(baseSettings)},
       )
