@@ -1,28 +1,38 @@
 <template>
-  <div class="bg-main container-fluid">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-1 border-right border-bottom">
+      <div class="border-right border-bottom nav-row">
       </div>
-      <div class="col-11 border-bottom">
+      <div class="border-bottom dashboard-row">
         <section class="dashboard-header">
-          header-bar Component
-          <button class="header-button button-left" v-on:click="isEditLayout = !isEditLayout">Edit</button>
-          <button v-if="isEditLayout" class="header-button button-lefter" v-on:click="saveDashboard">Save</button>
-          <button v-if="isEditLayout" v-on:click="restoreDashboard">Cancel</button>
-          <portal v-if="isEditLayout" to="settings-bar" >
-            <widget-library 
-              :layout="layout"
-              @addWidget="addWidget"
-            />
-          </portal>
+            <b-navbar toggleable="lg" type="dark" class="bg-dark z-index-10">
+              <b-navbar-brand>{{ dashboardName }}</b-navbar-brand>
+
+              <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+              <b-collapse id="nav-collapse" is-nav>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
+                    <i class="material-icons">create</i>
+                  </b-button>
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  text-white edit-btn" v-bind:disabled="!isEditLayout" v-on:click="saveDashboard">
+                    <i class="material-icons">save</i>
+                  </b-button>
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn" v-bind:disabled="!isEditLayout" v-on:click="restoreDashboard">
+                    <i class="material-icons">clear</i>
+                  </b-button>               
+                </b-navbar-nav>
+              </b-collapse>
+            </b-navbar>
         </section>
       </div>
     </div>
     <div class="row dashboard-content">
-      <div class="col-1 border-right">
+      <div class="border-right nav-row">
         <dashboard-nav :dashboards="dashboards" @changeDashboard="changeDashboard"/>
       </div>
-      <div class="col-11">
+      <div class="dashboard-row">
         <dashboard-content 
         :layout="layout" 
         :isEditLayout="isEditLayout"
@@ -31,6 +41,12 @@
         />
       </div>
     </div>
+     <portal v-if="isEditLayout" to="settings-bar" >
+            <widget-library 
+              :layout="layout"
+              @addWidget="addWidget"
+            />
+          </portal>
   </div>
 </template>
 
@@ -67,6 +83,7 @@ export default {
       layoutBackup: [],
       isEditLayout: false,
       dashboards: [],
+      dashboardName: '',
     }
   },
   created: function() {
@@ -107,6 +124,7 @@ export default {
     changeDashboard(id) {
       getDashboard(id).then(dashboard => {
         this.layout = dashboard.settings
+        this.dashboardName = dashboard.name
         this.layoutBackup = cloneDeep(this.layout)
       })
     },
@@ -136,7 +154,24 @@ export default {
 </script>
 
 <style>
+.z-index-10 {
+  z-index: 10;
+}
+.edit-active {
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1);
+  box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6);
+}
+.edit-btn {
+  color: white;
+}
 
+.edit-btn:focus {
+  outline: none !important;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6) !important;
+}
 .header-button {
   position: absolute;
   top: calc(30px - 10px);
@@ -161,5 +196,11 @@ export default {
 }
 .dashboard-content {
     height: calc(100% - 61px);
+}
+.dashboard-row {
+  width: calc(100% - 61px);
+}
+.nav-row {
+  width: 61px;
 }
 </style>

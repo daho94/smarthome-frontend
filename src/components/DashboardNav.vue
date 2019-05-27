@@ -1,18 +1,25 @@
 <template>
     <section class="dashboard-nav">
-        <b-list-group class="no-bg">
-            <b-list-group-item v-for="dashboard in dashboards" v-bind:key="dashboard.id" class="no-bg cursor-pointer">
+        <ul class="list-group flex-column no-bg">
+            <li v-for="dashboard in dashboards" 
+                v-bind:key="dashboard.id" 
+                v-bind:class="{'dashboard-nav-expanded': showById === dashboard.id}" 
+                class="no-bg  list-group-item dashboard-nav-border"
+                @mouseover="showById = dashboard.id"
+                @mouseleave="showById = null"
+            >
                  <router-link 
                  tag="i" 
-                class="material-icons dashboard-icon dashboard-hover md-36"
+                class="cursor-pointer material-icons dashboard-icon dashboard-hover md-36"
                 :to="{ name: 'dashboard', params: { dashboardId: dashboard.id}}"
                 active-class="dashboard-active"
                 exact-active-class
-                >
-                    dashboard
+
+                >dashboard
                 </router-link>
-            </b-list-group-item>
-        </b-list-group>
+                <span v-if="showById === dashboard.id" class="ml-2 align-middle">{{ dashboard.name }}</span>
+            </li>
+        </ul>
     </section>
 </template>
 
@@ -22,7 +29,7 @@ export default {
   props: ["dashboards"],
   data () {
     return {
-
+        showById:null,
     }
   },
   computed: {
@@ -41,9 +48,14 @@ export default {
 </script>
 
 <style>
-.cursor-pointer:hover {
-    color: grey;
+.dashboard-nav-border {
+    border: none !important;
+    border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0.25rem;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -51,6 +63,29 @@ export default {
     background: none !important;
 }
 .dashboard-active {
-    color: green;
+    color: #97d3d9 !important;
 }
+.dashboard-nav ul {
+    padding-top: 2rem;
+}
+
+.dashboard-nav li {
+    padding-left: 1.125rem;
+}
+
+.dashboard-nav ul>li>span {
+    position: relative;
+    bottom: 5px;
+    font-size: 18px;
+}
+
+.dashboard-nav-expanded {
+    width: 13rem;
+    background-color: #6c757d !important;
+    z-index: 10;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+ }
 </style>

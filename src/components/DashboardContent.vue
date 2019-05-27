@@ -84,7 +84,7 @@ export default {
     height: 100%;
     min-width: 250px;
     max-width: 250px;
-    z-index: 10;
+    z-index: 9;
     background-color: #212529;
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <router-view id="app"></router-view>
+  <router-view class="bg-dark" id="app"></router-view>
 </template>
 
 <script>
@@ -27,7 +27,9 @@ export default {
   color: whitesmoke;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #202121;
+}
+button:hover {
+  color: #6c757d!important;
 }
 body {
   width: 100%;
