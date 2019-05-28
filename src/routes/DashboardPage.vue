@@ -13,6 +13,7 @@
               <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
+                  <calendar-component/>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
                     <i class="material-icons">create</i>
                   </b-button>
@@ -41,12 +42,12 @@
         />
       </div>
     </div>
-     <portal v-if="isEditLayout" to="settings-bar" >
+      <portal v-if="isEditLayout" to="settings-bar" >
             <widget-library 
               :layout="layout"
               @addWidget="addWidget"
             />
-          </portal>
+      </portal>
   </div>
 </template>
 
@@ -58,6 +59,7 @@ import WidgetLibrary from '../components/WidgetLibrary'
 import DashboardNav from '../components/DashboardNav'
 import uuidv4 from 'uuid/v4'
 import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard } from '../calls/dashboard'
+import CalendarComponent from '../components/CalendarComponent'
 
 let baseSettings = {
   title: {
@@ -76,6 +78,7 @@ export default {
     DashboardContent,
     WidgetLibrary,
     DashboardNav,
+    CalendarComponent,
   },
   data() {
     return {
