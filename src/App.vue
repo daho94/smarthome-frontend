@@ -39,7 +39,7 @@ body {
   margin: 0px;
 }
 html, body, #app, section.section {
-  height: 100%;
+  height: 100vh;
 }
 
 @font-face {
