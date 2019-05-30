@@ -79,13 +79,13 @@ export default {
     width: calc(100% - 250px);
 }
 .settings-bar {
-    position: absolute;
+    position: fixed;
     right: 0;
     height: 100%;
     min-width: 250px;
     max-width: 250px;
     z-index: 9;
-    background-color: #212529;
+    background-color: #47494f;
 
 }
 </style>

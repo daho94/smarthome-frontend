@@ -5,7 +5,7 @@
       </div>
       <div class="border-bottom dashboard-row">
         <section class="dashboard-header">
-            <b-navbar toggleable="lg" type="dark" class="bg-dark z-index-10">
+            <b-navbar toggleable="lg" type="dark" class="bg-app z-index-10">
               <b-navbar-brand>{{ dashboardName }}</b-navbar-brand>
 
               <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

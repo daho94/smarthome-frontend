@@ -1,5 +1,5 @@
 <template>
-  <router-view class="bg-dark" id="app"></router-view>
+  <router-view class="bg-app" id="app"></router-view>
 </template>
 
 <script>
@@ -27,6 +27,9 @@ export default {
   color: whitesmoke;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+.bg-app {
+  background: #202225;
 }
 button:hover {
   color: #6c757d!important;
@@ -75,5 +78,10 @@ html, body, #app, section.section {
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
 
 </style>

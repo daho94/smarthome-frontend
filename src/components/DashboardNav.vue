@@ -10,9 +10,9 @@
             >
                  <router-link 
                  tag="i" 
-                class="cursor-pointer material-icons dashboard-icon dashboard-hover md-36"
+                class="cursor-pointer material-icons dashboard-icon dashboard-hover"
                 :to="{ name: 'dashboard', params: { dashboardId: dashboard.id}}"
-                active-class="dashboard-active"
+                active-class="text-info"
                 exact-active-class
 
                 >dashboard
@@ -62,9 +62,7 @@ export default {
 .no-bg {
     background: none !important;
 }
-.dashboard-active {
-    color: #97d3d9 !important;
-}
+
 .dashboard-nav ul {
     padding-top: 2rem;
 }

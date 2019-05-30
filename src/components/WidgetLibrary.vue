@@ -1,41 +1,24 @@
 <script>
-import groupBy from 'lodash/groupBy'
-
-const categories = {
-  MONITORING: 'Monitoring',
-  CONTROL: 'Control',
-  STUFF: 'Stuff',
-}
-
+import { getWidgets } from '../calls/widget'
 
 export default {
   components: {},
   props: ["layout"],
   data () {
     return {
-      library: [{
-        category: categories.CONTROL,
-        tags: ['control', 'socket'],
-        component: 'widget-socket',
-        name: 'Socket', //ToDo Make this multi lingual
-      },
-      {
-        category: categories.CONTROL,
-        tags: ['control', 'socket'],
-        component: 'widget-socket',
-        name: 'Socket', //ToDo Make this multi lingual
-      },
-      {
-        category: categories.STUFF,
-        tags: ['control', 'socket'],
-        component: 'widget-socket',
-        name: 'Socket', //ToDo Make this multi lingual
-      }
-    ]
+    lib: [],
     }
   },
   computed: {
 
+  },
+  created: function() {
+    getWidgets().then(res => {
+      for (let cat of res) {
+        cat[0].isVisible = true
+      }
+      this.lib = res
+    })
   },
   mounted () {
     
@@ -47,27 +30,64 @@ export default {
   },
   render: function(createElement) {
     let children = []
-    let grouped = groupBy(this.library, item => item.category)
-  
-    for (let cat of Object.keys(grouped)) {
-      let catItems = []
-      for (let item of grouped[cat]) {
-        catItems.push(createElement('li', [item.name, createElement(
-          'button',
-          {
-            on: {
-              click: e => {
-                this.addWidget(item.component)
-              }
-            }
-          },
-          'Add'
-        )]))
+    for (let cat of this.lib) {
+
+      let widgets = []
+
+      if (cat[0].isVisible) {
+        for (let widget of cat[1]) {
+          widgets.push(createElement('b-list-group-item',  { class: ["no-bg"] }, [createElement(
+            'b-button',
+            {
+              on: {
+                click: e => {
+                  this.addWidget(widget.component_key)
+                }
+              },
+              attrs: {
+                size: "sm",
+                variant: "transparent",
+              },
+              class: ["edit-btn"]
+            },
+            [
+              createElement(
+                'i', 
+                {
+                  class: ["material-icons", "md-18", "text-info"]
+                },
+                'face'
+              )
+            ]
+          ),
+          createElement('span', widget.name)
+          ]))
       }
-  
-      children.push(createElement('li', [cat, [createElement('ul', catItems)]]))
     }
-    return createElement('div', [createElement('h1', 'Library'), createElement('ul', [children])])
+
+
+    children.push(createElement('b-list-group-item',
+      {
+        class: ["no-bg"],
+        style: {
+          'padding-top': '0px !important'
+        },
+      },
+      [
+        createElement('div', 
+        {
+          class: ["cursor-pointer", "category-btn"],
+          on: {
+            click: function() {
+              cat[0].isVisible = !cat[0].isVisible
+            }
+          }
+        }, 
+        cat[0].name),
+        [createElement('b-list-group', widgets)]
+      ]))
+    }
+    return createElement('div', [createElement('h2', 'Library'), createElement('b-list-group', [children])])
   }
 }
 
@@ -75,5 +95,10 @@ export default {
 
 <style>
 .widget-library {
+}
+.category-btn {
+  padding-top: 12px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 </style>
