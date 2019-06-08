@@ -3,7 +3,7 @@
     <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
     <grid-layout
     :layout.sync="layout"
-    :col-num="12"
+    :col-num="8"
     :row-height="30"
     :is-draggable="isEditLayout"
     :is-resizable="isEditLayout"
@@ -28,7 +28,10 @@
             >
                 <component
                 v-bind:is="item.c"
+                :widgetId="item.i"
+                :settings="item.settings"
                 v-bind:class="{ showTitle: item.settings.showTitle.val }"
+                @update="updateSettings"
                 >
                 </component>
             </base-widget>
