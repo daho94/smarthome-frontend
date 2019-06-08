@@ -72,7 +72,7 @@ export default {
     },
     updateSettings(id, settings) {
       this.$emit('updateSettings', id, settings)
-    }
+    },
   }
 }
 </script>

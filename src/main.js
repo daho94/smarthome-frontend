@@ -8,6 +8,11 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VCalendar from 'v-calendar'
+import 'vue-resize/dist/vue-resize.css'
+import VueResize from 'vue-resize'
+
+Vue.use(VueResize)
+
 
 Vue.config.productionTip = false
 

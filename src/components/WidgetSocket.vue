@@ -1,19 +1,26 @@
 <template>
     <section  class="widget-socket">
-    {{ val }}
+      <div style="width:100%; height:20%">
+        {{ val }}
+      </div>
+      <div style="width:100%; height:80%">
+        <chart-test :height="height" :width="width" />
+      </div>
     </section>
 </template>
 
 <script>
 import SubscriptionMixin from '../mixins/subscription-mixin'
 import SettingsMergeMixin from '../mixins/settings-merge-mixin'
-
+import ChartTest from './ChartTest'
 
 
 export default {
   name: 'widget-socket',
-  components: {},
-  props: ["settings"],
+  components: {
+    ChartTest
+  },
+  props: ["settings", "height", "width"],
   mixins: [SubscriptionMixin, SettingsMergeMixin],
   data () {
     return {
@@ -24,8 +31,6 @@ export default {
         },
       },
     }
-  },
-  mounted () {
   },
   methods: {
  
@@ -54,5 +59,12 @@ export default {
 </script>
 
 <style>
-
+.widget-socket {
+  flex-flow: column;
+  overflow: hidden;
+}
+.widget-socket>div {
+  width: 100%;
+  padding: 20px;
+}
 </style>

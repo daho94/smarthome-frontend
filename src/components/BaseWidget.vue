@@ -21,8 +21,6 @@ import { mixin as clickaway } from 'vue-clickaway'
 export default {
   mixins: [ clickaway ],
   props: {
-    height: Number,
-    width: Number,
     isEditLayout: Boolean,
     widgetId: String,
     settings: Object,
