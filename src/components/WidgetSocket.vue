@@ -1,6 +1,6 @@
 <template>
     <section  class="widget-socket">
-    {{ temp }}
+    {{ val }}
     </section>
 </template>
 
@@ -13,42 +13,46 @@ import SettingsMergeMixin from '../mixins/settings-merge-mixin'
 export default {
   name: 'widget-socket',
   components: {},
-  props: [],
+  props: ["settings"],
   mixins: [SubscriptionMixin, SettingsMergeMixin],
   data () {
     return {
-      settings: {
-        title: {
-          val: "CPU Temp",
+      widgetSettings: {
+        objId: {
+          val: "",
           type: "input"
         },
       },
-      val: "",
     }
   },
   mounted () {
   },
   methods: {
+ 
   },
   computed: {
-    temp: function() {
-      return this.$store.state.subscriptions["rpi2.0.temperature.soc_temp"].val
-    }
+    val: function() {
+      return this.updateValue(this.settings.objId)
+    } 
   },
-  created () {
-    this.subscribe('rpi2.0.temperature.soc_temp')
+  created() {
+    let vm = this;
+    vm.$nextTick(function() {
+      vm.subscribe(vm.settings.objId.val)
+
+      vm.$watch('settings.objId.val', function(newVal, oldVal) {
+        vm.unsubscribe(oldVal)
+        vm.subscribe(newVal)
+      })
+    })
   },
   destroyed() {
-    this.unsubscribe("rpi2.0.temperature.soc_temp")
+    this.unsubscribe(this.settings.objId.val)
   },
 }
 
 </script>
 
 <style>
-.widget-socket {
-    background-color: darkgray;
-    height: 100%;
-    width: 100%;
-}
+
 </style>
