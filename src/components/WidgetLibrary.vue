@@ -187,9 +187,8 @@ export default {
 
 .category-item {
   width: 64px;
-  padding: 5px;
-  margin-top: 10px;
   text-align: center;
   word-break: break-word;
+  line-height: 1.0;
 }
 </style>

@@ -5,7 +5,7 @@
             <ul>
                 <li v-for="(val, key) in settingsCopy" v-bind:key="key">
                 {{ key }} 
-                <input v-if="settingsCopy[key].type == 'input'" v-model="settingsCopy[key].val" placeholder="settings[key].val">
+                <input v-if="settingsCopy[key].type == 'input'" v-model="settingsCopy[key].val">
                 <input v-if="settingsCopy[key].type == 'checkbox'" type="checkbox" v-model="settingsCopy[key].val" placeholder="settingsCopy[key].val">
                 </li>
                 <li><button v-on:click="remove">Remove Widget</button></li>

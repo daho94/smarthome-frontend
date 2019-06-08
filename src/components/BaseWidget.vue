@@ -67,17 +67,29 @@ export default {
 
 <style>
 .base-widget {
-    background-color: grey;
-    height: 100%;
+  background-color: #2d2d2f;
+  height: 100%;
 }
 
+.base-widget > section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+  font-size: 2.5em;
+}
 .base-title {
-    font-size: 1.5em;
-    max-height: 28px;
-    min-height: 28px;
+  font-size: 1.5em;
+  max-height: 34px;
+  min-height: 34px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  width: 100%;
 }
 
 .showTitle {
-    height: calc(100% - 28px);
+  /* height: calc(100% - 28px) !important; */
 }
 </style>
