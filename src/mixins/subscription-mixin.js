@@ -23,11 +23,12 @@ export default {
             })
         },
         /**
-         * Get the current state of all available objects
+         * Get the current states of all objects matching the pattern
+         * See https://github.com/ioBroker/ioBroker.socketio/blob/master/lib/socket.js#L263 for pattern definitions
          */
-        getStates: function() {
+        getStates: function(pattern) {
             return new Promise(resolve => {
-                this.$socket.emit('getStates', function(err, states) {
+                this.$socket.emit('getStates', pattern, function(err, states) {
                     resolve(states)
                 })
             })
@@ -45,7 +46,7 @@ export default {
 
                 // Get initial state of object...
                 this.getState(objId).then(data => {
-                    self.update_subscription_value({ id: objId, newVal: data.val })
+                    self.update_subscription_value({ id: objId, newState: data })
                     resolve(data.val)
                 }, (reason) => {
                     if(reason) {
@@ -57,13 +58,13 @@ export default {
                 })       
 
                 //...and then subscribe to it
-                this.$socket.emit('subscribe', objId); 
+                this.$socket.emit('subscribe', objId + "$"); 
             })
 
         },
         /**
          * Decrements subcount of objId in $store and unsubcribes if
-         * subcount reaches 0
+         * subcount equals 0
          * @param {String} objId 
          */
         unsubscribe: function(objId) {
@@ -71,21 +72,20 @@ export default {
 
             this.decrement_subs(objId).then(noReferencesLeft => {
                 // if object isn't referenced by any widget unsubscribe from object...
-                if(noReferencesLeft) this.$socket.emit('unsubscribe', objId)
+                if(noReferencesLeft) this.$socket.emit('unsubscribe', objId + "$")
             })
         },
         /**
          * Tries to update value to new state if object exists 
          * @param {String} objId 
-         * @returns {String} val or N/A
+         * @returns {String} val or undefined
          */
         updateValue: function(objId) {
-            const notAvailable = "N/A"
             if (objId && this.$store.state.subscriptions[objId.val]) {
-                const val = this.$store.state.subscriptions[objId.val].val
-                return  val !== undefined ? val : notAvailable   
+                const state = this.$store.state.subscriptions[objId.val].state
+                return  state !== undefined ? state : undefined   
             }
-            return notAvailable
+            return undefined
         }
     }
 }

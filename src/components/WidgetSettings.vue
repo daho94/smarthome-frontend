@@ -1,35 +1,71 @@
 <template>
     <portal to="settings-bar">
         <section class="widget-settings">
-            Settings
-            <ul>
-                <li v-for="(val, key) in settingsCopy" v-bind:key="key">
-                {{ key }} 
-                <input v-if="settingsCopy[key].type == 'input'" v-model="settingsCopy[key].val">
-                <input v-if="settingsCopy[key].type == 'checkbox'" type="checkbox" v-model="settingsCopy[key].val" placeholder="settingsCopy[key].val">
-                </li>
-                <li><button v-on:click="remove">Remove Widget</button></li>
-                <li v-if="settingsChanged"><button  v-on:click="confirm">Confirm</button></li>
-                <li v-if="settingsChanged"><button  v-on:click="cancel">Cancel</button></li>
-            </ul>
+            <h3>{{ categories[currentTab].name }}</h3>
+            <b-button-group v-if="settingsChanged" vertical class="action-buttons">
+              <b-button size="sm" variant="success" v-on:click="confirm"><i class="material-icons">check</i></b-button>
+              <b-button size="sm" variant="danger" v-on:click="cancel"><i class="material-icons">restore</i></b-button>
+            </b-button-group>
+
+            <b-button-group vertical class="tab-buttons">
+              <b-button class="text-white" v-for="(cat, i) in widgetCategories" v-bind:key="i" size="sm" variant="transparent" v-on:click="changeTab(cat)"><i class="material-icons">{{ categories[cat].iconUrl }}</i></b-button>
+            </b-button-group>
+
+            <component  v-for="(setting, j) in settingsSorted[currentTab]" v-bind:key="j"
+              :model="setting" 
+              :type="setting[1].type" 
+              v-bind:is="setting[1].component">
+            </component>
+            <button class="remove-widget-btn" v-on:click="remove">Remove Widget</button>
         </section>
     </portal>
 </template>
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
+import WidgetSettingsMixin from '../mixins/widget-settings-mixin'
+import groupBy from 'lodash/groupBy'
+import forEach from 'lodash/forEach'
+import FormInput from './FormInput'
+import FormSelect from './FormSelect'
+import FormCheckbox from './FormCheckbox'
 
 export default {
-  components: {},
+  components: {
+    FormInput,
+    FormSelect,
+    FormCheckbox
+  },
+  mixins: [WidgetSettingsMixin],
   props: ["settings", "widgetId"],
   data () {
     return {
       settingsCopy: cloneDeep(this.settings),
       settingsChanged: false,
+      currentTab: "basic",
     }
   },
   computed: {
+    settingsSorted: function() {
+      let array = []
+      forEach(this.settingsCopy, function(value, key) {
+        array.push([key, value])
+      })
 
+      let sorted = groupBy(array, function(value) {
+        return value[1].category
+      })
+      return sorted
+    },
+    widgetCategories: function() {
+      let cats = new Set()
+
+      forEach(this.settingsCopy, function(value) {
+        cats.add(value.category)
+      })
+      
+      return Array.from(cats)
+    }  
   },
   watch: {
     settingsCopy: {
@@ -40,6 +76,7 @@ export default {
     },
   },
   mounted () {
+
   },
   methods: {
     remove() {
@@ -55,6 +92,9 @@ export default {
       this.$nextTick(function() {
         this.settingsChanged = false
       })
+    },
+    changeTab(category) {
+      this.currentTab = category
     }
   }
 }
@@ -64,5 +104,32 @@ export default {
 <style>
 .widget-settings {
     height: 100%;
+    margin-left: 5px;
+    margin-right: 15px;
+}
+.tab-buttons {
+  position: absolute !important;
+  left: -42px;
+  top: 85px;
+  background: #343a40;
+}
+.tab-buttons button:focus {
+  /* color: #17a2b8; */
+  outline: none;
+  box-shadow: none;
+}
+.action-buttons {
+  position: absolute !important;
+  left: -42px;
+  top: 0px;
+  background: #47484f;
+}
+.action-buttons button {
+  border-radius: 0px !important;
+}
+.remove-widget-btn {
+  position: relative;
+  bottom: 0;
+  margin-top: 20px;
 }
 </style>

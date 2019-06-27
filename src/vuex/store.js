@@ -23,14 +23,14 @@ export default new Vuex.Store({
             state.connected = false
         },
         SOCKET_stateChange(state, data) {
-            state.subscriptions[data[0]].val = data[1].val
+            state.subscriptions[data[0]].state = data[1]
         },
         increment_subs(state, id) {
             let obj = state.subscriptions[id]
             if(!obj) {
                 Vue.set(state.subscriptions, id, { 
                     subscriber: 0,
-                    val: undefined,
+                    state: undefined,
                 })
                 obj = state.subscriptions[id]
             }
@@ -44,10 +44,10 @@ export default new Vuex.Store({
                 Vue.delete(state.subscriptions, id)
             }
         },
-        update_subscription_value(state, { id, newVal }) {
+        update_subscription_value(state, { id, newState }) {
             let obj = state.subscriptions[id]
             if (obj) {
-                obj.val = newVal
+                obj.state = newState
             }
         }
     },

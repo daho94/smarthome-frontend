@@ -55,6 +55,7 @@
 import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
 import maxBy from 'lodash/maxBy'
+// import forEach from 'lodash/forEach'
 import WidgetLibrary from '../components/WidgetLibrary'
 import DashboardNav from '../components/DashboardNav'
 import uuidv4 from 'uuid/v4'
@@ -64,11 +65,15 @@ import CalendarComponent from '../components/CalendarComponent'
 let baseSettings = {
   title: {
     val: "Default title",
-    type: "input"
+    component: "form-input",
+    type: "text",
+    category: "basic"
   },
   showTitle: {
     val: true,
-    type: "checkbox"
+    component: "form-checkbox",
+    type: "checkbox",
+    category: "basic"
   }
 }
 
@@ -125,10 +130,11 @@ export default {
       this.layout = this.layout.filter(item => item.i != id)
     },
     changeDashboard(id) {
+      let vm = this;
       getDashboard(id).then(dashboard => {
-        this.layout = dashboard.settings
-        this.dashboardName = dashboard.name
-        this.layoutBackup = cloneDeep(this.layout)
+        vm.layout = dashboard.settings
+        vm.dashboardName = dashboard.name
+        vm.layoutBackup = cloneDeep(vm.layout)
       })
     },
     loadDashboards() {
@@ -138,6 +144,16 @@ export default {
     },
     saveDashboard() {
       let self = this
+      // let layoutDB = cloneDeep(this.layout)
+
+      // // only store value in database  
+      // for (let widget of layoutDB) {
+      //   forEach(widget.settings, function(value, key) {
+      //       widget.settings[key] = { val: value.val }
+      //   })
+      // }
+      // console.log(layoutDB)
+
       saveDashboard(parseInt(this.$route.params.dashboardId), this.layout).then(success => {
         if(success) {
           self.isEditLayout = false

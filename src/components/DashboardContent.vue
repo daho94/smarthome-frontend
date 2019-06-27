@@ -42,15 +42,17 @@
 
 <script>
 import VueGridLayout from 'vue-grid-layout'
-import WidgetSocket from './WidgetSocket'
+import WidgetCurrentValue from './WidgetCurrentValue'
 import BaseWidget from './BaseWidget'
+import WidgetMeteogram from './WidgetMeteogram'
 
 export default {
   components: {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
-    WidgetSocket,
+    WidgetCurrentValue,
     BaseWidget,
+    WidgetMeteogram,
   },
   props: {
     isEditMode: Boolean,
@@ -88,7 +90,7 @@ export default {
     min-width: 250px;
     max-width: 250px;
     z-index: 9;
-    background-color: #47494f;
+    background-color: #2d2d2f;
 
 }
 </style>

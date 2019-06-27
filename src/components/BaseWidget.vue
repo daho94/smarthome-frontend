@@ -77,17 +77,20 @@ export default {
   font-size: 2.5em;
 }
 .base-title {
-  font-size: 1.5em;
+  font-size: 20px;
   max-height: 34px;
   min-height: 34px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  position: absolute;
-  width: 100%;
+  text-align: left;
+  color: #72a4d4;
+  padding-top: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .showTitle {
-  /* height: calc(100% - 28px) !important; */
+  height: calc(100% - 34px) !important;
 }
 </style>
