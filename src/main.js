@@ -11,8 +11,17 @@ import VCalendar from 'v-calendar'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 
-Vue.use(VueResize)
+// FontAwesome 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faThermometerQuarter, faChevronUp, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+library.add(faThermometerQuarter, faChevronUp, faChevronDown, faChevronRight)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
+Vue.use(VueResize)
 
 Vue.config.productionTip = false
 
