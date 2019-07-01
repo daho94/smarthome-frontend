@@ -12,9 +12,10 @@
             </b-button-group>
 
             <component  v-for="(setting, j) in settingsSorted[currentTab]" v-bind:key="j"
+              class="form-margin"
               :model="setting" 
               :type="setting[1].type" 
-              v-bind:is="setting[1].component">
+              :is="setting[1].component">
             </component>
             <button class="remove-widget-btn" v-on:click="remove">Remove Widget</button>
         </section>
@@ -29,12 +30,14 @@ import forEach from 'lodash/forEach'
 import FormInput from './FormInput'
 import FormSelect from './FormSelect'
 import FormCheckbox from './FormCheckbox'
+import FormIcon from './FormIcon'
 
 export default {
   components: {
     FormInput,
     FormSelect,
-    FormCheckbox
+    FormCheckbox,
+    FormIcon,
   },
   mixins: [WidgetSettingsMixin],
   props: ["settings", "widgetId"],
@@ -111,7 +114,7 @@ export default {
   position: absolute !important;
   left: -42px;
   top: 85px;
-  background: #343a40;
+  background: #2d2d2f;
 }
 .tab-buttons button:focus {
   /* color: #17a2b8; */
@@ -131,5 +134,9 @@ export default {
   position: relative;
   bottom: 0;
   margin-top: 20px;
+}
+.form-margin {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 </style>

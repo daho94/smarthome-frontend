@@ -20,9 +20,6 @@ export default {
     computed: {
         chartOptions: function() {
             return {                   
-                title: {
-                    text: ""
-                },
                 subtitle: {
                     text: "",
                     align: "left",
@@ -34,7 +31,6 @@ export default {
                 },
                 chart: {
                     type: "areaspline",
-                    backgroundColor: "#2d2d2f",
                     zoomType: "x"
                 },
                 yAxis: {
@@ -75,9 +71,6 @@ export default {
                 series: [{
                     data: this.chartData,
                 }],
-                credits: {
-                    enabled: false
-                },
             }
         }
     },

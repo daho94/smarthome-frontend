@@ -45,6 +45,7 @@ import VueGridLayout from 'vue-grid-layout'
 import WidgetCurrentValue from './WidgetCurrentValue'
 import BaseWidget from './BaseWidget'
 import WidgetMeteogram from './WidgetMeteogram'
+import IconSelector from './IconSelector'
 
 export default {
   components: {
@@ -53,9 +54,9 @@ export default {
     WidgetCurrentValue,
     BaseWidget,
     WidgetMeteogram,
+    IconSelector
   },
   props: {
-    isEditMode: Boolean,
     isEditLayout: Boolean,
     layout: Array,
   },
@@ -91,6 +92,8 @@ export default {
     max-width: 250px;
     z-index: 9;
     background-color: #2d2d2f;
-
+}
+.vue-grid-item>.vue-resizable-handle {
+  z-index: 3;
 }
 </style>

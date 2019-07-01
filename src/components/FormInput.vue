@@ -35,6 +35,12 @@ export default {
     background: none;
     border: none;
 }
+.form-input-color input:focus {
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+}
 .form-input > div {
     margin-left: 5px;
     margin-right: 5px;

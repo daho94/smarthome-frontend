@@ -1,19 +1,27 @@
 <template>
-    <section  class="widget-socket">
+    <section class="widget-current-value">
       <div style="width:100%; height:70px" class="row">
         <div class="current-value-display">
             <div>
-              <font-awesome-icon 
-                icon="thermometer-quarter" 
-                :style="{color: settings.plotColor !== undefined ? settings.plotColor.val : widgetSettings.plotColor.val}"
+              <squid-icon v-if="settings.icon && settings.icon.val.length > 0"
+                :icon="settings.icon !== undefined ? settings.icon.val : widgetSettings.icon.val"
+                :stroke="settings.titleColor.val"
+                :fill="settings.titleColor.val"
+                class="current-value-icon"
               />
             </div>
             <div>
-              <span v-if="state != undefined">{{ state.val != undefined ? state.val : "N/A" }}</span>
-              <span v-else> N/A </span>
+              <span class="current-value" v-if="state != undefined">{{ valueToDisplay[0] }}</span>
+              <span class="current-value" v-else> N/A </span>
             </div>
+            <div >
+              <span class="decimals text-secondary">
+                {{ valueToDisplay[1] }}
+                <span class="unit"> {{ settings.unit != undefined ? settings.unit.val : widgetSettings.unit.val }}</span>
+              </span>
+            </div>  
             <div>
-              <font-awesome-icon v-if="trend" :icon="'chevron-' + trend" :class="trendClass" size="xs" />
+              <font-awesome-icon v-if="trend" :icon="'chevron-' + trend" :class="trendClass" class="trend-icon" size="xs" />
             </div>
         </div>
       </div>
@@ -45,7 +53,19 @@ export default {
           val: "",
           component: "form-input",
           type: "text",
-          category: "settings",
+          category: "settings"
+        },
+        unit: {
+          val: "",
+          component: "form-input",
+          tye: "text",
+          category: "settings"
+        },
+        icon: {
+          val: "",
+          component: "form-icon",
+          type: "text",
+          category: "settings"
         },
         showHistory: {
            val: false,
@@ -109,6 +129,18 @@ export default {
     }
   },
   computed: {
+    valueToDisplay() {
+      if (this.state === undefined) {
+        return ["",""]
+      }
+
+      if (isNaN(this.state.val)) {
+        return [this.state.val, ""]
+      }
+
+      const splitted = this.state.val.toString().split(".")
+      return [splitted[0], "," + (splitted[1] | 0)]
+    },
     state: function() {
       return this.updateValue(this.settings.objId)
     },
@@ -150,11 +182,10 @@ export default {
 </script>
 
 <style>
-.widget-socket {
+.widget-current-value {
   flex-flow: column;
-  overflow: hidden;
 }
-.widget-socket>div {
+.widget-current-value > div {
   width: 100%;
   padding: 5px;
 }
@@ -164,19 +195,43 @@ export default {
   margin-top: auto;
   margin-left: 5px;
   margin-right: 5px;
+  height: 100%;
+}
+.current-value-display div {
+  height: 100%;
 }
 
-.current-value-display > div {
+.current-value-display div:first-child {
   padding-left: 4px;
-  padding-right: 4px;
+  padding-right: 8px;
 } 
-.current-value-icon {
-    position: relative;
-    top: calc(50% - 26px);
-    /* color: #72a4d4; */
+.current-value-display div:last-child {
+    padding-left: 8px;
+    padding-right: 4px;
 }
-.current-value-display span {
+.current-value-icon {
+    height: 80% !important;
+}
+.current-value {
   font-size: 2.5rem;
   text-align: right;
+  position: relative;
+  top: 5px;
+}
+.unit {
+  position: absolute;
+  font-size: 14px;
+  top: -18px;
+  left: calc(100% - 10px);
+}
+.decimals {
+  position: relative;
+  font-size: 30px;
+  top: 5px;
+}
+.trend-icon {
+  position: relative;
+  top: 5px;
+  height: 25px;
 }
 </style>

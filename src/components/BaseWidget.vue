@@ -1,6 +1,6 @@
 <template>
-    <section v-on:click="openSettings" class="base-widget">
-        <div v-if="settings.showTitle.val" class="base-title">
+    <section class="base-widget" >
+        <div v-if="settings.showTitle.val" class="base-title" :style="{color: settings.titleColor.val}">
             <span >{{ settings.title.val }}</span>
         </div>
         <slot></slot>
@@ -11,6 +11,9 @@
             :widgetId="widgetId"
         >
         </widget-settings>
+        <div v-show="isEditLayout" class="edit-overlay" :class="{'is-selected': isSelected}" v-on:click="openSettings">
+            <font-awesome-icon icon="cog"  size="6x" class="edit-overlay-icon"/>
+        </div>
     </section>
 </template>
 
@@ -29,6 +32,7 @@ export default {
     return {
       baseStyle: "base-widget",
       settingsOpen: false,
+      isSelected: false,
     }
   },
   components: {
@@ -51,11 +55,25 @@ export default {
     openSettings: function() {
       if(this.isEditLayout) {
         this.settingsOpen = true
+        this.isSelected = true
       }
     },
+    /** 
+     * Do not close settings-bar when clicked on a modal or in the settingsbar itself
+     */
     closeSettings: function(e) {
-      if(e.path.every(el => el.className != "widget-settings")) {
+      if (e.path.every(el => {
+          let clickOnSettings = el.className === "widget-settings"
+          let clickOnModal = false
+          
+          if (typeof el.className === "string") {
+            clickOnModal = el.className.includes("modal")
+          }
+        
+          return !(clickOnSettings || clickOnModal)
+        })) {
         this.settingsOpen = false
+        this.isSelected = false
       }
     }
   }
@@ -84,7 +102,6 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
-  color: #72a4d4;
   padding-top: 5px;
   margin-left: 10px;
   margin-right: 10px;
@@ -92,5 +109,34 @@ export default {
 
 .showTitle {
   height: calc(100% - 34px) !important;
+}
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  transition: .8s ease;
+  background-color: #343a40;
+  z-index: 2;
+}
+.edit-overlay-icon {
+  color: white;
+  max-height: 80%;
+  max-width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.is-selected {
+  opacity: 0;
+  transition: .8s ease;
 }
 </style>
