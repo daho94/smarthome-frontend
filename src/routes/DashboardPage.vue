@@ -74,6 +74,12 @@ let baseSettings = {
     component: "form-checkbox",
     type: "checkbox",
     category: "basic"
+  },
+  titleColor: {
+    val: "#FFFFFF",
+    component: "form-input",
+    type: "color",
+    category: "basic"
   }
 }
 
@@ -194,15 +200,6 @@ export default {
 .header-button {
   position: absolute;
   top: calc(30px - 10px);
-}
-.button-kek {
-  left: 0%;
-}
-.button-left {
-  left: 10%;
-}
-.button-lefter {
-  left: 20%;
 }
 .dashboard-header {
   height: 60px;
