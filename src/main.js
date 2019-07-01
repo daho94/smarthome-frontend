@@ -10,21 +10,27 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VCalendar from 'v-calendar'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
+// Global components
+import SquidIcon from '@/components/SquidIcon'
 
 // FontAwesome 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faThermometerQuarter, faChevronUp, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faChevronDown, faChevronRight, faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faThermometerQuarter, faChevronUp, faChevronDown, faChevronRight)
+library.add(
+  faChevronUp,
+  faChevronDown,
+  faChevronRight,
+  faCog
+)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
 Vue.config.productionTip = false
+
+Vue.component('squid-icon', SquidIcon)
 
 Vue.use(VueResize)
-
 Vue.config.productionTip = false
-
 Vue.use(VCalendar)
 Vue.use(BootstrapVue)
 Vue.use(PortalVue)
