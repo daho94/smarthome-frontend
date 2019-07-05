@@ -6,17 +6,15 @@ import BaseChart from './BaseChart'
 import each from 'lodash/each'
 import Highcharts from 'highcharts';
 import windbarbInit from 'highcharts/modules/windbarb'
-import SubscriptionMixin from '../mixins/subscription-mixin'
 
 windbarbInit(Highcharts)
 
 export default {
     name: "chart-meteogram",
-    mixins: [SubscriptionMixin],
     components: {
         BaseChart,
     },
-    props: ["objId", "objState", "timeSpan", "plotColor"],
+    props: ["data"],
     data () {
         return {
             pressures: [],
@@ -41,9 +39,9 @@ export default {
                     plotBorderWidth: 1,
                     alignTicks: false,
                     marginRight: 40,
-                    scrollablePlotArea: {
-                        minWidth: 720
-                    }
+                    // scrollablePlotArea: {
+                    //     mscrollinWidth: 720
+                    // }
                 },
 
                 defs: {
@@ -279,10 +277,15 @@ export default {
                     vectorLength: 18,
                     yOffset: -15,
                     tooltip: {
-                        valueSuffix: ' m/s'
+                        valueSuffix: ' km/h'
                     }
                 }]
             }
+        }
+    },
+    watch: {
+        data() {
+            this.parseData(this.data)
         }
     },
     methods: {
@@ -292,13 +295,6 @@ export default {
         rerender(chart) {
             this.drawBlocksForWindArrows(chart)
             this.drawWeatherSymbols(chart)
-        },
-        /**
-         * Get data from websocket
-         */
-        async getData(pattern) {
-            const states = await this.getStates(pattern)
-            return states
         },
         /**
          * Function to smooth the temperature line. The original data provides only whole degrees,
@@ -516,17 +512,16 @@ export default {
             })
         }
     },
-    async mounted() {
-        const states = await this.getData("daswetter.0.NextHours.Location_1.Day_1.Hour_*.(temp_value|symbol_desc|pressure_value|rain_value|iconURL|wind_value|wind_dir)")
-        try {
-            this.parseData(states)
-        } catch (error) {
-            console.error(error)
-        }
+    // async mounted() {
+    //     const states = await this.getData("daswetter.0.NextHours.Location_1.Day_1.Hour_*.(temp_value|symbol_desc|pressure_value|rain_value|iconURL|wind_value|wind_dir)")
+    //     try {
+    //         this.parseData(states)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
 
-    }
+    // }
 }
-
 </script>
 
 <style>
