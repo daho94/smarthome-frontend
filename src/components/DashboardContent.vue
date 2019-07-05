@@ -1,42 +1,47 @@
 <template>
-    <section class="dashboard-content" v-bind:class="{ 'settings-right-open': isEditLayout}" id="kek">
+    <section class="dashboard-content" v-bind:class="{ 'settings-right-open': isEditLayout}">
     <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
-    <grid-layout
-    :layout.sync="layout"
-    :col-num="8"
-    :row-height="30"
-    :is-draggable="isEditLayout"
-    :is-resizable="isEditLayout"
-    :is-mirrored="false"
-    :vertical-compact="false"
-    :margin="[10, 10]"
-    :use-css-transforms="true"
-    >
-        <grid-item v-for="item in layout" v-bind:key="item.i"
-            :x="item.x"
-            :y="item.y"
-            :w="item.w"
-            :h="item.h"
-            :i="item.i"
+    <div v-bar="{
+          preventParentScroll: true
+    }">
+      <div>
+        <grid-layout
+        :layout.sync="layout"
+        :col-num="12"
+        :row-height="30"
+        :is-draggable="isEditLayout"
+        :is-resizable="isEditLayout"
+        :is-mirrored="false"
+        :vertical-compact="false"
+        :margin="[10, 10]"       
         >
-            <base-widget
-            :isEditLayout="isEditLayout"
-            :widgetId="item.i"
-            :settings="item.settings"
-            @remove="removeWidget"
-            @update="updateSettings"
+            <grid-item v-for="item in layout" v-bind:key="item.i"
+                :x="item.x"
+                :y="item.y"
+                :w="item.w"
+                :h="item.h"
+                :i="item.i"
             >
-                <component
-                v-bind:is="item.c"
+                <base-widget
+                :isEditLayout="isEditLayout"
                 :widgetId="item.i"
                 :settings="item.settings"
-                v-bind:class="{ showTitle: item.settings.showTitle.val }"
+                @remove="removeWidget"
                 @update="updateSettings"
                 >
-                </component>
-            </base-widget>
-        </grid-item>
-    </grid-layout>
+                    <component
+                    v-bind:is="item.c"
+                    :widgetId="item.i"
+                    :settings="item.settings"
+                    v-bind:class="{ showTitle: item.settings.showTitle.val }"
+                    @update="updateSettings"
+                    >
+                    </component>
+                </base-widget>
+            </grid-item>
+        </grid-layout>
+      </div>
+    </div>
     </section>
 </template>
 
@@ -61,13 +66,18 @@ export default {
     layout: Array,
   },
   data () {
-    return {}
+    return {
+    }
   },
   computed: {
+  },
+  mounted() {
 
   },
-  mounted () {
 
+  watch: {
+    layout() {
+    }
   },
   methods: {
     removeWidget(id) {
@@ -76,11 +86,17 @@ export default {
     updateSettings(id, settings) {
       this.$emit('updateSettings', id, settings)
     },
+    responsiveLayoutUpdatedEvent: function (breakpoint, layout) {
+        console.log("responsiveLayoutUpdatedEvent: ", breakpoint, layout)
+    }
   }
 }
 </script>
 
 <style>
+.vue-grid-layout {
+  max-height: calc(100vh - 61px);
+}
 .settings-right-open {
     width: calc(100% - 250px);
 }

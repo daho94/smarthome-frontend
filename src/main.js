@@ -10,6 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VCalendar from 'v-calendar'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
+import Vuebar from 'vuebar';
 // Global components
 import SquidIcon from '@/components/SquidIcon'
 
@@ -29,6 +30,7 @@ Vue.config.productionTip = false
 
 Vue.component('squid-icon', SquidIcon)
 
+Vue.use(Vuebar);
 Vue.use(VueResize)
 Vue.config.productionTip = false
 Vue.use(VCalendar)

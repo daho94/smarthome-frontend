@@ -1,9 +1,15 @@
 <template>
     <section>
-        <div class="icon-box">
-            <div v-for="(icon, idx) in icons" :key="idx" @click="select(icon)" :class="{'icon-selected': selected === icon}">
-                <squid-icon  :icon="icon" :fill="stroke || '#FFFFFF'" :stroke="stroke || '#FFFFFF'"/>
-                {{ icon }}
+        <div v-bar="{
+          preventParentScroll: true
+        }">
+            <div>
+                <div class="icon-box">
+                    <div v-for="(icon, idx) in icons" :key="idx" @click="select(icon)" :class="{'icon-selected': selected === icon}">
+                        <squid-icon  :icon="icon" :style="{stroke: stroke || '#FFFFFF', fill: stroke || '#FFFFFF' }"/>
+                        {{ icon }}
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -53,7 +59,7 @@ export default {
     display: flex;
     flex-flow: row wrap;
     font-size: 12px;
-    justify-content: start
+    justify-content: flex-start;
 }
 .icon-box > div {
     width: 60px;
