@@ -46,12 +46,22 @@ export default {
               class: ["edit-btn"]
             },
             [
+              // createElement(
+              //   'i', 
+              //   {
+              //     class: ["material-icons", "md-36", "text-info"]
+              //   },
+              //   'insert_chart'
+              // )
               createElement(
-                'i', 
+                'squid-icon',
                 {
-                  class: ["material-icons", "md-36", "text-info"]
-                },
-                'insert_chart'
+                  attrs: {
+                    icon: widget.icon,
+                    stroke: "#FFFFFF"
+                  },
+                  class: ["hovered"]
+                }
               )
             ]
           ),
@@ -122,7 +132,10 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+.hovered:hover {
+    filter: drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 4px #17a2b8);
+}
 .arrow-toggle.collapsed  .arrow-right{
  display: inline-block;
 }
@@ -190,5 +203,8 @@ export default {
   text-align: center;
   word-break: break-word;
   line-height: 1.0;
+}
+.category-item button {
+  width: 80%;
 }
 </style>

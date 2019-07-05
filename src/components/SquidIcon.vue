@@ -1,5 +1,5 @@
 <template>
-    <svg class="squid-icon" viewBox="0 0 48 48" :stroke="stroke" :fill="fill">
+    <svg class="squid-icon" viewBox="0 0 48 48">
         <use v-bind="{'xlink:href':'/icons/squidink.svg#' + icon}"></use>
     </svg>
 </template>
@@ -8,7 +8,7 @@
 
 export default {
     name: "suqid-icon",
-    props: ["icon", "stroke", "fill"],
+    props: ["icon"],
     data() {
         return {}
     },
@@ -17,7 +17,6 @@ export default {
 </script>
 <style>
 .squid-icon {
-    /* width: 100%; */
     height: 100%;
 }
 </style>
