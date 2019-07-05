@@ -8,7 +8,18 @@
             </b-button-group>
 
             <b-button-group vertical class="tab-buttons">
-              <b-button class="text-white" v-for="(cat, i) in widgetCategories" v-bind:key="i" size="sm" variant="transparent" v-on:click="changeTab(cat)"><i class="material-icons">{{ categories[cat].iconUrl }}</i></b-button>
+              <b-button class="text-white" 
+                v-for="(cat, i) in widgetCategories" 
+                v-bind:key="i" 
+                size="sm" 
+                variant="transparent" 
+                v-on:click="changeTab(cat)"
+                v-b-tooltip.hover 
+                :title="categories[cat].name"
+                placement="left"
+              >
+                <i class="material-icons">{{ categories[cat].iconUrl }}</i>
+              </b-button>
             </b-button-group>
 
             <component  v-for="(setting, j) in settingsSorted[currentTab]" v-bind:key="j"
