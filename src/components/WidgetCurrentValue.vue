@@ -4,9 +4,11 @@
         <div class="current-value-display">
             <div>
               <squid-icon v-if="settings.icon && settings.icon.val.length > 0"
-                :icon="settings.icon !== undefined ? settings.icon.val : widgetSettings.icon.val"
-                :stroke="settings.titleColor.val"
-                :fill="settings.titleColor.val"
+                :icon="loadSetting('icon')"
+                :style="{
+                  stroke: loadSetting('titleColor'),
+                  fill: loadSetting('titleColor')
+                }"
                 class="current-value-icon"
               />
             </div>
@@ -17,7 +19,7 @@
             <div >
               <span class="decimals text-secondary">
                 {{ valueToDisplay[1] }}
-                <span class="unit"> {{ settings.unit != undefined ? settings.unit.val : widgetSettings.unit.val }}</span>
+                <span class="unit"> {{ loadSetting('unit') }}</span>
               </span>
             </div>  
             <div>
@@ -25,11 +27,11 @@
             </div>
         </div>
       </div>
-      <div v-if="settings.showHistory === undefined ? false : settings.showHistory.val" style="width:100%; height:calc(100% - 70px)">
-        <chart-history :timeSpan="settings.timeSpan !== undefined ? settings.timeSpan.val : widgetSettings.timeSpan.val" 
-          :objId="settings.objId != undefined ? settings.objId.val : widgetSettings.objId.val"
+      <div v-if="loadSetting('showHistory')" style="width:100%; height:calc(100% - 70px)">
+        <chart-history :timeSpan="loadSetting('timeSpan')" 
+          :objId="loadSetting('objId')"
           :objState="state" 
-          :plotColor="settings.plotColor !== undefined ? settings.plotColor.val : widgetSettings.plotColor.val"
+          :plotColor="loadSetting('plotColor')"
         />
       </div>
     </section>
@@ -101,7 +103,7 @@ export default {
 
   },
   watch: {
-    "state": function(newState, oldState) {
+    state(newState, oldState) {
       let trend = ""
 
       // no trend if no oldState is available or state is undefined

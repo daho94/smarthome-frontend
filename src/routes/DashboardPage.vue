@@ -129,7 +129,7 @@ export default {
         }  
       }
       this.layout.push(
-        {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":2,"i":uuidv4(),"c": component, "settings": cloneDeep(baseSettings)},
+        {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":4,"i":uuidv4(),"c": component, "settings": cloneDeep(baseSettings)},
       )
     },
     removeWidget(id) {
@@ -150,16 +150,6 @@ export default {
     },
     saveDashboard() {
       let self = this
-      // let layoutDB = cloneDeep(this.layout)
-
-      // // only store value in database  
-      // for (let widget of layoutDB) {
-      //   forEach(widget.settings, function(value, key) {
-      //       widget.settings[key] = { val: value.val }
-      //   })
-      // }
-      // console.log(layoutDB)
-
       saveDashboard(parseInt(this.$route.params.dashboardId), this.layout).then(success => {
         if(success) {
           self.isEditLayout = false
@@ -211,12 +201,13 @@ export default {
   border-bottom: 1px solid #c3c0c087; 
 }
 .dashboard-content {
-    height: calc(100% - 61px);
+  min-height: calc(100vh - 61px);
+
 }
 .dashboard-row {
   width: calc(100% - 61px);
 }
 .nav-row {
-  width: 61px;
+  width: 60px;
 }
 </style>

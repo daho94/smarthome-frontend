@@ -79,7 +79,7 @@ export default {
 
 .dashboard-nav-expanded {
     width: 13rem;
-    background-color: #6c757d !important;
+    background-color: #2d2d2f !important;
     z-index: 10;
     text-align: left;
     text-overflow: ellipsis;
