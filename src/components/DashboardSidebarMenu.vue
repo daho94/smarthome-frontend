@@ -1,0 +1,79 @@
+<template>
+    <sidebar-menu class="sidebar-menu" :menu="menu"  @item-click="onItemClick" :collapsed="collapsed" @collapse="onCollapse">
+        <span slot="collapse-icon"><squid-icon class="icon-sidebar-collapse" icon="side-arrow"/></span>
+        <span slot="dropdown-icon">dropdown-icon</span>
+    </sidebar-menu>
+</template>
+
+<script>
+import { SidebarMenu } from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+
+
+export default {
+    props: {
+        dashboards: Array
+    },
+    components: {
+        SidebarMenu
+    },
+    data() {
+        return {
+            collapsed: true
+        }
+    },
+    computed: {
+        menu() {
+            const dashboardUrl = "/"
+            let menu = [{
+                header: true,
+                        title: "Dashboards",
+            }]
+
+            for (const dashboard of this.dashboards) {
+                menu.push({
+                    href: dashboardUrl + dashboard.id,
+                    title: dashboard.name,
+                    dashboardId: dashboard.id,
+                    icon: {
+                        element: "squid-icon",
+                        class: "icon-sidebar",
+                        attributes: {
+                            icon: dashboard.icon
+                        }
+                    }
+                })
+            }
+
+            return  menu
+            
+        }
+    },
+    methods: {
+        onItemClick(event, item) {
+            this.$emit("changeDashboard", item.dashboardId)
+        },
+        onCollapse (collapsed) {
+            this.collapsed = collapsed
+        },
+    }
+}
+</script>
+
+<style lang="scss">
+.v-sidebar-menu {
+    background-color: $sidebar-background-color;
+    top: $navbar-height;
+    height: calc(100vh - #{$navbar-height})
+}
+.icon-sidebar {
+    padding: 2px;
+    stroke: $light-color;
+    stroke-width: 3px;
+}
+.icon-sidebar-collapse {
+    width: 100%;
+    stroke: $light-color;
+}
+
+</style>

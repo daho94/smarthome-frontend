@@ -61,6 +61,17 @@ function saveDashboard(id, settings) {
     })
 }
 
+async function createDashboard(name, icon) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ name, icon }),
+    };
+    let response = await fetch(`${ENTRYPOINT}/create`, requestOptions)
+    return response.ok
+}
+
 function handleResponse(response) {
     if (!response.ok) {
         if (response.status === 401) {
@@ -72,4 +83,4 @@ function handleResponse(response) {
     return response.json()
 }
 
-export { getDashboards, getDashboard, getDefaultDashboard, saveDashboard }
+export { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard }

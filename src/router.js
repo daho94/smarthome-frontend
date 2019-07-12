@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Home from './routes/Home'
-import Login from './routes/Login'
+import Dashboard from './routes/DashboardPage'
+import Login from './routes/LoginPage'
 
 import { validate } from './calls/auth'
 
@@ -11,9 +11,9 @@ Vue.use(Router);
 export const router = new Router({
   mode: 'hash',
   routes: [
-    { path: '/', component: Home },
+    { path: '/', component: Dashboard },
     { path: '/login', component: Login },
-    { path: '/:dashboardId', name: 'dashboard', component: Home },
+    { path: '/:dashboardId', name: 'dashboard', component: Dashboard },
     { path: '*', redirect: '/' },
   ]
 });
