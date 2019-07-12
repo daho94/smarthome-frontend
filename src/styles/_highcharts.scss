@@ -1,0 +1,24 @@
+
+// Neutral colors
+$neutral-color-100: #FF0000;
+
+// Title
+.highcharts-title, .highcharts-subtitle, .highcharts-axis-title {
+  fill: $neutral-color-100;
+  font-weight: normal;
+  text-transform: uppercase;
+
+}
+
+.highcharts-background {
+  @include themify($themes) {
+    fill: themed('widgetBackgroundColor');  
+  }
+}
+
+.highcharts-axis-labels {
+  @include themify($themes) {
+    stroke: themed('chartAxisLabelColor');
+    fill: themed('chartAxisLabelColor');
+  }
+}

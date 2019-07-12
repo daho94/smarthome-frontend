@@ -81,9 +81,13 @@ export default {
 
 </script>
 
-<style>
-.base-widget {
-  background-color: #2d2d2f;
+<style lang="scss" scoped>
+.base-widget {  
+  @include themify($themes) {
+    background-color: themed('widgetBackgroundColor');  
+    border-radius: themed('widgetBorderRadius');
+    box-shadow: themed('widgetBoxShadow')
+  }
   height: 100%;
 }
 
@@ -120,11 +124,15 @@ export default {
   width: 100%;
   opacity: 0.8;
   transition: .8s ease;
-  background-color: #343a40;
+  @include themify($themes) {
+    background-color: themed('overlayColor');  
+  }
   z-index: 2;
 }
 .edit-overlay-icon {
-  color: white;
+  @include themify($themes) {
+    color: themed('textColor');  
+  }
   max-height: 80%;
   max-width: 80%;
   position: absolute;

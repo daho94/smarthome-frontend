@@ -23,7 +23,7 @@
               </span>
             </div>  
             <div>
-              <font-awesome-icon v-if="trend" :icon="'chevron-' + trend" :class="trendClass" class="trend-icon" size="xs" />
+              <font-awesome-icon v-if="trend" :trend="trend" :icon="'chevron-' + trend"  class="trend-icon" size="xs" />
             </div>
         </div>
       </div>
@@ -165,7 +165,7 @@ export default {
       return trendClass
     }
   },
-  created() {
+  mounted() {
     let vm = this;
     vm.$nextTick(function() {
       vm.subscribe(vm.settings.objId.val)
@@ -183,7 +183,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 .widget-current-value {
   flex-flow: column;
 }
@@ -236,4 +236,16 @@ export default {
   top: 5px;
   height: 25px;
 }
+.trend-icon {
+  &[trend="up"] {
+    color: $success-color;
+  }
+  &[trend="down"] {
+    color: $danger-color;
+  }
+  &[trend="right"] {
+    color: $secondary-color;
+  }
+}
+
 </style>

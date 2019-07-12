@@ -3,7 +3,6 @@ import { getWidgets } from '../calls/widget'
 
 export default {
   components: {},
-  props: ["layout"],
   data () {
     return {
     lib: [],
@@ -46,21 +45,13 @@ export default {
               class: ["edit-btn"]
             },
             [
-              // createElement(
-              //   'i', 
-              //   {
-              //     class: ["material-icons", "md-36", "text-info"]
-              //   },
-              //   'insert_chart'
-              // )
               createElement(
                 'squid-icon',
                 {
                   attrs: {
                     icon: widget.icon,
-                    stroke: "#FFFFFF"
                   },
-                  class: ["hovered"]
+                  class: ["icon"]
                 }
               )
             ]
@@ -132,9 +123,18 @@ export default {
 
 </script>
 
-<style scoped>
-.hovered:hover {
-    filter: drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 4px #17a2b8);
+<style lang="scss" scoped>
+.edit-btn:focus {
+  outline: none !important;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6) !important;
+}
+.icon {
+  stroke: $light-color;
+}
+.icon:hover {
+    stroke: $primary-color;
 }
 .arrow-toggle.collapsed  .arrow-right{
  display: inline-block;

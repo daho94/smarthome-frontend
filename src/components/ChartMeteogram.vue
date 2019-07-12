@@ -100,10 +100,7 @@ export default {
                         format: '{value:<span style="font-size: 12px; font-weight: bold">%a</span> %b %e}',
                         align: 'left',
                         x: 3,
-                        y: -15,
-                        style: {
-                            color: textColor
-                        }
+                        y: -15
                     },
                     opposite: true,
                     tickLength: 20,
@@ -163,7 +160,7 @@ export default {
                     labels: {
                         style: {
                             fontSize: '8px',
-                            color: Highcharts.getOptions().colors[2]
+                            stroke: Highcharts.getOptions().colors[2] + "!important"
                         },
                         y: 2,
                         x: 3
@@ -226,7 +223,8 @@ export default {
                         },
                         style: {
                             fontSize: '8px',
-                            color: textColor
+                            color: "contrast",
+                            textOutline: "1px contrast"
                         }
                     }
                 }, {
@@ -245,10 +243,10 @@ export default {
                                 return this.y;
                             }
                         },
+                        className: "precipitation-datalabels",
                         style: {
                             fontSize: '8px',
-                            color: textColor,
-                            textOutline: "1px black"
+                            textOutline: "1px contrast"
                         }
                     },
                     tooltip: {
@@ -511,19 +509,15 @@ export default {
                 }
             })
         }
-    },
-    // async mounted() {
-    //     const states = await this.getData("daswetter.0.NextHours.Location_1.Day_1.Hour_*.(temp_value|symbol_desc|pressure_value|rain_value|iconURL|wind_value|wind_dir)")
-    //     try {
-    //         this.parseData(states)
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-
-    // }
+    }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+.precipitation-datalabels {
+    font-size: 8px;
+    @include themify($themes) {
+        stroke: themed('chartAxisLabelColor');
+    }
+}
 </style>

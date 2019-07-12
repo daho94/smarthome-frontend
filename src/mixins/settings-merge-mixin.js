@@ -13,7 +13,7 @@ export default {
     },
     methods: {
         /**
-         * This function loads the database setting. However if there is nothing 
+         * This function loads the widget-setting from database. However if there is nothing 
          * stored yet (on initial creation of the widget) it loads the default widget setting.
          * 
          * @param {String} key 

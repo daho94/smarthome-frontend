@@ -1,11 +1,9 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="border-right border-bottom nav-row">
-      </div>
-      <div class="border-bottom dashboard-row">
+      <div class="dashboard-row bg-nav">
         <section class="dashboard-header">
-            <b-navbar toggleable="lg" type="dark" class="bg-app z-index-10">
+            <b-navbar toggleable="lg"  class="bg-nav z-index-10">
               <b-navbar-brand>{{ dashboardName }}</b-navbar-brand>
 
               <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -14,15 +12,23 @@
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                   <calendar-component/>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
                     <i class="material-icons">create</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  text-white edit-btn" v-bind:disabled="!isEditLayout" v-on:click="saveDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="saveDashboard">
                     <i class="material-icons">save</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn" v-bind:disabled="!isEditLayout" v-on:click="restoreDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="restoreDashboard">
                     <i class="material-icons">clear</i>
-                  </b-button>               
+                  </b-button>
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
+                    <i class="material-icons">brightness_3</i>
+                  </b-button>    
+                  <div class="seperator" ></div>
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn add-btn"  v-b-modal.modal-create-dashboard>
+                    <i class="material-icons">add</i>
+                  </b-button> 
+
                 </b-navbar-nav>
               </b-collapse>
             </b-navbar>
@@ -30,66 +36,37 @@
       </div>
     </div>
     <div class="row dashboard-content">
-      <div class="border-right nav-row">
-        <dashboard-nav :dashboards="dashboards" @changeDashboard="changeDashboard"/>
-      </div>
       <div class="dashboard-row">
         <dashboard-content 
         :layout="layout" 
+        :activeTheme="activeTheme"
         :isEditLayout="isEditLayout"
-        @removeWidget="removeWidget"
-        @updateSettings="updateSettings"
+        @layoutChanged="layoutChangedEvent"
         />
       </div>
     </div>
-      <portal v-if="isEditLayout" to="settings-bar" >
-            <widget-library 
-              :layout="layout"
-              @addWidget="addWidget"
-            />
-      </portal>
+    <dashboard-sidebar-menu :dashboards="dashboards" />
+    <form-create-dashboard @on-submit="createDashboard" />
   </div>
 </template>
 
 <script>
 import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
-import maxBy from 'lodash/maxBy'
-// import forEach from 'lodash/forEach'
-import WidgetLibrary from '../components/WidgetLibrary'
-import DashboardNav from '../components/DashboardNav'
-import uuidv4 from 'uuid/v4'
-import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard } from '../calls/dashboard'
+import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard } from '../calls/dashboard'
 import CalendarComponent from '../components/CalendarComponent'
-
-let baseSettings = {
-  title: {
-    val: "Default title",
-    component: "form-input",
-    type: "text",
-    category: "basic"
-  },
-  showTitle: {
-    val: true,
-    component: "form-checkbox",
-    type: "checkbox",
-    category: "basic"
-  },
-  titleColor: {
-    val: "#FFFFFF",
-    component: "form-input",
-    type: "color",
-    category: "basic"
-  }
-}
+import DashboardSidebarMenu from '../components/DashboardSidebarMenu'
+import FormCreateDashboard from '../components/FormCreateDashboard'
 
 export default {
-  // name: 'dashboard',
   components: {
     DashboardContent,
-    WidgetLibrary,
-    DashboardNav,
     CalendarComponent,
+    DashboardSidebarMenu,
+    FormCreateDashboard,
+  },
+  props: {
+    activeTheme: String
   },
   data() {
     return {
@@ -119,22 +96,6 @@ export default {
   computed: {
   },
   methods: {
-    addWidget: function(component) {
-      let wLowest = maxBy(this.layout, w => w.y + w.h)
-      // if dashboard is empty...
-      if (!wLowest) {
-        wLowest = {
-          y: 0,
-          h: 0,
-        }  
-      }
-      this.layout.push(
-        {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":4,"i":uuidv4(),"c": component, "settings": cloneDeep(baseSettings)},
-      )
-    },
-    removeWidget(id) {
-      this.layout = this.layout.filter(item => item.i != id)
-    },
     changeDashboard(id) {
       let vm = this;
       getDashboard(id).then(dashboard => {
@@ -148,27 +109,37 @@ export default {
         this.dashboards = dashboards
       })
     },
+    layoutChangedEvent(newLayout) {
+      this.newLayout = newLayout
+    },
     saveDashboard() {
       let self = this
-      saveDashboard(parseInt(this.$route.params.dashboardId), this.layout).then(success => {
+      saveDashboard(parseInt(this.$route.params.dashboardId), this.newLayout).then(success => {
         if(success) {
           self.isEditLayout = false
         }
       })
     },
+    async createDashboard(dashboard) {
+      let success = await createDashboard(dashboard.name, dashboard.icon)
+      if(success) {
+        // refresh dashboards
+        this.loadDashboards()
+      }
+    },
     restoreDashboard() {
       this.layout = cloneDeep(this.layoutBackup)
       this.isEditLayout = false
     },
-    updateSettings(id, settings) {
-      let widget = this.layout.filter(item => item.i === id)[0]
-      widget.settings = settings
-    }
   }
 }
 </script>
 
-<style>
+<style lang="scss" >
+.seperator {
+  border-left: 1px solid $secondary-color;
+  height: auto;
+}
 .z-index-10 {
   z-index: 10;
 }
@@ -177,10 +148,10 @@ export default {
   -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1);
   box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6);
 }
-.edit-btn {
-  color: white;
-}
 
+.nav-btn {
+  color: $light-color !important;
+}
 .edit-btn:focus {
   outline: none !important;
   -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
@@ -192,22 +163,39 @@ export default {
   top: calc(30px - 10px);
 }
 .dashboard-header {
-  height: 60px;
+  height: $navbar-height;
 }
-.boder-right {
-  border-right: 1px solid #c3c0c087; 
+.border-layout-right {
+  @include themify($themes) {
+    border-right: 1px solid themed('layoutBorderColor');  
+  }
 }
-.border-bottom {
-  border-bottom: 1px solid #c3c0c087; 
+.border-layout-bottom {
+  @include themify($themes) {
+    border-bottom: 1px solid themed('layoutBorderColor');  
+  }
 }
 .dashboard-content {
-  min-height: calc(100vh - 61px);
-
+  min-height: calc(100vh - #{$navbar-height});
 }
 .dashboard-row {
-  width: calc(100% - 61px);
+  width: 100vw;
+  padding-left: $sidebar-width;
 }
 .nav-row {
   width: 60px;
+}
+.navbar-brand {
+  color: $light-color !important;
+}
+.navbar {
+  padding: 5px 1rem !important;
+}
+.bg-nav {
+  background-color: $sidebar-background-color !important;  
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 </style>

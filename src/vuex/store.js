@@ -23,6 +23,7 @@ export default new Vuex.Store({
             state.connected = false
         },
         SOCKET_stateChange(state, data) {
+            console.info("State changed")
             state.subscriptions[data[0]].state = data[1]
         },
         increment_subs(state, id) {

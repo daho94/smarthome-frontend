@@ -6,7 +6,7 @@
     <div>
         <b-form inline>
             <b-form-input size="sm" v-model="model[1].val" :type="type" style="width: calc(100% - 50px) !important;"></b-form-input>
-            <b-button variant="transparent" class="text-white edit-btn" size="sm" v-b-modal.modal-icon-selector><i class="material-icons">collections</i></b-button>
+            <b-button variant="transparent" class="picture-btn edit-btn" size="sm" v-b-modal.modal-icon-selector><i class="material-icons">collections</i></b-button>
             <b-modal
                 id="modal-icon-selector"
                 title="Choose Icon!"
@@ -15,8 +15,6 @@
                 @hidden="resetModal"
                 @ok="handleOk"
                 content-class="modal-bg"
-                body-text-variant="light"
-                header-text-variant="light"
             >
                 <icon-selector  v-on:select="changeIcon" />
             </b-modal>
@@ -60,7 +58,16 @@ export default {
     
 }
 </script>
-<style>
+<style lang="scss">
+.picture-btn {
+    color: $light-color !important;  
+}
+.picture-btn:focus {
+  outline: none !important;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
+  box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6) !important;
+}
 .form-input {
     display: flex;
     flex-flow: column;
@@ -74,6 +81,6 @@ export default {
 }
 .modal-bg {
     background-color: #393b3d !important;
-    color: white
+    color: $font-color;
 }
 </style>

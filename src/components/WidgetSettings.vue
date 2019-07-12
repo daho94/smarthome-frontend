@@ -8,17 +8,18 @@
             </b-button-group>
 
             <b-button-group vertical class="tab-buttons">
-              <b-button class="text-white" 
+              <b-button
                 v-for="(cat, i) in widgetCategories" 
                 v-bind:key="i" 
                 size="sm" 
                 variant="transparent" 
                 v-on:click="changeTab(cat)"
-                v-b-tooltip.hover 
-                :title="categories[cat].name"
-                placement="left"
+                :id="cat"
               >
                 <i class="material-icons">{{ categories[cat].iconUrl }}</i>
+                <b-tooltip :target="cat" placement="left">
+                    {{ categories[cat].name }}
+                </b-tooltip>
               </b-button>
             </b-button-group>
 
@@ -115,7 +116,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss" scope>
 .widget-settings {
     height: 100%;
     margin-left: 5px;
@@ -125,10 +126,12 @@ export default {
   position: absolute !important;
   left: -42px;
   top: 85px;
-  background: #2d2d2f;
+  background:$sidebar-background-color;
+  button {
+    color: $light-color;
+  }    
 }
 .tab-buttons button:focus {
-  /* color: #17a2b8; */
   outline: none;
   box-shadow: none;
 }

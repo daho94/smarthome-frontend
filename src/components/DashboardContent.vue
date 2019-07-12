@@ -1,21 +1,29 @@
 <template>
-    <section class="dashboard-content" v-bind:class="{ 'settings-right-open': isEditLayout}">
-    <portal-target v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
+    <section v-bind:class="{ 'settings-right-open': isEditLayout}">
+    <portal-target  v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
+    <portal v-if="isEditLayout" to="settings-bar" >
+      <widget-library 
+        @addWidget="addWidget"
+      />
+    </portal>
     <div v-bar="{
-          preventParentScroll: true
+          preventParentScroll: true,
+          overrideFloatingScrollbar: true
     }">
       <div>
         <grid-layout
-        :layout.sync="layout"
+        :key="lel"
+        :layout.sync="layoutCopy"
         :col-num="12"
         :row-height="30"
         :is-draggable="isEditLayout"
         :is-resizable="isEditLayout"
         :is-mirrored="false"
         :vertical-compact="false"
-        :margin="[10, 10]"       
+        :margin="[10, 10]"    
+        responsive   
         >
-            <grid-item v-for="item in layout" v-bind:key="item.i"
+            <grid-item v-for="item in layoutCopy" v-bind:key="item.i"
                 :x="item.x"
                 :y="item.y"
                 :w="item.w"
@@ -51,6 +59,11 @@ import WidgetCurrentValue from './WidgetCurrentValue'
 import BaseWidget from './BaseWidget'
 import WidgetMeteogram from './WidgetMeteogram'
 import IconSelector from './IconSelector'
+import WidgetLibrary from './WidgetLibrary'
+import WidgetSwitch from './WidgetSwitch'
+import maxBy from 'lodash/maxBy'
+import uuidv4 from 'uuid/v4'
+import cloneDeep from 'lodash/cloneDeep'
 
 export default {
   components: {
@@ -59,43 +72,80 @@ export default {
     WidgetCurrentValue,
     BaseWidget,
     WidgetMeteogram,
-    IconSelector
+    IconSelector,
+    WidgetLibrary,
+    WidgetSwitch,
   },
   props: {
     isEditLayout: Boolean,
     layout: Array,
+    activeTheme: String,
   },
   data () {
     return {
+      layoutCopy: [],
+      lel: 0,
+      baseSettings: {
+        title: {
+          val: "Default title",
+          component: "form-input",
+          type: "text",
+          category: "basic"
+        },
+        showTitle: {
+          val: true,
+          component: "form-checkbox",
+          type: "checkbox",
+          category: "basic"
+        },
+        titleColor: {
+          val: "", //this.activeTheme === "dark" ? "#f8f9fa" : "#212529",
+          component: "form-input",
+          type: "color",
+          category: "basic"
+        }
+      }
     }
   },
   computed: {
   },
-  mounted() {
-
-  },
-
   watch: {
     layout() {
+      this.layoutCopy = this.layout
+      this.lel += 1
+    },
+    layoutCopy() {
+      this.$emit("layoutChanged", this.layoutCopy)
     }
   },
   methods: {
+    addWidget: function(component) {
+      let wLowest = maxBy(this.layoutCopy, w => w.y + w.h)
+      // if dashboard is empty...
+      if (!wLowest) {
+        wLowest = {
+          y: 0,
+          h: 0,
+        }  
+      }
+      this.layoutCopy.push(
+        {"x":0,"y":wLowest.y+ wLowest.h,"w":2,"h":4,"i":uuidv4(),"c": component, "settings": cloneDeep(this.baseSettings)},
+      )
+    },
     removeWidget(id) {
-      this.$emit('removeWidget', id)
+      this.layoutCopy = this.layoutCopy.filter(item => item.i != id)
     },
     updateSettings(id, settings) {
-      this.$emit('updateSettings', id, settings)
+      let widget = this.layoutCopy.filter(item => item.i === id)[0]
+      widget.settings = settings
     },
-    responsiveLayoutUpdatedEvent: function (breakpoint, layout) {
-        console.log("responsiveLayoutUpdatedEvent: ", breakpoint, layout)
-    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 .vue-grid-layout {
-  max-height: calc(100vh - 61px);
+  max-height: calc(100vh - #{$navbar-height});
 }
 .settings-right-open {
     width: calc(100% - 250px);
@@ -107,9 +157,15 @@ export default {
     min-width: 250px;
     max-width: 250px;
     z-index: 9;
-    background-color: #2d2d2f;
+    color: $light-color;
+    background-color: $sidebar-background-color;  
 }
 .vue-grid-item>.vue-resizable-handle {
   z-index: 3;
+}
+/* Trigger parent scroll on mobile devices */
+.vue-grid-item.no-touch {
+    -ms-touch-action: pan-y !important;
+    touch-action: pan-y !important;
 }
 </style>

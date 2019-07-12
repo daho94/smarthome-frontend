@@ -1,4 +1,5 @@
 import { mapActions } from 'vuex'
+import { getState } from '../calls/iobroker'
 
 export default {
     methods: {
@@ -7,32 +8,6 @@ export default {
             'decrement_subs',
             'update_subscription_value',
           ]),
-        /**
-         * Get the current state of objId
-         * @param {String} objId 
-         */
-        getState: function(objId) {
-            return new Promise((resolve, reject) => {
-                this.$socket.emit('getState', objId, function (err, data) {
-                    if (err || !data) {
-                        reject(err)
-                    } else {
-                        resolve(data)
-                    }
-                })
-            })
-        },
-        /**
-         * Get the current states of all objects matching the pattern
-         * See https://github.com/ioBroker/ioBroker.socketio/blob/master/lib/socket.js#L263 for pattern definitions
-         */
-        getStates: function(pattern) {
-            return new Promise(resolve => {
-                this.$socket.emit('getStates', pattern, function(err, states) {
-                    resolve(states)
-                })
-            })
-        },
         /**
          * Increments subcount of objId in $store and subscribes to it
          * @param {String} objId 
@@ -45,7 +20,7 @@ export default {
                 this.increment_subs(objId)
 
                 // Get initial state of object...
-                this.getState(objId).then(data => {
+                getState(this.$socket, objId).then(data => {
                     self.update_subscription_value({ id: objId, newState: data })
                     resolve(data.val)
                 }, (reason) => {
@@ -67,13 +42,13 @@ export default {
          * subcount equals 0
          * @param {String} objId 
          */
-        unsubscribe: function(objId) {
+        async unsubscribe(objId) {
             if (!objId) return;
 
-            this.decrement_subs(objId).then(noReferencesLeft => {
-                // if object isn't referenced by any widget unsubscribe from object...
-                if(noReferencesLeft) this.$socket.emit('unsubscribe', objId + "$")
-            })
+            const noReferencesLeft = await this.decrement_subs(objId)
+
+            if(noReferencesLeft) this.$socket.emit('unsubscribe', objId + "$")
+
         },
         /**
          * Tries to update value to new state if object exists 

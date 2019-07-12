@@ -82,4 +82,49 @@ function handleResponse(response) {
     return response.json()
 }
 
-export { getData, getLast24Hours, getLastHour, hasHistory }
+/**
+ * Get the current state of objId
+ * @param {WebSocket} socket 
+ * @param {String} objId 
+ */
+function getState(socket, objId) {
+    return new Promise((resolve, reject) => {
+        socket.emit('getState', objId, function (err, data) {
+            if (err || !data) {
+                reject(err)
+            } else {
+                resolve(data)
+            }
+        })
+    })
+}
+
+/**
+ * Get the current states of all objects matching the pattern
+ * See https://github.com/ioBroker/ioBroker.socketio/blob/master/lib/socket.js#L263 for pattern definitions
+ * @param {WebSocket} socket 
+ * @param {String} pattern
+ */
+function getStates(socket, pattern) {
+    return new Promise(resolve => {
+        socket.emit('getStates', pattern, function(_err, states) {
+            resolve(states)
+        })
+    })
+}
+
+/**
+ * 
+ * @param {WebSocket} socket 
+ * @param {String} id 
+ * @param {any} state 
+ */
+function setState(socket, id, state) {
+    return new Promise(resolve => {
+        socket.emit('setState', id, state, function(_err, res) {
+            resolve(res)
+        })
+    })
+}
+
+export { getData, getLast24Hours, getLastHour, hasHistory, getState, getStates, setState }

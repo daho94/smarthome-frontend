@@ -15,6 +15,7 @@
     </section>
 </template>
 <script>
+import { getIcons } from '../utils/iconParser'
 
 export default {
     name: "icon-selector",
@@ -26,29 +27,13 @@ export default {
         }
     },
     methods: {
-        getFile() {
-            const requestOptions = {
-                method: 'GET',
-                headers: {'Content-Type': 'image/svg+xml'},
-                credentials: 'include',
-            }
-            return fetch("/icons/squidink.svg", requestOptions)
-                .then(r => r.text())
-                .then(text => {
-                    return text
-                })
-        },
         select(icon) {
             this.selected = icon
             this.$emit('select', icon)
         }
     },
     async mounted() {
-        const parser = new DOMParser()
-        const svg = await this.getFile()
-        const doc = parser.parseFromString(svg, "image/svg+xml")
-
-        this.icons = Array.from(doc.children[0].children).map(node => node.getAttribute("id"))
+        this.icons = await getIcons("/icons/squidink.svg")
     }
 }
 

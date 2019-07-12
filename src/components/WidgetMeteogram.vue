@@ -3,11 +3,10 @@
 </template>
 <script>
 import ChartMeteogram from './ChartMeteogram'
-import SubscriptionMixin from '../mixins/subscription-mixin'
+import { getStates } from '../calls/iobroker'
 
 export default {
     name: "widget-meteogram",
-    mixins: [SubscriptionMixin],
     components: {
         ChartMeteogram
     },
@@ -21,7 +20,7 @@ export default {
          * Get data from websocket
          */
         async getData(pattern) {
-            const states = await this.getStates(pattern)
+            const states = await getStates(this.$socket, pattern)
             return states
         },
     },

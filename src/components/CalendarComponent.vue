@@ -7,7 +7,7 @@
       is-dark
       :popover="{ placement: 'bottom-left', visibility: 'click', keepVisibleOnInput: true }"
     >
-    <b-button size="sm" variant="transparent" class="my-2 my-sm-0 text-white edit-btn calendar-btn">
+    <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn calendar-btn">
       <i class="material-icons calendar-icon">date_range</i>
     </b-button>
   </v-date-picker>
@@ -39,9 +39,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .calendar-btn {
   height: 40px;
+  color: $light-color !important;
 }
 .calendar-icon {
   line-height: 1 !important;

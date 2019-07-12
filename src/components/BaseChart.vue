@@ -21,7 +21,6 @@ export default {
             updateArgs: [true, true, {duration: 1000}],
             defaultOptions: {
                 chart: {
-                    backgroundColor: "#2d2d2f",
                 },
                 credits: {
                     enabled: false
@@ -58,6 +57,10 @@ export default {
         async resize() {
             await this.$nextTick()
             let chart = this.$children[0].chart
+            if (chart.series === undefined || chart.series.length === 0) {
+                return
+            }
+
             chart.reflow()
             this.$emit("onResize", chart) // Sometimes you need to manually resize stuff
 
@@ -87,9 +90,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .chart {
     height: 100%;
     width: 100%;
+    @include themify($themes) {
+        border-bottom-left-radius: themed('widgetBorderRadius');  
+        border-bottom-right-radius: themed('widgetBorderRadius')
+    }
+
 }
 </style>

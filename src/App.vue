@@ -1,5 +1,7 @@
 <template>
-  <router-view class="bg-app" id="app"></router-view>
+<div :class="'theme-' + activeTheme">
+  <router-view class="app-container" @themeChanged="themeChangedEvent" :activeTheme="activeTheme"></router-view>
+</div>
 </template>
 
 <script>
@@ -9,27 +11,33 @@ export default {
   },
   data() {
     return {
-  
+      activeTheme: 'dark'
     }
   },
   computed: {
   },
   methods: {
-
+    themeChangedEvent() {
+      this.activeTheme = this.activeTheme === "dark" ? "light" : "dark"
+    }
   }
 }
 </script>
 
-<style>
-#app {
+<style lang="scss">
+.app-container {
+
+  @include themify($themes) {
+    color: themed('textColor');  
+    background-color: themed('backgroundColor');  
+  }
+
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: whitesmoke;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-}
-.bg-app {
-  background: #202225;
+
+
 }
 button:hover {
   color: #6c757d!important;
@@ -39,7 +47,6 @@ body {
   margin: 0px;
 }
 html, body, #app, section.section {
-  /* height: 100vh; */
   overflow: hidden;
 }
 
@@ -131,9 +138,5 @@ html, body, #app, section.section {
 .vb.vb-dragging-phantom > .vb-dragger > .vb-dragger-styler {
     background-color: rgba(255, 255, 255,.5);
 }
-.vb-content {
-    width: calc(100% + 16px) !important;
-}
-
 
 </style>
