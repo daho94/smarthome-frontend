@@ -139,8 +139,8 @@ export default {
       if (isNaN(this.state.val)) {
         return [this.state.val, ""]
       }
-
-      const splitted = this.state.val.toString().split(".")
+      const rounded = this.state.val.toFixed(2)
+      const splitted = rounded.toString().split(".")
       return [splitted[0], "," + (splitted[1] | 0)]
     },
     state: function() {
