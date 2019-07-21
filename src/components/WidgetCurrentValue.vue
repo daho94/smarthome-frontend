@@ -115,7 +115,7 @@ export default {
       const newVal = newState.val
 
       // no trend for NaN values
-      if (isNaN(parseFloat(newState.val))) {
+      if (typeof newVal !== "number") {
         return
       }
 
@@ -136,7 +136,7 @@ export default {
         return ["",""]
       }
 
-      if (isNaN(this.state.val)) {
+      if (typeof this.state.val !== "number") {
         return [this.state.val, ""]
       }
       const rounded = this.state.val.toFixed(2)
