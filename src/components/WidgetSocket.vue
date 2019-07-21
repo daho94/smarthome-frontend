@@ -37,18 +37,6 @@ export default {
                     component: "form-icon",
                     type: "text",
                     category: "settings"
-                },          
-                device: {
-                    val: "A",
-                    component: "form-select",
-                    type: "select",
-                    category: "settings",
-                    options: [
-                        { value: "A", text: "Socket A" },
-                        { value: "B", text: "Socket B" },
-                        { value: "C", text: "Socket C" },
-                        { value: "D", text: "Socket D" }
-                    ]
                 }   
             }
         }
