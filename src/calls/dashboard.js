@@ -61,6 +61,17 @@ function saveDashboard(id, settings) {
     })
 }
 
+async function deleteDashboard(id) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ id }),
+    };
+    let response = await fetch(`${ENTRYPOINT}/single`, requestOptions)
+    return response.ok
+}
+
 async function createDashboard(name, icon) {
     const requestOptions = {
         method: 'POST',
@@ -83,4 +94,4 @@ function handleResponse(response) {
     return response.json()
 }
 
-export { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard }
+export { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard, deleteDashboard }

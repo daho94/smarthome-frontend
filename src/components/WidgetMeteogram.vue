@@ -25,7 +25,7 @@ export default {
         },
     },
     async mounted() {
-        const states = await this.getData("daswetter.0.NextHours.Location_1.Day_1.Hour_*.(temp_value|symbol_desc|pressure_value|rain_value|iconURL|wind_value|wind_dir)")
+        const states = await this.getData("daswetter.0.NextHours.Location_1.Day_1.Hour_*.(|temp_value|symbol_desc|pressure_value|rain_value|iconURL|wind_value|wind_dir)$")
         try {
             this.data = states
         } catch (_e) {

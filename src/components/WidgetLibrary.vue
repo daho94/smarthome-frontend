@@ -175,7 +175,7 @@ export default {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-flow: row wrap;
   align-content: flex-start;
 }

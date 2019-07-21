@@ -3,8 +3,8 @@
         :icon="loadSetting('icon')" 
         :state="state" 
         @onToggle="toggleEvent"
-        :mapTrue="loadSetting('mapTrue')"
-        :mapFalse="loadSetting('mapFalse')"
+        mapTrue="ON"
+        mapFalse="OFF"
     />
 </template>
 
@@ -13,10 +13,9 @@ import BaseSwitch from "./BaseSwitch"
 import SubscriptionMixin from '../mixins/subscription-mixin'
 import SettingsMergeMixin from '../mixins/settings-merge-mixin'
 import { setState } from '../calls/iobroker'
-import { sendSocketState } from '../calls/socket'
 
 export default {
-    name: "widget-switch",
+    name: "widget-socket",
     props: {
         settings: Object
     },
@@ -34,23 +33,23 @@ export default {
                     category: "settings"
                 },
                 icon: {
-                    val: "", //ToDo: Set default icon
+                    val: "stop",
                     component: "form-icon",
                     type: "text",
                     category: "settings"
-                },  
-                mapTrue: {
-                    val: "true",
-                    component: "form-input",
-                    type: "text",
-                    category: "settings"
-                },
-                mapFalse: {
-                    val: "false",
-                    component: "form-input",
-                    type: "text",
-                    category: "settings"
-                }              
+                },          
+                device: {
+                    val: "A",
+                    component: "form-select",
+                    type: "select",
+                    category: "settings",
+                    options: [
+                        { value: "A", text: "Socket A" },
+                        { value: "B", text: "Socket B" },
+                        { value: "C", text: "Socket C" },
+                        { value: "D", text: "Socket D" }
+                    ]
+                }   
             }
         }
     },
@@ -61,11 +60,7 @@ export default {
     },
     methods: {
         async toggleEvent(newState) {
-            let success = await sendSocketState("A", newState === true ? "1" : "0")
-            if(success) {
-                setState(this.$socket, this.settings.objId.val, newState)   
-            }
-
+            setState(this.$socket, this.settings.objId.val, newState)   
         }
     },
     mounted() {

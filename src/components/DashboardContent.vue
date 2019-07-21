@@ -61,6 +61,7 @@ import WidgetMeteogram from './WidgetMeteogram'
 import IconSelector from './IconSelector'
 import WidgetLibrary from './WidgetLibrary'
 import WidgetSwitch from './WidgetSwitch'
+import WidgetSocket from './WidgetSocket'
 import maxBy from 'lodash/maxBy'
 import uuidv4 from 'uuid/v4'
 import cloneDeep from 'lodash/cloneDeep'
@@ -75,6 +76,7 @@ export default {
     IconSelector,
     WidgetLibrary,
     WidgetSwitch,
+    WidgetSocket,
   },
   props: {
     isEditLayout: Boolean,
