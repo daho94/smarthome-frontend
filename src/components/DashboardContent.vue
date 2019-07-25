@@ -62,6 +62,7 @@ import IconSelector from './IconSelector'
 import WidgetLibrary from './WidgetLibrary'
 import WidgetSwitch from './WidgetSwitch'
 import WidgetSocket from './WidgetSocket'
+import WidgetColorPicker from './WidgetColorPicker'
 import maxBy from 'lodash/maxBy'
 import uuidv4 from 'uuid/v4'
 import cloneDeep from 'lodash/cloneDeep'
@@ -77,6 +78,7 @@ export default {
     WidgetLibrary,
     WidgetSwitch,
     WidgetSocket,
+    WidgetColorPicker,
   },
   props: {
     isEditLayout: Boolean,
