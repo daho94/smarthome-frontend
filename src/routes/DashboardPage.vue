@@ -15,10 +15,10 @@
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
                     <i class="material-icons">create</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="saveDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  nav-btn edit-btn" v-show="isEditLayout" v-on:click="saveDashboard">
                     <i class="material-icons">save</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="restoreDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-show="isEditLayout" v-on:click="restoreDashboard">
                     <i class="material-icons">clear</i>
                   </b-button>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">

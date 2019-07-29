@@ -1,55 +1,55 @@
 <template>
     <section v-bind:class="{ 'settings-right-open': isEditLayout}">
-    <portal-target  v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
-    <portal v-if="isEditLayout" to="settings-bar" >
-      <widget-library 
-        @addWidget="addWidget"
-      />
-    </portal>
-    <div v-bar="{
-          preventParentScroll: true,
-          overrideFloatingScrollbar: true
-    }">
-      <div>
-        <grid-layout
-        :key="lel"
-        :layout.sync="layoutCopy"
-        :col-num="12"
-        :row-height="30"
-        :is-draggable="isEditLayout"
-        :is-resizable="isEditLayout"
-        :is-mirrored="false"
-        :vertical-compact="false"
-        :margin="[10, 10]"    
-        responsive   
-        >
-            <grid-item v-for="item in layoutCopy" v-bind:key="item.i"
-                :x="item.x"
-                :y="item.y"
-                :w="item.w"
-                :h="item.h"
-                :i="item.i"
-            >
-                <base-widget
-                :isEditLayout="isEditLayout"
-                :widgetId="item.i"
-                :settings="item.settings"
-                @remove="removeWidget"
-                @update="updateSettings"
-                >
-                    <component
-                    v-bind:is="item.c"
-                    :widgetId="item.i"
-                    :settings="item.settings"
-                    v-bind:class="{ showTitle: item.settings.showTitle.val }"
-                    @update="updateSettings"
-                    >
-                    </component>
-                </base-widget>
-            </grid-item>
-        </grid-layout>
+      <portal-target  v-show="isEditLayout" class="settings-bar" name="settings-bar"></portal-target>
+      <portal v-if="isEditLayout" to="settings-bar" >
+        <widget-library 
+          @addWidget="addWidget"
+        />
+      </portal>
+      <div v-bar="{
+            preventParentScroll: true,
+            overrideFloatingScrollbar: true
+      }">
+        <div>
+          <grid-layout
+          :key="lel"
+          :layout.sync="layoutCopy"
+          :col-num="12"
+          :row-height="30"
+          :is-draggable="isEditLayout"
+          :is-resizable="isEditLayout"
+          :is-mirrored="false"
+          :vertical-compact="false"
+          :margin="[10, 10]"    
+          responsive   
+          >
+              <grid-item v-for="item in layoutCopy" v-bind:key="item.i"
+                  :x="item.x"
+                  :y="item.y"
+                  :w="item.w"
+                  :h="item.h"
+                  :i="item.i"
+              >
+                  <base-widget
+                  :isEditLayout="isEditLayout"
+                  :widgetId="item.i"
+                  :settings="item.settings"
+                  @remove="removeWidget"
+                  @update="updateSettings"
+                  >
+                      <component
+                      v-bind:is="item.c"
+                      :widgetId="item.i"
+                      :settings="item.settings"
+                      v-bind:class="{ showTitle: item.settings.showTitle.val }"
+                      @update="updateSettings"
+                      >
+                      </component>
+                  </base-widget>
+              </grid-item>
+          </grid-layout>
+        </div>
       </div>
-    </div>
     </section>
 </template>
 
@@ -63,6 +63,8 @@ import WidgetLibrary from './WidgetLibrary'
 import WidgetSwitch from './WidgetSwitch'
 import WidgetSocket from './WidgetSocket'
 import WidgetColorPicker from './WidgetColorPicker'
+import WidgetColorPalette from './WidgetColorPalette'
+import WidgetColorEffect from './WidgetColorEffect'
 import maxBy from 'lodash/maxBy'
 import uuidv4 from 'uuid/v4'
 import cloneDeep from 'lodash/cloneDeep'
@@ -79,6 +81,8 @@ export default {
     WidgetSwitch,
     WidgetSocket,
     WidgetColorPicker,
+    WidgetColorPalette,
+    WidgetColorEffect,
   },
   props: {
     isEditLayout: Boolean,

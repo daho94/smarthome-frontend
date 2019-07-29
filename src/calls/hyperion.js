@@ -46,8 +46,33 @@ async function setEffect(name) {
             }
         }),
     }
-    let response = await fetch(`${ENTRYPOINT}/hyperion/command`, requestOptions)
+    let response = await fetch(`${ENTRYPOINT}/command`, requestOptions)
     return response.ok
 }
 
-export { setColor, setEffect }
+/**
+ * Get available hyperion effects
+ */
+async function getEffects() {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+            address: HYPERION_ADDRESS,
+        }),
+    }
+    let response = await fetch(`${ENTRYPOINT}/effects`, requestOptions)
+
+    if(response.ok) {
+        let json = await response.json()
+        return json
+    } else {
+        return {
+            effects: []
+        }
+    }
+
+}
+
+export { setColor, setEffect, getEffects }

@@ -29,7 +29,7 @@ export default {
         this.colorPicker.on("color:change", throttle(this.colorChangeCallback, 500))
 
         // inital resize when widget is inserted
-        this.colorPicker.on("mount", this.resize);
+        this.colorPicker.on("mount", debounce(this.resize), 100);
     },
     created() {
         let vm = this

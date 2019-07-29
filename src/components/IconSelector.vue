@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="icon-selector">
         <div v-bar="{
           preventParentScroll: true
         }">
@@ -40,6 +40,9 @@ export default {
 
 </script>
 <style>
+.icon-selector {
+    align-items: unset !important;
+}
 .icon-box {
     display: flex;
     flex-flow: row wrap;
