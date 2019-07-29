@@ -33,7 +33,7 @@ export default {
                 })       
 
                 //...and then subscribe to it
-                this.$socket.emit('subscribe', objId + "$"); 
+                self.$socket.emit('subscribe', objId);
             })
 
         },
@@ -47,7 +47,7 @@ export default {
 
             const noReferencesLeft = await this.decrement_subs(objId)
 
-            if(noReferencesLeft) this.$socket.emit('unsubscribe', objId + "$")
+            if(noReferencesLeft) this.$socket.emit('unsubscribe', objId)
 
         },
         /**

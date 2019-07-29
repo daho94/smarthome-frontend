@@ -112,7 +112,7 @@ export default {
 }
 
 .showTitle {
-  height: calc(100% - 34px) !important;
+  max-height: calc(100% - 34px) !important;
 }
 .edit-overlay {
   position: absolute;

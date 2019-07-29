@@ -4,7 +4,7 @@
       <div class="dashboard-row bg-nav">
         <section class="dashboard-header">
             <b-navbar toggleable="lg"  class="bg-nav z-index-10">
-              <b-navbar-brand>{{ dashboardName }}</b-navbar-brand>
+              <b-navbar-brand>{{ currentDashboardInfo.name }}</b-navbar-brand>
 
               <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -15,19 +15,30 @@
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
                     <i class="material-icons">create</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="saveDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0  nav-btn edit-btn" v-show="isEditLayout" v-on:click="saveDashboard">
                     <i class="material-icons">save</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-bind:disabled="!isEditLayout" v-on:click="restoreDashboard">
+                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-show="isEditLayout" v-on:click="restoreDashboard">
                     <i class="material-icons">clear</i>
                   </b-button>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
                     <i class="material-icons">brightness_3</i>
                   </b-button>    
-                  <div class="seperator" ></div>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn add-btn"  v-b-modal.modal-create-dashboard>
-                    <i class="material-icons">add</i>
-                  </b-button> 
+                  <div class="seperator" ></div>    
+                  <b-nav-item-dropdown text="Dashboard" right>
+                    <b-dropdown-item v-b-modal.modal-create-dashboard>
+                      Add dashboard                  
+                      <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn"  >
+                        <i class="material-icons">add</i>
+                      </b-button> 
+                  </b-dropdown-item>
+                    <b-dropdown-item  @click="deleteDashboard()">
+                      Delete Dashboard
+                      <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
+                        <i class="material-icons">delete</i>
+                      </b-button> 
+                    </b-dropdown-item>
+                  </b-nav-item-dropdown>
 
                 </b-navbar-nav>
               </b-collapse>
@@ -53,7 +64,7 @@
 <script>
 import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
-import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard } from '../calls/dashboard'
+import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard, deleteDashboard } from '../calls/dashboard'
 import CalendarComponent from '../components/CalendarComponent'
 import DashboardSidebarMenu from '../components/DashboardSidebarMenu'
 import FormCreateDashboard from '../components/FormCreateDashboard'
@@ -74,7 +85,11 @@ export default {
       layoutBackup: [],
       isEditLayout: false,
       dashboards: [],
-      dashboardName: '',
+      currentDashboardInfo: {
+        name: "",
+        id: undefined,
+        isDefault: undefined,
+      },
     }
   },
   created: function() {
@@ -100,7 +115,9 @@ export default {
       let vm = this;
       getDashboard(id).then(dashboard => {
         vm.layout = dashboard.settings
-        vm.dashboardName = dashboard.name
+        vm.currentDashboardInfo.id = dashboard.id
+        vm.currentDashboardInfo.name = dashboard.name
+        vm.currentDashboardInfo.isDefault = dashboard.default_dashboard
         vm.layoutBackup = cloneDeep(vm.layout)
       })
     },
@@ -125,6 +142,27 @@ export default {
       if(success) {
         // refresh dashboards
         this.loadDashboards()
+      }
+    },
+    async deleteDashboard() {
+      let vm = this
+
+      // can't delete default dashboard
+      if(this.currentDashboardInfo.isDefault) {
+        return
+      }
+
+      let success = await deleteDashboard(this.currentDashboardInfo.id)
+      if(success) {
+        getDashboards().then(dashboards => {
+          let defaultDashboard = dashboards.find(function(dashboard) {
+            return dashboard.is_default
+          })
+
+          vm.$router.replace({ name: 'dashboard', params: { dashboardId: defaultDashboard.id }})
+
+          vm.dashboards = dashboards
+        })
       }
     },
     restoreDashboard() {
@@ -197,5 +235,8 @@ export default {
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+.navbar-light .navbar-nav .nav-link {
+  color: $light-color !important;
 }
 </style>

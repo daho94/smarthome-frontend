@@ -38,7 +38,7 @@ Vue.use(BootstrapVue)
 Vue.use(PortalVue)
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://192.168.178.36:8449',
+  connection: 'http://192.168.178.36:8449',
   vuex: {
     store,
     router,

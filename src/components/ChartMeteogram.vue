@@ -24,7 +24,7 @@ export default {
             precipitationsError: [],
             winds: [],
             iconsRendered: [],
-            windsBlocksRendered: [],
+            windBlocksRendered: [],
             states: undefined,
             resolution: 3600000,
         }
@@ -360,8 +360,8 @@ export default {
                 i;
             const vm = this
             
-            this.destroyElements(vm.windsBlocksRendered)
-            vm.windsBlocksRendered = []
+            this.destroyElements(vm.windBlocksRendered)
+            vm.windBlocksRendered = []
 
             for (pos = xAxis.min, max = xAxis.max, i = 0; pos <= max + 36e5; pos += 36e5, i += 1) {
 
@@ -381,7 +381,7 @@ export default {
                         stroke: chart.options.chart.plotBorderColor,
                         'stroke-width': 1
                     })
-                vm.windsBlocksRendered.push(block)
+                vm.windBlocksRendered.push(block)
                 block.add();
             }
         },
@@ -405,6 +405,7 @@ export default {
                 let splitted = key.split(".")
                 // timestamp in milliseconds
                 let ts = moment().startOf("day").add(parseInt(splitted[splitted.length - 2].split("_")[1]), 'hour').unix() * 1000
+
                 switch (splitted[splitted.length - 1]) {
                     case "temp_value":
                         temperatures.push({
@@ -518,6 +519,9 @@ export default {
     font-size: 8px;
     @include themify($themes) {
         stroke: themed('chartAxisLabelColor');
+    }
+    .highcharts-text-outline {
+        stroke: none;
     }
 }
 </style>

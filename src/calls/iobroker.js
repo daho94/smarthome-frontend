@@ -84,6 +84,7 @@ function handleResponse(response) {
 
 /**
  * Get the current state of objId
+ * 
  * @param {WebSocket} socket 
  * @param {String} objId 
  */
@@ -102,6 +103,7 @@ function getState(socket, objId) {
 /**
  * Get the current states of all objects matching the pattern
  * See https://github.com/ioBroker/ioBroker.socketio/blob/master/lib/socket.js#L263 for pattern definitions
+ * 
  * @param {WebSocket} socket 
  * @param {String} pattern
  */
@@ -114,6 +116,7 @@ function getStates(socket, pattern) {
 }
 
 /**
+ * Sets state of objectId
  * 
  * @param {WebSocket} socket 
  * @param {String} id 

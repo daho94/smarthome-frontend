@@ -4,7 +4,7 @@
             <squid-icon  :icon="icon" class="icon" />
         </div>
         <span class="current-val">
-            {{ switchState }}
+            {{ displayState }}
         </span>
     </section>
 </template>
@@ -16,9 +16,12 @@ export default {
     props: {
         icon: String,
         state: Object,
+        mapTrue: String,
+        mapFalse: String,
     },
     data() {
-        return {}
+        return {
+        }
     },
     computed: {
         switchState() {
@@ -26,7 +29,14 @@ export default {
                 return "N/A"
             }
 
-            return this.state.val ? "ON" : "OFF"
+            return this.state.val ? "TRUE" : "FALSE"
+        },
+        displayState() {
+             if (this.state === undefined) {
+                return "N/A"
+            }
+
+            return this.state.val ? this.mapTrue : this.mapFalse
         }
     },
     methods: {
@@ -56,13 +66,13 @@ export default {
 .base-switch {
     display: flex;
     flex-flow: column;
-    &[switchState="ON"] {
+    &[switchState="TRUE"] {
         stroke: $primary-color;
         fill: $primary-color;
         color: $primary-color;
     }
 
-    &[switchState="OFF"] {
+    &[switchState="FALSE"] {
         stroke: $secondary-color;
         fill: $secondary-color;
         color: $secondary-color;
