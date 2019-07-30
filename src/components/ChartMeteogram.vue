@@ -494,7 +494,7 @@ export default {
                     
                     let icon = chart.renderer
                         .image(
-                            'https://192.168.178.36:8449' + vm.symbols[i],
+                            'http://192.168.178.36:8449' + vm.symbols[i],
                             point.plotX + chart.plotLeft - 8,
                             point.plotY + chart.plotTop - 30,
                             30,

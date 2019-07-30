@@ -73,6 +73,10 @@ export default {
     },
     methods: {
         async getEffects() {
+            if (this.settings.effect && this.settings.effect.options.length > 0) {
+                return
+            }
+
             let effects = undefined
 
             let res = await getEffects()
