@@ -98,6 +98,12 @@ export default {
         border-bottom-left-radius: themed('widgetBorderRadius');  
         border-bottom-right-radius: themed('widgetBorderRadius')
     }
-
+}
+.highcharts-tooltip-box {
+    @include themify($themes) {
+        fill: themed('backgroundColor')
+    }
+	fill-opacity: 0.6;
+	stroke-width: 0;
 }
 </style>
