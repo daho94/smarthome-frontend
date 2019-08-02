@@ -3,7 +3,14 @@
         <div v-if="settings.showTitle.val" class="base-title" :style="{color: settings.titleColor.val}">
             <span >{{ settings.title.val }}</span>
         </div>
-        <slot></slot>
+        <component
+          :activeTheme="activeTheme"
+          v-bind:is="componentFile"
+          :widgetId="widgetId"
+          :settings="settings"
+          v-bind:class="{ showTitle: settings.showTitle.val }"
+          >
+          </component>
         <widget-settings 
             v-if="settingsOpen"
             :settings="settings"
@@ -20,6 +27,7 @@
 <script>
 import WidgetSettings from './WidgetSettings'
 import { mixin as clickaway } from 'vue-clickaway'
+import camelCase from 'lodash/camelCase'
 
 export default {
   mixins: [ clickaway ],
@@ -27,6 +35,11 @@ export default {
     isEditLayout: Boolean,
     widgetId: String,
     settings: Object,
+    activeTheme: String,
+    componentName: {
+			type: String,
+			required: true
+		}
   },
   data () {
     return {
@@ -39,7 +52,14 @@ export default {
     WidgetSettings,
   },
   computed: {
-
+    /**
+     * Import widgets at runtime
+     */
+    componentFile() {
+      let fileName = camelCase(this.componentName)
+      fileName = fileName.charAt(0).toUpperCase() + fileName.slice(1)
+      return () => import(`./${fileName}.vue`)
+    }
   },
   mounted () {
   },
