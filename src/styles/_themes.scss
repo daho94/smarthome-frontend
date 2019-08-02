@@ -14,6 +14,7 @@ $themes: (
     buttonColor: $light-color,
     buttonBorder: 2px solid #fff,
     chartAxisLabelColor: $light-color,
+    scrollbarColor: rgb(255,255,255)
   ),
   light: (
     backgroundColor: #eeeef4,
@@ -23,13 +24,14 @@ $themes: (
     layoutBorderColor: $gray-light-hard,
     overlayColor: #cecece,
     menuBackgroundColor: $light-color,
-    textColor: #212529,
+    textColor: $dark-color,
     buttonTextColor: #aaa,
     buttonTextTransform: uppercase,
     buttonTextHoverColor: #ddd,
     buttonColor: #333,
     buttonBorder: 1px solid #aaa,
-    chartAxisLabelColor: $secondary-color,
+    chartAxisLabelColor: $dark-color,
+    scrollbarColor: rgb(0,0,0)
   ),
 );
 

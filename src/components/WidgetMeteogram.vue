@@ -1,5 +1,5 @@
 <template>
-<chart-meteogram :data="data"></chart-meteogram>
+    <chart-meteogram :activeTheme="activeTheme" :data="data"></chart-meteogram>
 </template>
 <script>
 import ChartMeteogram from './ChartMeteogram'
@@ -9,6 +9,9 @@ export default {
     name: "widget-meteogram",
     components: {
         ChartMeteogram
+    },
+    props: {
+        activeTheme: String
     },
     data() {
         return {

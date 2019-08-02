@@ -11,7 +11,7 @@ export default {
     components: {
         BaseChart,
     },
-    props: ["objId", "objState", "timeSpan", "plotColor"],
+    props: ["objId", "objState", "timeSpan", "plotColor", "activeTheme"],
     data () {
         return {
             chartData: [],
@@ -32,6 +32,9 @@ export default {
                 chart: {
                     type: "areaspline",
                     zoomType: "x"
+                },
+                 tooltip: {
+                    style: { color: this.activeTheme === "dark" ? "white" : "black" },
                 },
                 yAxis: {
                     title: {

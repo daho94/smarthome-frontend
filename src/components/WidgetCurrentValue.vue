@@ -32,6 +32,7 @@
           :objId="loadSetting('objId')"
           :objState="state" 
           :plotColor="loadSetting('plotColor')"
+          :activeTheme="activeTheme"
         />
       </div>
     </section>
@@ -47,7 +48,7 @@ export default {
   components: {
     ChartHistory
   },
-  props: ["settings"],
+  props: ["settings", "activeTheme"],
   mixins: [SubscriptionMixin, SettingsMergeMixin],
   data () {
     let widgetSettings = {

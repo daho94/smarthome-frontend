@@ -6,7 +6,7 @@
             <div>
                 <div class="icon-box">
                     <div v-for="(icon, idx) in icons" :key="idx" @click="select(icon)" :class="{'icon-selected': selected === icon}">
-                        <squid-icon  :icon="icon" :style="{stroke: stroke || '#FFFFFF', fill: stroke || '#FFFFFF' }"/>
+                        <squid-icon  :icon="icon" :style="{stroke: stroke || '#FFFFFF', fill: stroke || 'none' }"/>
                         {{ icon }}
                     </div>
                 </div>
