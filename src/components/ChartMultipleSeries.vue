@@ -29,7 +29,7 @@ export default {
                 },
                 chart: {
                     type: "areaspline",
-                    zoomType: "x"
+                    zoomType: "x",
                 },
                 tooltip: {
                     shared: true,

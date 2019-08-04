@@ -8,8 +8,8 @@
                 <b-table responsive small borderless :fields="fields" :items="items">
                     <!-- A virtual composite column -->
                     <template slot="frequency" slot-scope="data">
-                        <div class="frequency-wrapper">
-                            <div :style="{width: `${(data.item.hits * 100) / blockedAds}%` }"></div>
+                        <div class="frequency-wrapper" :title="`${(data.item.hits * 100 / blockedAds).toFixed(2)}% of ${blockedAds}`">
+                            <div :style="{width: `${(data.item.hits * 100 / blockedAds).toFixed(2)}%` }"></div>
                         </div>
                     </template>
                 </b-table>
@@ -39,7 +39,7 @@ export default {
                     class: "table-text-color",
                     sortable: true
                 },
-                // A virtual column made up from two informations
+                // A virtual column made up from two information
                 frequenzy: { 
                     key: 'frequency', 
                     label: 'Frequency',

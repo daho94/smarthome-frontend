@@ -214,6 +214,10 @@ export default {
 }
 .current-value-icon {
     height: 80% !important;
+    @include themify($themes) {
+      stroke: themed('textColor');  
+      fill: themed('textColor');  
+    }
 }
 .current-value {
   font-size: 2.5rem;

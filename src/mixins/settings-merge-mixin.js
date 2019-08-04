@@ -9,7 +9,7 @@ export default {
      */
     created () {  
         let mergedSettings = merge(this.widgetSettings, this.$parent.settings)    
-        this.$emit("update", this.widgetId, cloneDeep(mergedSettings))
+        this.$parent.$emit("update", this.widgetId, cloneDeep(mergedSettings))
     },
     methods: {
         /**
