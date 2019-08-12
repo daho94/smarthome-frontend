@@ -13,7 +13,6 @@ import BaseSwitch from "./BaseSwitch"
 import SubscriptionMixin from '../mixins/subscription-mixin'
 import SettingsMergeMixin from '../mixins/settings-merge-mixin'
 import { setState } from '../calls/iobroker'
-import { sendSocketState } from '../calls/socket'
 
 export default {
     name: "widget-switch",
@@ -61,11 +60,7 @@ export default {
     },
     methods: {
         async toggleEvent(newState) {
-            let success = await sendSocketState("A", newState === true ? "1" : "0")
-            if(success) {
-                setState(this.$socket, this.settings.objId.val, newState)   
-            }
-
+            setState(this.$socket, this.settings.objId.val, newState) 
         }
     },
     mounted() {

@@ -22,7 +22,7 @@
                     <i class="material-icons">clear</i>
                   </b-button>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
-                    <i class="material-icons">brightness_3</i>
+                    <i class="material-icons">{{activeTheme === 'dark' ? 'brightness_3' : 'wb_sunny'}}</i>
                   </b-button>    
                   <div class="seperator" ></div>    
                   <b-nav-item-dropdown text="Dashboard" right>

@@ -8,7 +8,7 @@
                 <div class="content-wrapper">
                     <div class="item">
                         <div class="title">
-                            <img style="margin-right: 5px; margin-left: 5px" height="40px" src="/icons/phv.svg" />
+                            <img class="symbol" style="margin-right: 5px; margin-left: 5px" height="40px" src="/icons/phv.svg" />
                             Domains being blocked
                         </div>
                         <div class="value">
@@ -17,16 +17,16 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="progress-bar-1" style="stroke: #17a2b8"/>
+                            <squid-icon icon="progress-bar-1" class="symbol" style="stroke: #17a2b8"/>
                             DNS queries today
                         </div>
                         <div class="value">
-                            {{ data.ads_blocked_today }}
+                            {{ data.dns_queries_today }}
                         </div>
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="currency-2" style="stroke: #28a745"/>
+                            <squid-icon icon="currency-2" class="symbol" style="stroke: #28a745"/>
                             Ads blocked today
                         </div>
                         <div class="value">
@@ -35,7 +35,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="currency-2" style="stroke: #28a745"/>
+                            <squid-icon icon="currency-2" class="symbol" style="stroke: #28a745"/>
                             Ads percentage today
                         </div>
                         <div class="value">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="network-tred" style="stroke: #17a2b8"/>
+                            <squid-icon icon="network-tred" class="symbol" style="stroke: #17a2b8"/>
                             Unique domains
                         </div>
                         <div class="value">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="progress-bar-1" style="stroke: #17a2b8"/>
+                            <squid-icon icon="progress-bar-1" class="symbol" style="stroke: #17a2b8"/>
                             Queries forwarded
                         </div>
                         <div class="value">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="storager" style="stroke: #6c757d"/>
+                            <squid-icon icon="storager" class="symbol" style="stroke: #6c757d"/>
                             Queries cached
                         </div>
                         <div class="value">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="wifi-mob" style="stroke: #a91669"/>
+                            <squid-icon icon="wifi-mob" class="symbol" style="stroke: #a91669"/>
                             Clients ever seen
                         </div>
                         <div class="value">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="wifi-mob" style="stroke: #a91669"/>
+                            <squid-icon icon="wifi-mob" class="symbol" style="stroke: #a91669"/>
                             Unique clients
                         </div>
                         <div class="value">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="item">
                         <div class="title">
-                            <squid-icon icon="plug" style="stroke: #ea7807"/>
+                            <squid-icon icon="plug" class="symbol" style="stroke: #ea7807"/>
                             Status
                         </div>
                         <div class="value">
@@ -152,14 +152,26 @@ export default {
     justify-content: center;
     display: flex;
 }
+@media only screen and (min-width: 500px) {
+    .symbol { 
+        display: inline-block !important;  
+    }
+    .item {
+        margin: 10px;
+        min-width: 330px !important;
+    }
+}
+.symbol {
+    display: none;
+}
 .item {
     width: 50%;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #dacece47;
     height: 50px;
-    margin: 10px;
-    min-width: 330px;
+    // margin: 10px;
+    min-width: 100%;
     max-width: calc(50% - 20px);
 }
 .title {
@@ -170,6 +182,9 @@ export default {
         margin-right: 5px;
         stroke-width: 2px;
     }
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .value {
     text-align: right;

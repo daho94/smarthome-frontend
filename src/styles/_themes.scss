@@ -6,7 +6,7 @@ $themes: (
     widgetBorderRadius: 0px,
     layoutBorderColor: rgba(177, 188, 199, 0.36),
     overlayColor: #343a40,
-    menuBackgroundColor: $gray-medium,
+    menuBackgroundColor: #24262d,
     textColor: $light-color,
     buttonTextColor: #408bbd,
     buttonTextTransform: none,
@@ -14,7 +14,8 @@ $themes: (
     buttonColor: $light-color,
     buttonBorder: 2px solid #fff,
     chartAxisLabelColor: $light-color,
-    scrollbarColor: rgb(255,255,255)
+    scrollbarColor: rgb(255,255,255),
+    backgroundGradient: linear-gradient(to right, #191b1f, #26282dfa)
   ),
   light: (
     backgroundColor: #eeeef4,
@@ -31,7 +32,8 @@ $themes: (
     buttonColor: #333,
     buttonBorder: 1px solid #aaa,
     chartAxisLabelColor: $dark-color,
-    scrollbarColor: rgb(0,0,0)
+    scrollbarColor: rgb(0,0,0),
+    backgroundGradient: linear-gradient(to right, #e0e0e0, #d2d2d2fa)
   ),
 );
 
