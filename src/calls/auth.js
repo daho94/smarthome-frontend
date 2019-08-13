@@ -15,17 +15,14 @@ function login(username, password) {
         })
 }
 
-function logout() {
+async function logout() {
     const requestOptions = {
         method: 'DELETE',
         credentials: 'include'
     };
 
-    return fetch(`${ENTRYPOINT}/auth`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            return user
-        })
+    let response = await fetch(`${ENTRYPOINT}/auth`, requestOptions)
+    return response.ok
 }
 
 function validate() {

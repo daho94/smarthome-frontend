@@ -451,7 +451,7 @@
 	
 		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="16" y1="40" x2="16" y2="12"/>
 	
-		<ellipse transform="matrix(0.9345719 -0.3557745 0.3557745 0.9345719 -14.143074 6.0951266)" fill="none" stroke="#1F1F1F"  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="9.5" cy="41.5" rx="6.7237597" ry="4.6549106"/>
+		<ellipse transform="matrix(0.9345719 -0.3557745 0.3557745 0.9345719 -14.143074 6.0951266)" fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="9.5" cy="41.5" rx="6.7237597" ry="4.6549106"/>
 	
 		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="42" y1="32" x2="42" y2="3"/>
 	
@@ -570,5 +570,17 @@
 		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="39" y1="26" x2="43" y2="26"/>
 	
 		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="4" y1="42" x2="46" y2="42"/>
+</g>
+<g id="cd">
+	<circle fill="none"   stroke-linejoin="round" stroke-miterlimit="10" cx="24" cy="24" r="21.5"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M18.0510807,29.9489193
+		c-3.2854986-3.2854977-3.2854986-8.6123409,0-11.8978386"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M15.7376108,32.2623901
+		c-4.5631914-4.5631924-4.5631914-11.9615879,0-16.5247803"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M13.4241419,34.5758591
+		c-5.8408847-5.8408871-5.8408847-15.3108311,0-21.1517181"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M11.110673,36.889328
+		c-7.1185784-7.1185799-7.1185784-18.6600761,0-25.778656"/>
+	<circle fill="none"   stroke-linejoin="round" stroke-miterlimit="10" cx="24" cy="24" r="5"/>
 </g>
 </svg>
