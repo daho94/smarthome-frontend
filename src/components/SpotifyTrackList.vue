@@ -71,6 +71,9 @@ export default {
             if(oldVal !== undefined && oldVal.length > 0) this.unsubscribe(`${this.objId}.playlists.${oldVal}.trackListArray`)     
         }
     },
+    destroyed() {
+        this.subscribe(`${this.objId}.playlists.${this.currentPlaylist}.trackListArray`)
+    },
     methods: {
         parseData(data) {
             return data.map((track, i) => {
