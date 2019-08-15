@@ -1,20 +1,18 @@
 <template>
-    <base-chart :options="chartOptions"></base-chart>
+    <base-chart class="chart-wrapper" :options="chartOptions"></base-chart>
 </template>
 
 <script>
-import { getLastHour, getLast24Hours } from '../calls/iobroker'
 import BaseChart from './BaseChart'
 
 export default {
-    name: 'chart-history',
+    name: 'chart-multiple-series',
     components: {
         BaseChart,
     },
-    props: ["objId", "objState", "timeSpan", "plotColor", "activeTheme"],
+    props: ["chartSeries", "activeTheme"],
     data () {
         return {
-            chartData: [],
         }
     },
     computed: {
@@ -31,10 +29,15 @@ export default {
                 },
                 chart: {
                     type: "areaspline",
-                    zoomType: "x"
+                    zoomType: "x",
                 },
-                 tooltip: {
+                tooltip: {
+                    shared: true,
+                    useHTML: true,
                     style: { color: this.activeTheme === "dark" ? "white" : "black" },
+                    headerFormat:
+                        '<small>{point.x:%A, %b %e, %H:%M} - {point.point.to:%H:%M}</small><br>' +
+                        '<b>{point.point.symbolDesc}</b><br>'
                 },
                 yAxis: {
                     title: {
@@ -45,8 +48,7 @@ export default {
                 },
                 xAxis: {
                     title: {
-                        text: `Last ${this.timeSpan} hour(s)`,
-                        reserveSpace: true
+                        text: "",
                     },
                     alignTicks: true,
                     minorGridLineDashStyle: "Solid",
@@ -54,7 +56,7 @@ export default {
                     visible: true,
                     labels: {},
                     type: 'datetime',
-                    tickPixelInterval: 150
+                    tickPixelInterval: 150,
                 },
                 legend: {
                     layout: "horizontal",
@@ -65,55 +67,26 @@ export default {
                 },
                 plotOptions: {
                     series: {
-                        color: this.plotColor,
+                        // color: this.plotColor,
                         marker: {
                             enabled: false
                         }
                     }
                 },
-                series: [{
-                    data: this.chartData,
-                }],
+                series: this.chartSeries,
             }
         }
     },
     methods: {
-        getData: async function(objId) {
-            let data = this.timeSpan === 1 ? await getLastHour(objId) : await getLast24Hours(objId)
-            try {
-                this.chartData = data.map(point => [point.timestamp, point.val])
-            } catch (error) {
-                // do not update data
-            }
-        }
+
     },
     mounted() {
-        this.getData(this.objId)
-    },
-    watch: {
-        objId: function() {
-            if (!this.objId) {
-                this.chartData = []
-                return
-            }
-
-            this.getData(this.objId)
-        },
-        objState: function() {
-            if (!this.objState) {
-                this.chartData = []
-                return
-            }
-            this.chartData.push([this.objState.ts, parseFloat(this.objState.val)])
-        },
-        // pull data for new timespan
-        timeSpan: function() {
-            this.getData(this.objId)
-        },
-    },
+    }
 }
 </script>
 
-<style>
-
+<style scoped>
+.chart-wrapper {
+    padding: 5px;
+}
 </style>

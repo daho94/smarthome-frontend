@@ -1,5 +1,5 @@
 <template>
-<div :class="'theme-' + activeTheme">
+<div :class="'theme-' + activeTheme" id="root">
   <router-view class="app-container" @themeChanged="themeChangedEvent" :activeTheme="activeTheme"></router-view>
 </div>
 </template>
@@ -112,7 +112,9 @@ html, body, #app, section.section {
         background-color 100ms ease-out,
         margin 100ms ease-out,
         height 100ms ease-out;
-    background-color: rgba(255,255,255,.1);
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), 0.1);  
+    }
     margin: 5px 5px 5px 0;
     border-radius: 20px;
     height: calc(100% - 10px);
@@ -120,23 +122,31 @@ html, body, #app, section.section {
 }
 
 .vb.vb-scrolling-phantom > .vb-dragger > .vb-dragger-styler {
-    background-color: rgba(255, 255, 255, .3);
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), .3);  
+    }
 }
 
 .vb > .vb-dragger:hover > .vb-dragger-styler {
-    background-color: rgba(255, 255, 255,.5);
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), .5);  
+    }
     margin: 0px;
     height: 100%;
 }
 
 .vb.vb-dragging > .vb-dragger > .vb-dragger-styler {
-    background-color: rgba(255, 255, 255,.5);
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), .5);  
+    }
     margin: 0px;
     height: 100%;
 }
 
 .vb.vb-dragging-phantom > .vb-dragger > .vb-dragger-styler {
-    background-color: rgba(255, 255, 255,.5);
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), .5);  
+    }
 }
 
 </style>

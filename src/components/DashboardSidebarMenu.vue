@@ -70,6 +70,7 @@ export default {
     padding: 2px;
     stroke: $light-color;
     stroke-width: 3px;
+    fill: none;
 }
 .icon-sidebar-collapse {
     width: 100%;

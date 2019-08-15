@@ -30,22 +30,15 @@
                   :h="item.h"
                   :i="item.i"
               >
-                  <base-widget
+                <base-widget
                   :isEditLayout="isEditLayout"
                   :widgetId="item.i"
                   :settings="item.settings"
                   @remove="removeWidget"
                   @update="updateSettings"
-                  >
-                      <component
-                      v-bind:is="item.c"
-                      :widgetId="item.i"
-                      :settings="item.settings"
-                      v-bind:class="{ showTitle: item.settings.showTitle.val }"
-                      @update="updateSettings"
-                      >
-                      </component>
-                  </base-widget>
+                  :activeTheme="activeTheme"
+                  :componentName="item.c"
+                />
               </grid-item>
           </grid-layout>
         </div>
@@ -55,16 +48,8 @@
 
 <script>
 import VueGridLayout from 'vue-grid-layout'
-import WidgetCurrentValue from './WidgetCurrentValue'
 import BaseWidget from './BaseWidget'
-import WidgetMeteogram from './WidgetMeteogram'
-import IconSelector from './IconSelector'
 import WidgetLibrary from './WidgetLibrary'
-import WidgetSwitch from './WidgetSwitch'
-import WidgetSocket from './WidgetSocket'
-import WidgetColorPicker from './WidgetColorPicker'
-import WidgetColorPalette from './WidgetColorPalette'
-import WidgetColorEffect from './WidgetColorEffect'
 import maxBy from 'lodash/maxBy'
 import uuidv4 from 'uuid/v4'
 import cloneDeep from 'lodash/cloneDeep'
@@ -73,16 +58,8 @@ export default {
   components: {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
-    WidgetCurrentValue,
     BaseWidget,
-    WidgetMeteogram,
-    IconSelector,
     WidgetLibrary,
-    WidgetSwitch,
-    WidgetSocket,
-    WidgetColorPicker,
-    WidgetColorPalette,
-    WidgetColorEffect,
   },
   props: {
     isEditLayout: Boolean,
@@ -147,6 +124,9 @@ export default {
       let widget = this.layoutCopy.filter(item => item.i === id)[0]
       widget.settings = settings
     },
+    componentInstance (name) {
+      return () => import(`./${name}`)
+    }
   }
 }
 </script>

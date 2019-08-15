@@ -22,6 +22,7 @@ export default {
             defaultOptions: {
                 chart: {
                 },
+                colors: ["#19A2A5", "#154775", "#02BFFE", "#4E8BB8", "#00643F", "#9ECAE3"],
                 credits: {
                     enabled: false
                 },
@@ -98,6 +99,12 @@ export default {
         border-bottom-left-radius: themed('widgetBorderRadius');  
         border-bottom-right-radius: themed('widgetBorderRadius')
     }
-
+}
+.highcharts-tooltip-box {
+    @include themify($themes) {
+        fill: themed('backgroundColor')
+    }
+	fill-opacity: 0.6;
+	stroke-width: 0;
 }
 </style>

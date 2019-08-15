@@ -22,24 +22,29 @@
                     <i class="material-icons">clear</i>
                   </b-button>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
-                    <i class="material-icons">brightness_3</i>
+                    <i class="material-icons">{{activeTheme === 'dark' ? 'brightness_3' : 'wb_sunny'}}</i>
                   </b-button>    
                   <div class="seperator" ></div>    
-                  <b-nav-item-dropdown text="Dashboard" right>
-                    <b-dropdown-item v-b-modal.modal-create-dashboard>
-                      Add dashboard                  
+                  <b-nav-item-dropdown text="Actions" right>
+                    <b-dropdown-item v-b-modal.modal-create-dashboard>                  
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn"  >
                         <i class="material-icons">add</i>
                       </b-button> 
-                  </b-dropdown-item>
+                      Add dashboard
+                    </b-dropdown-item>
                     <b-dropdown-item  @click="deleteDashboard()">
-                      Delete Dashboard
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
                         <i class="material-icons">delete</i>
                       </b-button> 
+                      Delete Dashboard
+                    </b-dropdown-item>
+                    <b-dropdown-item  @click="logout()">
+                      <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
+                        <i class="material-icons">account_circle</i>
+                      </b-button> 
+                      Logout
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
-
                 </b-navbar-nav>
               </b-collapse>
             </b-navbar>
@@ -65,6 +70,7 @@
 import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
 import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard, deleteDashboard } from '../calls/dashboard'
+import { logout } from '../calls/auth'
 import CalendarComponent from '../components/CalendarComponent'
 import DashboardSidebarMenu from '../components/DashboardSidebarMenu'
 import FormCreateDashboard from '../components/FormCreateDashboard'
@@ -138,7 +144,7 @@ export default {
       })
     },
     async createDashboard(dashboard) {
-      let success = await createDashboard(dashboard.name, dashboard.icon)
+      let success = await createDashboard(dashboard.name, dashboard.icon, this.dashboards.length === 0 ? true : false)
       if(success) {
         // refresh dashboards
         this.loadDashboards()
@@ -169,6 +175,12 @@ export default {
       this.layout = cloneDeep(this.layoutBackup)
       this.isEditLayout = false
     },
+    async logout() {
+      let success = await logout()
+      if(success) {
+        this.$router.push('login')
+      }
+    }
   }
 }
 </script>

@@ -39,6 +39,8 @@ export default new Vuex.Store({
         },
         decrement_subs(state, id) {
             let obj = state.subscriptions[id]
+            // If component is destroyed immediatly nothing gets subscribed
+            if(obj === undefined) return
             obj.subscriber--
            
             if(obj.subscriber == 0) {

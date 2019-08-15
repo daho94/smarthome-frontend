@@ -112,7 +112,7 @@ export default {
           class: ["category-container"], 
           attrs: {
            id: 'cat-' + cat[0].id,
-           visible: true,
+           visible: false,
           },
         }, widgets)]
       ]))

@@ -14,7 +14,7 @@ export default {
     components: {
         BaseChart,
     },
-    props: ["data"],
+    props: ["data", "activeTheme"],
     data () {
         return {
             pressures: [],
@@ -38,10 +38,7 @@ export default {
                 chart: {
                     plotBorderWidth: 1,
                     alignTicks: false,
-                    marginRight: 40,
-                    // scrollablePlotArea: {
-                    //     mscrollinWidth: 720
-                    // }
+                    marginRight: 40
                 },
 
                 defs: {
@@ -66,6 +63,7 @@ export default {
                 tooltip: {
                     shared: true,
                     useHTML: true,
+                    style: { color: this.activeTheme === "dark" ? "white" : "black" },
                     headerFormat:
                         '<small>{point.x:%A, %b %e, %H:%M} - {point.point.to:%H:%M}</small><br>' +
                         '<b>{point.point.symbolDesc}</b><br>'

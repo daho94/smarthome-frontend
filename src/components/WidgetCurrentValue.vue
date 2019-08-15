@@ -32,6 +32,7 @@
           :objId="loadSetting('objId')"
           :objState="state" 
           :plotColor="loadSetting('plotColor')"
+          :activeTheme="activeTheme"
         />
       </div>
     </section>
@@ -47,7 +48,7 @@ export default {
   components: {
     ChartHistory
   },
-  props: ["settings"],
+  props: ["settings", "activeTheme"],
   mixins: [SubscriptionMixin, SettingsMergeMixin],
   data () {
     let widgetSettings = {
@@ -213,6 +214,10 @@ export default {
 }
 .current-value-icon {
     height: 80% !important;
+    @include themify($themes) {
+      stroke: themed('textColor');  
+      fill: themed('textColor');  
+    }
 }
 .current-value {
   font-size: 2.5rem;
