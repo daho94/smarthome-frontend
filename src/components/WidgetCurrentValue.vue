@@ -202,6 +202,9 @@ export default {
 }
 .current-value-display div {
   height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .current-value-display div:first-child {
