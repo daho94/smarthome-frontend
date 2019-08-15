@@ -15,7 +15,12 @@ $themes: (
     buttonBorder: 2px solid #fff,
     chartAxisLabelColor: $light-color,
     scrollbarColor: rgb(255,255,255),
-    backgroundGradient: linear-gradient(to right, #191b1f, #26282dfa)
+    backgroundGradient: linear-gradient(to right, #191b1f, #26282dfa),
+    clockNotchColor: $light-color,
+    clockSecondsColor: #edbec5,
+    clockHandColor: #7392a0,
+    clockTextColor: #daf6ff,
+    clockTextShadow: rgba(10, 175, 230, 1)
   ),
   light: (
     backgroundColor: #eeeef4,
@@ -33,7 +38,12 @@ $themes: (
     buttonBorder: 1px solid #aaa,
     chartAxisLabelColor: $dark-color,
     scrollbarColor: rgb(0,0,0),
-    backgroundGradient: linear-gradient(to right, #e0e0e0, #d2d2d2fa)
+    backgroundGradient: linear-gradient(to right, #e0e0e0, #d2d2d2fa),
+    clockNotchColor: $dark-color,
+    clockSecondsColor:  $primary-color,
+    clockHandColor: $gray-medium,
+    clockTextColor: #0a5d77,
+    clockTextShadow: $dark-color
   ),
 );
 
