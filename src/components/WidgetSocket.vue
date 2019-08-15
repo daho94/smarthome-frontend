@@ -5,6 +5,7 @@
         @onToggle="toggleEvent"
         mapTrue="ON"
         mapFalse="OFF"
+        :readOnly="false"
     />
 </template>
 

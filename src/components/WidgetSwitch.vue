@@ -5,6 +5,7 @@
         @onToggle="toggleEvent"
         :mapTrue="loadSetting('mapTrue')"
         :mapFalse="loadSetting('mapFalse')"
+        :readOnly="loadSetting('readOnly')"
     />
 </template>
 
@@ -37,7 +38,13 @@ export default {
                     component: "form-icon",
                     type: "text",
                     category: "settings"
-                },  
+                },
+                readOnly: {
+                    val: false,
+                    component: "form-checkbox",
+                    type: "checkbox",
+                    category: "settings"
+                }, 
                 mapTrue: {
                     val: "true",
                     component: "form-input",
