@@ -12,7 +12,7 @@
                 class="current-value-icon"
               />
             </div>
-            <div>
+            <div class="current-value-wrapper">
               <span class="current-value" v-if="state != undefined">{{ valueToDisplay[0] }}</span>
               <span class="current-value" v-else> N/A </span>
             </div>
@@ -188,6 +188,11 @@ export default {
 .widget-current-value {
   flex-flow: column;
 }
+.current-value-wrapper {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .widget-current-value > div {
   width: 100%;
   padding: 5px;
@@ -199,6 +204,7 @@ export default {
   margin-left: 5px;
   margin-right: 5px;
   height: 100%;
+  max-width: 100%;
 }
 .current-value-display div {
   height: 100%;
