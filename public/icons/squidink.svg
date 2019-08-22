@@ -583,4 +583,17 @@
 		c-7.1185784-7.1185799-7.1185784-18.6600761,0-25.778656"/>
 	<circle fill="none"   stroke-linejoin="round" stroke-miterlimit="10" cx="24" cy="24" r="5"/>
 </g>
+<g id="round-clock">
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="24" y1="3" x2="24" y2="8"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="24" y1="40" x2="24" y2="45"/>
+	<polyline fill="none"   stroke-linecap="round" stroke-miterlimit="10" points="18,19 24,25 
+		34,15 	"/>
+	<circle fill="none"   stroke-linecap="round" stroke-miterlimit="10" cx="24" cy="24" r="21.5"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="45" y1="24" x2="40" y2="24"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="8" y1="24" x2="3" y2="24"/>
+</g>
 </svg>
