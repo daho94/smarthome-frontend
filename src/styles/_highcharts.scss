@@ -18,7 +18,11 @@ $neutral-color-100: #FF0000;
 
 .highcharts-axis-labels {
   @include themify($themes) {
-    stroke: themed('chartAxisLabelColor');
-    fill: themed('chartAxisLabelColor');
+    font-weight: bold;
+    text {
+      stroke: themed('chartAxisLabelColor');
+      fill: themed('chartAxisLabelColor') !important;
+      stroke-width: 0px;
+    }
   }
 }
