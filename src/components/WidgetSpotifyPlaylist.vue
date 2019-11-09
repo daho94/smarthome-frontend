@@ -173,7 +173,7 @@ export default {
     background-repeat: no-repeat;
 }
 .wrapper {
-    padding: 10px;
+    padding: 15px;
 }
 .play-icon {
     height: 50%;

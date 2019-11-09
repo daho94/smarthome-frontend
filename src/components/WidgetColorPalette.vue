@@ -1406,7 +1406,7 @@ export default {
 .color-wrapper {
   display: flex;
   flex-flow: row wrap;
-  margin: 5px;
+  margin: 15px;
   display: flex;
   align-items: flex-start !important;
 }
