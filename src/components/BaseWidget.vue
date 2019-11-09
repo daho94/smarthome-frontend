@@ -21,6 +21,14 @@
         <div v-show="isEditLayout" class="edit-overlay" :class="{'is-selected': isSelected}" v-on:click="openSettings">
             <font-awesome-icon icon="cog"  size="6x" class="edit-overlay-icon"/>
         </div>
+        <button class="widget-actions" ref="button-3">●●●</button>
+        <b-tooltip ref="tooltip" variant="dark" :target="() => $refs['button-3']" title="Devices" placement="bottomleft" triggers="click blur">
+            <div class="widget-actions-menu">
+              <div @click="toggleFullscreen">
+                <squid-icon :icon="isFullscreen ? 'close-move' : 'expand-middle'"/>
+              </div>
+            </div>
+        </b-tooltip> 
     </section>
 </template>
 
@@ -46,6 +54,13 @@ export default {
       baseStyle: "base-widget",
       settingsOpen: false,
       isSelected: false,
+      isFullscreen: false,
+      defaultGridLayoutHeight: undefined,
+      defaultGridItem: {
+        width: undefined,
+        height: undefined,
+        transform: undefined,
+      }
     }
   },
   components: {
@@ -72,7 +87,7 @@ export default {
     }
   },
   methods: {
-    openSettings: function() {
+    openSettings() {
       if(this.isEditLayout) {
         this.settingsOpen = true
         this.isSelected = true
@@ -81,7 +96,7 @@ export default {
     /** 
      * Do not close settings-bar when clicked on a modal or in the settingsbar itself
      */
-    closeSettings: function(e) {
+    closeSettings(e) {
       if (e.path.every(el => {
           let clickOnSettings = el.className === "widget-settings"
           let clickOnModal = false
@@ -95,6 +110,37 @@ export default {
         this.settingsOpen = false
         this.isSelected = false
       }
+    },
+    toggleFullscreen() {
+      let gridItem = this.$parent
+      let gridLayout = gridItem.$parent
+      if (this.isFullscreen) {
+        //restore default style
+        gridLayout.$el.style.height = this.defaultGridLayoutHeight
+        gridItem.$el.style.width = this.defaultGridItem.width
+        gridItem.$el.style.height = this.defaultGridItem.height
+        gridItem.$el.style.transform = this.defaultGridItem.transform
+        gridItem.$el.style.zIndex = 0
+
+        this.isFullscreen = false
+      } else {
+        // store default height and width
+        this.defaultGridLayoutHeight = gridLayout.containerHeight()
+        this.defaultGridItem.height = gridItem.style.height
+        this.defaultGridItem.width = gridItem.style.width
+        this.defaultGridItem.transform = gridItem.style.transform
+
+        // set new width and height
+        gridLayout.$el.style.height = "calc(100vh - 60px)"
+
+        gridItem.$el.style.width = "calc(100% - 20px)"
+        gridItem.$el.style.height = "calc(100% - 10px)"
+        gridItem.$el.style.zIndex = 1;
+        gridItem.$el.style.transform = "translate3d(10px,10px, 0)"
+        
+        this.isFullscreen = true
+      }
+      this.$refs.tooltip.$emit('close')
     }
   }
 }
@@ -102,6 +148,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.widget-actions-menu {
+  stroke: white;
+  cursor: pointer;
+  height: 40px;
+  >div {
+    height: inherit;
+  }
+}
+@media only screen and (min-width: 650px) {
+  .widget-actions {
+    position: absolute;
+    display: block !important;
+    top: 8px;
+    right: 5px;
+    line-height: 0px;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    font-family: monospace;
+    font-size: 12px;
+    opacity: 0.5;
+    border-width: 0px;
+    background-color: #ff000000;
+     @include themify($themes) {
+      color: themed('textColor') !important;  
+    }
+  }
+  .widget-actions:focus {
+    outline: none;
+  }
+  .widget-actions:hover {
+    opacity: 0.8;
+  }
+}
+.widget-actions {
+  display: none;
+}
 .base-widget {  
   @include themify($themes) {
     background-color: themed('widgetBackgroundColor');  
