@@ -29,7 +29,7 @@
             </div>
             <div class="example-btn">
               <b-button-group>
-                <file-upload class="btn btn-primary" post-action="/api/file" :multiple="true" :drop="true"
+                <file-upload class="btn btn-primary" post-action="/api/upload/file" :multiple="true" :drop="true"
                   :drop-directory="true" v-model="files" ref="upload" @input-file="inputFile">
                   Select files
                 </file-upload>
