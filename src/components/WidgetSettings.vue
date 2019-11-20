@@ -29,7 +29,8 @@
               :type="setting[1].type" 
               :is="setting[1].component">
             </component>
-            <button class="remove-widget-btn" v-on:click="remove">Remove Widget</button>
+            <b-button class="remove-widget-btn" v-on:click="remove" variant="danger">
+              <i class="material-icons">delete_outline</i> <span>Remove</span></b-button>
         </section>
     </portal>
 </template>
@@ -148,6 +149,16 @@ export default {
   position: relative;
   bottom: 0;
   margin-top: 20px;
+  i {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    top: 3px;
+  }
+  > span {
+    position: relative;
+    top: -3px;
+  }
 }
 .form-margin {
   margin-top: 5px;

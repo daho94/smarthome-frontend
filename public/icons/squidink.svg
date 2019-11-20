@@ -583,4 +583,183 @@
 		c-7.1185784-7.1185799-7.1185784-18.6600761,0-25.778656"/>
 	<circle fill="none"   stroke-linejoin="round" stroke-miterlimit="10" cx="24" cy="24" r="5"/>
 </g>
+<g id="round-clock">
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="24" y1="3" x2="24" y2="8"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="24" y1="40" x2="24" y2="45"/>
+	<polyline fill="none"   stroke-linecap="round" stroke-miterlimit="10" points="18,19 24,25 
+		34,15 	"/>
+	<circle fill="none"   stroke-linecap="round" stroke-miterlimit="10" cx="24" cy="24" r="21.5"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="45" y1="24" x2="40" y2="24"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="8" y1="24" x2="3" y2="24"/>
+</g>
+<g id="umbrella">
+	<g>
+			<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="17" y1="2" x2="15" y2="6"/>
+		
+			<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="23" y1="2" x2="21" y2="6"/>
+		
+			<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="29" y1="2" x2="27" y2="6"/>
+		
+			<line fill="none"   stroke-linecap="round" stroke-miterlimit="10" x1="35" y1="2" x2="33" y2="6"/>
+		<path fill="none"   stroke-linecap="round" stroke-miterlimit="10" d="M24,26v17c0,1.7,1.3,3,3,3
+			h0c1.7,0,3-1.3,3-3v-1"/>
+		<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M8,26c0-8.8,7.2-16,16-16s16,7.2,16,16H8z"/>
+	</g>
+</g>
+<g id="printer">
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M36,47H12
+		c-0.5522852,0-1-0.4477158-1-1V33h26v13C37,46.5522842,36.5522842,47,36,47z"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M11,17V2
+		c0-0.5522847,0.4477148-1,1-1h17.0003872L37,9.9999933V17"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M10,38H1V20
+		c0-1.6568546,1.3431458-3,3-3h40c1.6568527,0,3,1.3431454,3,3v18h-9"/>
+	
+		<line fill="none"   stroke-linejoin="round" stroke-miterlimit="10" x1="17" y1="38" x2="31" y2="38"/>
+	
+		<line fill="none"   stroke-linejoin="round" stroke-miterlimit="10" x1="17" y1="42" x2="31" y2="42"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M37,12h3
+		c1.1045685,0,2,0.8954306,2,2v2"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M6,16v-2
+		c0-1.1045694,0.8954306-2,2-2h3"/>
+	
+		<line fill="none"   stroke-linejoin="round" stroke-miterlimit="10" x1="8" y1="33" x2="40" y2="33"/>
+	
+		<line fill="none"   stroke-linejoin="round" stroke-miterlimit="10" x1="6" y1="22" x2="12" y2="22"/>
+	<path fill="none"   stroke-linejoin="round" stroke-miterlimit="10" d="M29,1v8
+		c0,0.5522852,0.4477158,1,1,1h7"/>
+</g>
+<g id="flat-tv">
+	<path fill="none"   stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M46,37H2V8c0-1.6568542,1.3431458-3,3-3h38c1.6568527,0,3,1.3431458,3,3V37z"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="24" y1="37" x2="24" y2="43"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18" y1="44" x2="30" y2="44"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="3" y1="32" x2="45" y2="32"/>
+</g>
+<g id="close-move">
+	<g>
+		<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M18.7309685,29.3665829"/>
+		
+			<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+			11,29 19,29 19,37 			"/>
+	</g>
+	<g>
+		<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M18.7309685,18.6134357"/>
+		
+			<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+			19,11 19,19 11,19 			"/>
+	</g>
+	<g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M29.4841156,29.3665829"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				29,37 29,29 37,29 				"/>
+		</g>
+		
+			<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+			44,44 41.5586662,41.5586662 39.1173286,39.1173286 37.8966599,37.8966599 36.6759949,36.6759949 35.4553261,35.4553261 
+			34.2346573,34.2346573 33.0139923,33.0139923 31.7933235,31.7933235 30.5726547,30.5726547 29.3519878,29.3519878 			"/>
+	</g>
+	
+		<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		18.6480122,18.6480122 17.4273453,17.4273453 16.2066765,16.2066765 14.9860086,14.9860086 13.7653418,13.7653418 
+		12.5446739,12.5446739 11.3240061,11.3240061 10.1033382,10.1033382 8.8826704,8.8826704 6.4413352,6.4413352 4,4 		"/>
+	
+		<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		4,44 8.8826704,39.1173286 11.3240061,36.6759949 13.7653418,34.2346573 16.2066765,31.7933235 18.6480122,29.3519878 		"/>
+	<g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M29.4841156,18.6134357"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				37,19 29,19 29,11 				"/>
+		</g>
+		
+			<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+			29.3519878,18.6480122 31.7933235,16.2066765 34.2346573,13.7653418 36.6759949,11.3240061 39.1173286,8.8826704 44,4 			"/>
+	</g>
+</g>
+<g id="expand-middle">
+<g>
+	<g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M43.5060959,4.4939032"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				36,4 44,4 44,12 					"/>
+		</g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M4.4939032,43.5060959"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				12,44 4,44 4,36 					"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M43.5060959,43.5060959"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				44,36 44,44 36,44 					"/>
+		</g>
+		<g>
+			
+				<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M4.4939032,4.4939032"/>
+			
+				<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				4,12 4,4 12,4 					"/>
+		</g>
+	</g>
+</g>
+
+	<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	28.9902134,28.8726807 31.4315491,31.3140163 33.8728828,33.755352 35.0935516,34.976017 36.3142204,36.1966858 
+	37.5348854,37.4173546 38.7555542,38.6380234 39.976223,39.8586884 41.196888,41.0793571 42.4175568,42.3000259 
+	43.6382256,43.5206909 		"/>
+
+	<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	4.5768595,4.4593267 5.7975273,5.6799946 7.0181947,6.9006619 8.238862,8.1213303 9.4595299,9.3419971 10.6801977,10.562665 
+	11.9008656,11.7833328 13.1215334,13.0040007 14.3422012,14.2246685 16.7835369,16.6660042 19.2248707,19.107338 		"/>
+
+	<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	19.2248707,28.8726807 14.3422012,33.755352 11.9008656,36.1966858 9.4595299,38.6380234 7.0181947,41.0793571 
+	4.5768595,43.5206909 		"/>
+
+	<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	43.6382256,4.4593267 41.196888,6.9006619 38.7555542,9.3419971 36.3142204,11.7833328 33.8728828,14.2246685 
+	28.9902134,19.107338 		"/>
+</g>
+<g id="cloud-up">
+	
+		<polyline fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		17.1673069,29.8326931 24,23 30.8326931,29.8326931 	"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="24" y1="23" x2="24" y2="46"/>
+	<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M38.5,20c-0.5806885,0-1.1474609,0.059021-1.6954346,0.1699829C36.923645,19.4628296,37,18.7410278,37,18
+		c0-7.1796875-5.8203125-13-13-13s-13,5.8203125-13,13c0,0.7410278,0.076355,1.4628296,0.1954346,2.1699829
+		C10.6474609,20.059021,10.0806885,20,9.5,20C4.805603,20,1,23.805542,1,28.5C1,33.194397,4.805603,37,9.5,37
+		c4.3571167,0,24.6428833,0,29,0c4.694397,0,8.5-3.805603,8.5-8.5C47,23.805542,43.194397,20,38.5,20z"/>
+</g>
 </svg>

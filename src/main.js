@@ -37,7 +37,7 @@ Vue.use(VCalendar)
 Vue.use(BootstrapVue)
 Vue.use(PortalVue)
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: false,
   connection: 'http://192.168.178.36:8449',
   vuex: {
     store,
