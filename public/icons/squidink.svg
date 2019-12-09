@@ -762,4 +762,48 @@
 		C10.6474609,20.059021,10.0806885,20,9.5,20C4.805603,20,1,23.805542,1,28.5C1,33.194397,4.805603,37,9.5,37
 		c4.3571167,0,24.6428833,0,29,0c4.694397,0,8.5-3.805603,8.5-8.5C47,23.805542,43.194397,20,38.5,20z"/>
 </g>
+<g id="microphone-3">
+	<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M26,12c0-5.8978806-5.1057949-10.6031513-11.1383533-9.937005c-4.6529684,0.5138049-8.4022541,4.3514366-8.8201904,9.0139933
+		c-0.3086939,3.4438314,1.1301303,6.5669441,3.5300117,8.5830956c1.0503435,0.8823986,1.7431831,2.1156044,1.8571062,3.4826717
+		l1.3223419,15.8679943C12.8917189,40.7003708,14.3041563,42,15.9996338,42h0.0007324
+		c1.6954765,0,3.1079159-1.2996292,3.2487183-2.9892502l1.3226147-15.8712864
+		c0.112381-1.3485584,0.7770844-2.5814323,1.8176193-3.4466057C24.5954285,17.8585434,26,15.0933018,26,12z"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="16" y1="27" x2="16" y2="32"/>
+	<circle fill="#1F1F1F" cx="16" cy="5" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="5" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="5" r="1"/>
+	<circle fill="#1F1F1F" cx="16" cy="8" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="8" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="8" r="1"/>
+	<circle fill="#1F1F1F" cx="16" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="16" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="16" cy="17" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="17" r="1"/>
+	<circle fill="#1F1F1F" cx="22" cy="8" r="1"/>
+	<circle fill="#1F1F1F" cx="22" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="22" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="10" cy="8" r="1"/>
+	<circle fill="#1F1F1F" cx="10" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="10" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="7" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="7" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="25" cy="11" r="1"/>
+	<circle fill="#1F1F1F" cx="25" cy="14" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="17" r="1"/>
+	<circle fill="#1F1F1F" cx="16" cy="20" r="1"/>
+	<circle fill="#1F1F1F" cx="19" cy="20" r="1"/>
+	<circle fill="#1F1F1F" cx="13" cy="20" r="1"/>
+	<circle fill="#1F1F1F" cx="10" cy="17" r="1"/>
+	<circle fill="#1F1F1F" cx="22" cy="17" r="1"/>
+	
+		<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="12" y1="23" x2="20" y2="23"/>
+	<path fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M16.0003662,42c0,0,0.2496338,5.4166679,8.9996338,4c7.0193253-1.1364632,12.5-10.4166679,20-5"/>
+</g>
 </svg>
