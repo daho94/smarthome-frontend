@@ -93,6 +93,10 @@ html, body, #app, section.section {
 .material-icons.md-48 { font-size: 48px; }
 
 /* Vue-bar styling */
+.vb {
+  width: 100%;
+}
+
 .vb > .vb-dragger {
     z-index: 5;
     width: 12px;
