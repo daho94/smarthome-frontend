@@ -35,6 +35,9 @@ export default {
                 },
                  tooltip: {
                     style: { color: this.activeTheme === "dark" ? "white" : "black" },
+                    formatter: function () {
+                        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${this.y.toFixed(2)}</b>`
+                    }
                 },
                 yAxis: {
                     title: {
@@ -104,7 +107,8 @@ export default {
                 this.chartData = []
                 return
             }
-            this.chartData.push([this.objState.ts, parseFloat(this.objState.val)])
+            this.chartData.push([this.objState.ts, this.objState.val])
+
         },
         // pull data for new timespan
         timeSpan: function() {
