@@ -60,8 +60,8 @@ export default {
                     options: []
                 },
                 image: {
-                    val: "https://images-na.ssl-images-amazon.com/images/I/61lcYL2o66L._SY679_.jpg",
-                    component: "form-input",
+                    val: "/img/forest.jpg",
+                    component: "form-img",
                     type: "text",
                     category: "settings"
                 }
