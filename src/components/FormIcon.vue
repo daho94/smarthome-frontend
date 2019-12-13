@@ -9,7 +9,9 @@
             <b-button variant="transparent" class="picture-btn edit-btn" size="sm" v-b-modal.modal-icon-selector><i class="material-icons">collections</i></b-button>
             <b-modal
                 id="modal-icon-selector"
-                title="Choose Icon!"
+                size="lg"
+                scrollable
+                title="Icons"
                 ref="modal"
                 @show="resetModal"
                 @hidden="resetModal"
