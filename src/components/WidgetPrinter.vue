@@ -6,10 +6,6 @@
 import SubscriptionMixin from '../mixins/subscription-mixin'
 import SettingsMergeMixin from '../mixins/settings-merge-mixin'
 import BaseChart from './BaseChart'
-import Highcharts from 'highcharts';
-import More from 'highcharts/highcharts-more'
-
-More(Highcharts)
 
 export default {
     name:"widget-printer",
@@ -33,7 +29,7 @@ export default {
         }
     },
     computed: {
-        state: function() {
+        state() {
             return this.updateValue(this.settings.objId)
         },
         chartSeries() {
@@ -42,7 +38,7 @@ export default {
             }
             return this.parseData(JSON.parse(this.state.val))
         },
-        chartOptions: function() {
+        chartOptions() {
             return {                   
                 subtitle: {
                     text: "",
@@ -50,7 +46,6 @@ export default {
                 chart: {
                     type: "column",
                     inverted: false,
-                    polar: true,
                 },
                 tooltip: {
                     shared: true,
@@ -64,6 +59,7 @@ export default {
                     },
                     labels: {},
                     max: 100,
+                    gridLineWidth: 0,
                 },
                 xAxis: {
                     title: {},

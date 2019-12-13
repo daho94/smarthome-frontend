@@ -9,36 +9,44 @@
             <b-button variant="transparent" class="picture-btn edit-btn" size="sm" v-b-modal.modal-icon-selector><i class="material-icons">collections</i></b-button>
             <b-modal
                 id="modal-icon-selector"
-                size="lg"
+                size="xl"
                 scrollable
-                title="Icons"
+                title="Uploads"
                 ref="modal"
                 @show="resetModal"
                 @hidden="resetModal"
                 @ok="handleOk"
                 content-class="modal-bg"
             >
-                <icon-selector  v-on:select="changeIcon" />
+            <div class="img-view" >
+                <div v-for="file in files" :key="file.name"  @click="select(file.path)" :class="{'img-selected': selected === file.path}">
+                    <img :src="`/${file.path}`" :alt="file.name" />
+                    <span>{{ file.name }}</span>
+                </div>
+            </div>    
             </b-modal>
         </b-form>
     </div>
 </section>
 </template>
 <script>
-import IconSelector from './IconSelector'
+import { getFiles } from '../calls/upload'
 
 export default {
-    name: "form-icon",
+    name: "form-img",
     props: ["model", "type"],
-    components: {IconSelector},
     data () {
         return {
-            selected: ""
+            selected: "",
+            files: []
         }
     },
+    async mounted() {
+        this.files = await getFiles()
+    },
     methods: {
-        changeIcon(icon) {
-            this.selected = icon
+        select(path) {
+            this.selected = path
         },
         resetModal() {
             this.selected = ""
@@ -49,7 +57,7 @@ export default {
         },
         handleSubmit() {
             if (this.selected.length !== 0) {
-                this.model[1].val = this.selected
+                this.model[1].val = `/${this.selected}`
             }
 
             this.$nextTick(() => {
@@ -60,29 +68,32 @@ export default {
     
 }
 </script>
-<style lang="scss">
-.picture-btn {
-    color: $light-color !important;  
+<style lang="scss" scoped>
+.img-selected {
+    filter: drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 2px #17a2b8) drop-shadow(0px 0px 4px #17a2b8);
 }
-.picture-btn:focus {
-  outline: none !important;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
-  -moz-box-shadow: 0px 0px 10px 0px rgba(235,228,235,1) !important;
-  box-shadow: 0px 0px 4px 0px rgba(235, 228, 235, 0.6) !important;
-}
-.form-input {
+.img-view {
     display: flex;
-    flex-flow: column;
-}
-.form-input > div {
-    margin-left: 5px;
-    margin-right: 5px;
-    align-self: flex-start;
-    width: 100%;
-    text-align: left;
-}
-.modal-bg {
-    background-color: #393b3d !important;
-    color: $font-color;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    > div {
+        display: flex;
+        justify-content: center;
+        flex-flow: column;
+        width: 130px;
+        margin: 5px;
+        cursor: pointer;
+        > img {
+            width: 100%;
+        }
+        > span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
 }
 </style>

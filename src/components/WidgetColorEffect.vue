@@ -60,8 +60,8 @@ export default {
                     options: []
                 },
                 image: {
-                    val: "https://images-na.ssl-images-amazon.com/images/I/61lcYL2o66L._SY679_.jpg",
-                    component: "form-input",
+                    val: "/img/forest.jpg",
+                    component: "form-img",
                     type: "text",
                     category: "settings"
                 }
@@ -116,19 +116,18 @@ export default {
 .effect-image-wrapper {
     width: 45%;
     height: 100%;
-
+    padding: 10px;
     img { 
         width: 50%;
         height: 50%;
     }
 }
 .clipboard {
-    clip-path: inset(10% 10% 10% 10% round 5%);
+    clip-path: inset(0% 0% 0% 0% round 5%);
     background-size: cover;
     background-position: center center;
-    height: 80%;
+    height: 100%;
     position: relative;
-    top: 10%;
 }
 
 .effect-text {

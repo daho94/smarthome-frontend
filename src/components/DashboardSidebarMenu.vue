@@ -1,7 +1,6 @@
 <template>
-    <sidebar-menu class="sidebar-menu" :menu="menu"  @item-click="onItemClick" :collapsed="collapsed" @collapse="onCollapse">
-        <span slot="collapse-icon"><squid-icon class="icon-sidebar-collapse" icon="side-arrow"/></span>
-        <span slot="dropdown-icon">dropdown-icon</span>
+    <sidebar-menu class="sidebar-menu" :menu="menu"  disable-hover @item-click="onItemClick" :collapsed="collapsed" @collapse="onCollapse">
+        <span slot="toggle-icon"><squid-icon class="icon-sidebar-collapse" icon="side-arrow"/></span>
     </sidebar-menu>
 </template>
 
@@ -27,7 +26,8 @@ export default {
             const dashboardUrl = "/"
             let menu = [{
                 header: true,
-                        title: "Dashboards",
+                title: "Dashboards",
+                hiddenOnCollapse: true
             }]
 
             for (const dashboard of this.dashboards) {

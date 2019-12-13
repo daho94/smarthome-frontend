@@ -44,6 +44,7 @@ import FormInput from './FormInput'
 import FormSelect from './FormSelect'
 import FormCheckbox from './FormCheckbox'
 import FormIcon from './FormIcon'
+import FormImg from './FormImg'
 
 export default {
   components: {
@@ -51,6 +52,7 @@ export default {
     FormSelect,
     FormCheckbox,
     FormIcon,
+    FormImg,
   },
   mixins: [WidgetSettingsMixin],
   props: ["settings", "widgetId"],
