@@ -4,7 +4,8 @@ build:
   image: "node:latest"
   before_script:
     - npm install -g @vue/cli
+    - npm install
+    - apk add python make g++
   stage: build
   script:
-    - npm install
     - npm run build
