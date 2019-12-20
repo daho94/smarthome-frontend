@@ -6,4 +6,5 @@ build:
     - npm install -g @vue/cli
   stage: build
   script:
+    - npm install
     - npm run build
