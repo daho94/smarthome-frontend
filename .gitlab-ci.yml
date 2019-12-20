@@ -1,6 +1,7 @@
 stages:
   - build
 build:
+  image: "node:latest"
   before_script:
     - npm install -g @vue/cli
   stage: build
