@@ -121,8 +121,11 @@ export default {
         gridItem.$el.style.height = this.defaultGridItem.height
         gridItem.$el.style.transform = this.defaultGridItem.transform
         gridItem.$el.style.zIndex = 0
+        gridItem.$el.style.position = "absolute"
 
         this.isFullscreen = false
+
+        this.toggleOtherGridItemsVisibility(gridItem._uid)
       } else {
         // store default height and width
         this.defaultGridLayoutHeight = gridLayout.containerHeight()
@@ -133,14 +136,35 @@ export default {
         // set new width and height
         gridLayout.$el.style.height = "calc(100vh - 60px)"
 
-        gridItem.$el.style.width = "calc(100% - 20px)"
-        gridItem.$el.style.height = "calc(100% - 10px)"
+        gridItem.$el.style.width = "calc(100% - 70px)"
+        gridItem.$el.style.height = "calc(100% - 70px)"
+
         gridItem.$el.style.zIndex = 1;
-        gridItem.$el.style.transform = "translate3d(10px,10px, 0)"
-        
+        gridItem.$el.style.transform = "translate3d(60px, 10px, 0px)"
+        gridItem.$el.style.position = "fixed"
         this.isFullscreen = true
+
+        this.toggleOtherGridItemsVisibility(gridItem._uid)
       }
       this.$refs.tooltip.$emit('close')
+    },
+    /**
+     * Hide/show all other grid-items except the fullscreen-one
+     */
+    toggleOtherGridItemsVisibility(id) {
+      let gridItems = this.$parent.$parent.$children;
+      for (let item of gridItems) {
+        if (item.$el.classList.contains("vue-grid-placeholder") || item._uid === id) {
+          continue
+        }
+
+        if (this.isFullscreen) {
+          item.$el.style.visibility = "hidden";
+        } else {
+          item.$el.style.visibility = "visible";
+        }
+      }
+
     }
   }
 }
@@ -156,6 +180,7 @@ export default {
     height: inherit;
   }
 }
+
 @media only screen and (min-width: 650px) {
   .widget-actions {
     position: absolute;
