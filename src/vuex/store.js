@@ -16,14 +16,12 @@ export default new Vuex.Store({
     },
     mutations: {
         SOCKET_connect(state) {
-            console.info("Socket connected")
             state.connected = true
         },
         SOCKET_disconnect(state) {
             state.connected = false
         },
         SOCKET_stateChange(state, data) {
-            // console.info("State changed")
             state.subscriptions[data[0]].state = data[1]
         },
         increment_subs(state, id) {

@@ -23,12 +23,7 @@ export default {
                 getState(this.$socket, objId).then(data => {
                     self.update_subscription_value({ id: objId, newState: data })
                     resolve(data.val)
-                }, (reason) => {
-                    if(reason) {
-                        console.error(reason)
-                    } else {
-                        console.error("The state with objectid: " + objId + " does not exist")
-                    }
+                }, () => {
                     resolve("N/A")
                 })       
 

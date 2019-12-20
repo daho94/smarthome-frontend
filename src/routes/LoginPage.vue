@@ -33,11 +33,11 @@ export default {
   computed: {
   },
   methods: {
-      handleSubmit: function(e) {
+      handleSubmit() {
           this.submitted = true;
           const { username, password } = this;
           if (username && password) {
-              login(username, password).then(_res => {
+              login(username, password).then(() => {
                   this.$router.push("/")
               })
           }
