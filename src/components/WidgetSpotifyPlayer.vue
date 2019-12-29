@@ -206,10 +206,6 @@ $controls-height: 80px;
     display: flex;
     flex-flow: column nowrap;
     width: calc(100% - 40px);
-    @include themify($themes) {
-        background-image: themed('backgroundGradient');
-        border-top-right-radius: themed('widgetBorderRadius');
-    }
 }
 .player-context-description {
     height: 25%;
