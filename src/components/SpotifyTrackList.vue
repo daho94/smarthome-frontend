@@ -7,7 +7,7 @@
             <div>
                 <b-table responsive small borderless :fields="fields" :items="trackList"
                     @row-dblclicked="onDoubleClickEvent"
-                    @row-clicked="onClickEvent"
+                    tbody-class="custom-tr-hover"
                 >
                 </b-table>
             </div>
@@ -86,6 +86,7 @@ export default {
                     artistName: track.artistName,
                     album: track.album.name,
                     duration: track.duration,
+                    // Iobroker spotify-premium-adapter is buggy
                     trackNo: i + 1
                 }
             })
@@ -93,9 +94,6 @@ export default {
         onDoubleClickEvent(item) {
             this.$emit("trackDblClicked", item.trackNo)
         },
-        onClickEvent(item) {
-            this.$emit("trackClicked", item.trackNo)
-        }
     }
 }
 
@@ -121,5 +119,10 @@ export default {
         height: 100%;
     }
     height: 100%;
+}
+.custom-tr-hover > tr:hover {
+    @include themify($themes) {
+      background-color: rgba(themed('scrollbarColor'), 0.1);  
+    }
 }
 </style>

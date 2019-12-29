@@ -38,7 +38,6 @@
                     <spotify-track-list 
                         :currentPlaylist="activePlaylistPath"
                         :objId="objId"
-                        @trackClicked="changeSelectedTrack"
                         @trackDblClicked="playTrack"
                     />
                 </div>
@@ -96,7 +95,6 @@ export default {
                     ]
                 },
             },
-            selectedTrackIndex: undefined,
             activePlaylistPath: undefined,
             isPlaylistHidden: true,
             breakpoints: {small: 650, medium: 1280, large: 1600}
@@ -104,9 +102,6 @@ export default {
 
     },
     methods: {
-        changeSelectedTrack(track) {
-            this.selectedTrackIndex = track.trackNo
-        },
         async playTrack(trackNo) {
             setState(this.$socket, `${this.objId}.player.playlist.trackNo`, trackNo) 
         },
