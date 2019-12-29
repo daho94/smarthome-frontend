@@ -26,31 +26,35 @@ export default {
     mixins: [SubscriptionMixin],
     data() {
         return {
-            fields: {
+            fields: [
                 // A regular column
-                title: {
+                {
+                    key: "title",
                     label: "Title",
                     class: "table-text-color",
                     sortable: true
                 },
                 // A regular column
-                artistName: {
+                {
+                    key: "artistName",
                     label: "Artist",
                     class: "table-text-color",
                     sortable: true
                 },
                 // A virtual column made up from two information
-                album: { 
+                { 
+                    key: "album",
                     label: 'Album', 
                     class: "table-text-color",
                     sortable: true  
                 },
-                duration: {
+                {
+                    key: "duration",
                     label: 'Duration',
                     class: "table-text-color",
                     sortable: true  
                 }        
-            },
+            ],
         }
     },
     computed: {

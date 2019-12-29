@@ -7,7 +7,7 @@
             <div>
                 <b-table responsive small borderless :fields="fields" :items="items">
                     <!-- A virtual composite column -->
-                    <template slot="frequency" slot-scope="data">
+                    <template v-slot:cell(frequency)="data">
                         <div class="frequency-wrapper" :title="`${(data.item.hits * 100 / blockedAds).toFixed(2)}% of ${blockedAds}`">
                             <div :style="{width: `${(data.item.hits * 100 / blockedAds).toFixed(2)}%` }"></div>
                         </div>
@@ -27,25 +27,25 @@ export default {
     mixins: [SubscriptionMixin],
     data() {
         return {
-            fields: {
-                // A regular column
-                domain: {
+            fields: [
+                {
+                    key: "domain",
                     label: "Domain",
                     class: "table-text-color"
                 },
-                // A regular column
-                hits: {
+                {
+                    key: "hits",
                     label: "Hits",
                     class: "table-text-color",
                     sortable: true
                 },
-                // A virtual column made up from two information
-                frequenzy: { 
+                // Virtual column
+                { 
                     key: 'frequency', 
                     label: 'Frequency',
                     class: "table-text-color"     
                 }           
-            },
+            ],
             objId: "javascript.0.pi-hole.JSON"
         }
     },

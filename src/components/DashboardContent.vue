@@ -61,11 +61,7 @@ export default {
     BaseWidget,
     WidgetLibrary,
   },
-  props: {
-    isEditLayout: Boolean,
-    layout: Array,
-    activeTheme: String,
-  },
+  props: ["isEditLayout", "layout", "activeTheme"],
   data () {
     return {
       layoutCopy: [],
