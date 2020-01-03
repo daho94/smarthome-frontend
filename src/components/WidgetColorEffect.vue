@@ -116,7 +116,7 @@ export default {
 .effect-image-wrapper {
     width: 45%;
     height: 100%;
-    padding: 10px;
+    padding: 20px;
     img { 
         width: 50%;
         height: 50%;
