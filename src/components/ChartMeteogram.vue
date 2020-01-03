@@ -395,11 +395,25 @@ export default {
 
             const moment = require("moment")
 
-            each(states, function(value, key) {
-                // sometimes iobroker returns an undefined state
-                if (value === null || key === null) {
+            // sort keys by hour
+            let keys = Object.keys(states).sort(function(a, b) {
+                let splitted_a = a.split(".")
+                let ts_a = moment().startOf("day").add(parseInt(splitted_a[splitted_a.length - 2].split("_")[1]), 'hour').unix()
+                
+                let splitted_b = b.split(".")
+                let ts_b = moment().startOf("day").add(parseInt(splitted_b[splitted_b.length - 2].split("_")[1]), 'hour').unix()
+                
+                return ts_a - ts_b
+            })
+
+            for (let key of keys) {
+                let value = states[key]
+                
+                // sometimes iobroker returns an empty state
+                if (value === null) {
                     return
                 }
+
                 let splitted = key.split(".")
                 // timestamp in milliseconds
                 let ts = moment().startOf("day").add(parseInt(splitted[splitted.length - 2].split("_")[1]), 'hour').unix() * 1000
@@ -444,10 +458,10 @@ export default {
                         // do nothing
                 }
 
-            })
+            }
             each(vm.winds, function(val, idx) {
                 val.direction = windDirections[idx]
-            })
+            })      
             each(temperatures, function(val, idx) {
                 val.symbolDesc = symbolDescs[idx]
             })
