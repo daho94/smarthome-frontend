@@ -23,7 +23,8 @@
     </section>
 </template>
 <script>
-import { setColor } from '../calls/hyperion'
+import SettingsMergeMixin from '../mixins/settings-merge-mixin'
+import {setState } from '../calls/iobroker'
 
  const COLORS = [
   {
@@ -1353,17 +1354,48 @@ import { setColor } from '../calls/hyperion'
 
 export default {
     name: "widget-color-palette",
+        props: {
+        settings: Object
+    },
+    mixins: [SettingsMergeMixin],
     data() {
         return {
             colors: COLORS,
             //index of selected color
             selected: undefined, 
+            widgetSettings: {
+                objId: {
+                    val: "",
+                    component: "form-input",
+                    type: "text",
+                    category: "settings"
+                }, 
+                isSynced: {
+                    val: false,
+                    component: "form-checkbox",
+                    type: "checkbox",
+                    category: "settings"
+                },
+            }
         }
     },
     methods: {
       async changeColor(color, index) {
-        let success = await setColor(color.dec.r, color.dec.g, color.dec.b)
-        if (success) this.selected = index
+        // let success = await setColor(color.dec.r, color.dec.g, color.dec.b)
+        // if (success) this.selected = index
+        let rgb = JSON.stringify({
+          r: color.dec.r,
+          g: color.dec.g,
+          b: color.dec.b
+        })
+        let res = false
+        if (this.settings.isSynced.val) {
+            res = await setState(this.$socket, "0_userdata.0.lights.globalColor", rgb)
+        } else {
+            res = await setState(this.$socket, this.settings.objId.val, rgb)
+        }
+
+        if (res) this.selected = index
       }
     }
 }

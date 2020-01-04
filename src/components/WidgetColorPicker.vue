@@ -1,10 +1,10 @@
 <template>
     <section>
-        <div :id="uniqueId"></div>
+        <div :id="`color-picker-container-${uniqueId}`"></div>
         <resize-observer @notify="resizeDebounced" />
         <svg style="display:none;">
             <defs>
-                <g id="handle" stroke-width="2" stroke="#000000">
+                <g :id="`handle-${uniqueId}`" stroke-width="2" stroke="#000000">
                     <path 
                         fill="none"
                         stroke="#ffffff"
@@ -26,43 +26,74 @@
 import iro from '@jaames/iro';
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
-import { setColor } from '../calls/hyperion'
+import {setState } from '../calls/iobroker'
 import uuidv4 from 'uuid/v4'
-
+import SettingsMergeMixin from '../mixins/settings-merge-mixin'
+import SubscriptionMixin from '../mixins/subscription-mixin'
 
 export default {
     name: "widget-color-picker",
+    props: {
+        settings: Object
+    },
+    mixins: [SubscriptionMixin, SettingsMergeMixin],
     data() {
         return {
             colorPicker: undefined,
-            uniqueId: `color-picker-container-${uuidv4()}`,
-            color: "red"
+            uniqueId: `${uuidv4()}`,
+            color: "red",
+            widgetSettings: {
+                objId: {
+                    val: "",
+                    component: "form-input",
+                    type: "text",
+                    category: "settings"
+                }, 
+                isSynced: {
+                    val: false,
+                    component: "form-checkbox",
+                    type: "checkbox",
+                    category: "settings"
+                },
+            }
         }
     },
     mounted() {
-        this.colorPicker = new iro.ColorPicker(`#${this.uniqueId}`, {
+        let vm = this;
+        vm.$nextTick(function() {
+            vm.subscribe(vm.settings.objId.val)
+
+            vm.$watch('settings.objId.val', function(newVal, oldVal) {
+                vm.unsubscribe(oldVal)
+                vm.subscribe(newVal)
+            })
+        })
+        vm.colorPicker = new iro.ColorPicker(`#color-picker-container-${vm.uniqueId}`, {
             // Set the initial color to pure red
             color: "#f00",
             borderWidth: 1,
-            handleSvg: '#handle',
+            handleSvg: `#handle-${vm.uniqueId}`,
             handleOrigin: {x: -14.25, y: -40}
         });
         // only update every 500 ms to less spam the server
-        this.colorPicker.on("color:change", throttle(this.colorChangeCallback, 500))
+        vm.colorPicker.on("color:change", throttle(vm.colorChangeCallback, 500))
 
-        this.colorPicker.on("input:start", this.handleInput)
-        this.colorPicker.on("input:move", this.handleInput)
-        this.colorPicker.on("input:end", this.handleInput)
+        vm.colorPicker.on("input:start", vm.handleInput)
+        vm.colorPicker.on("input:move", vm.handleInput)
+        vm.colorPicker.on("input:end", vm.handleInput)
 
 
         // inital resize when widget is inserted
-        this.colorPicker.on("mount", debounce(this.resize), 100);
+        vm.colorPicker.on("mount", debounce(vm.resize), 100);
     },
     created() {
         let vm = this
         this.resizeDebounced = debounce(function() {
             vm.resize() 
         }, 300)
+    },
+    destroyed() {
+        this.unsubscribe(this.settings.objId.val)
     },
     methods: {
         handleInput(color) {
@@ -96,7 +127,11 @@ export default {
          */
         colorChangeCallback(color) {
             let rgb = color.rgb
-            setColor(rgb.r, rgb.g, rgb.b)
+            if (this.settings.isSynced.val) {
+                setState(this.$socket, "0_userdata.0.lights.globalColor", JSON.stringify(rgb))
+            } else {
+                setState(this.$socket, this.settings.objId.val, JSON.stringify(rgb))
+            }
         }
     }
 }
