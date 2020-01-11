@@ -136,5 +136,6 @@ export default {
     font-size: 1.5rem;
     text-align: left;
     line-height: 1.0;
+    margin-right: 20px;
 }
 </style>
