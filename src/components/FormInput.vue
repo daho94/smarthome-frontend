@@ -4,7 +4,9 @@
         <label for="input-small">{{ model[0] }}:</label>
     </div>
     <div>
-        <b-form-input size="sm" v-model="model[1].val" :type="type"></b-form-input> 
+        <b-form-input v-if="type == 'range'" size="sm" v-model="model[1].val" type="number" :min="model[1].min" :max="model[1].max"></b-form-input> 
+        <b-form-input v-if="type == 'range'" size="sm" v-model="model[1].val" :type="type" :min="model[1].min" :max="model[1].max" ></b-form-input> 
+        <b-form-input v-else size="sm" v-model="model[1].val" :type="type"></b-form-input> 
     </div>
 </section>
 </template>

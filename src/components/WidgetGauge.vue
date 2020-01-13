@@ -1,5 +1,5 @@
 <template>
-    <base-chart :options="chartOptions" @onChartLoad="onChartLoad"></base-chart>
+    <base-chart :options="chartOptions" @onChartLoad="onChartLoad" @onResize="resize"></base-chart>
 </template>
 <script>
 import BaseChart from './BaseChart'
@@ -8,6 +8,7 @@ import solidGaugeInit from 'highcharts/modules/solid-gauge'
 import highchartsMoreInit from 'highcharts/highcharts-more'
 import SettingsMergeMixin from '../mixins/settings-merge-mixin'
 import SubscriptionMixin from '../mixins/subscription-mixin'
+import { abbreviateNumber } from '../utils/format'
 
 highchartsMoreInit(Highcharts)
 solidGaugeInit(Highcharts)
@@ -18,22 +19,14 @@ const gaugeOptions = {
     },
     title: null,
     pane: {
-        center: ['50%', '50%'],
-        size: '80%',
-        // startAngle: -110,
-        endAngle: 90,
         background: {
-            // backgroundColor:
-            //     Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-            innerRadius: '60%',
-            outerRadius: '100%',
-            shape: 'arc'
+            shape: 'arc',
+            backgroundColor: "#2a2a2e"
         }
     },
     tooltip: {
         enabled: false
     },
-    // the value axis
     yAxis: {
         stops: [
             [0.1, '#55BF3B'], // green
@@ -44,22 +37,30 @@ const gaugeOptions = {
         tickWidth: 0,
         minorTickInterval: null,
         tickAmount: 2,
-        title: {
-            y: -70
-        },
+        title: null,
         labels: {
-            y: 16
+            y: 30,
+            distance: "75%",
+            style: {
+                fontSize: "16px"
+            },
+            formatter: function () {
+                return `
+                    <div style="text-align:center">
+                        <span style="font-size:25px">${abbreviateNumber(this.value)}</span><br/>
+                    </div>`
+            }          
         }
     },
     plotOptions: {
         solidgauge: {
             dataLabels: {
-                y: 5,
+                y: -45,
                 borderWidth: 0,
-                useHTML: true
+                useHTML: true,
             }
         }
-    }
+    },
 }
 
 
@@ -96,81 +97,106 @@ export default {
                 unit: {
                     val: "",
                     component: "form-input",
-                    tye: "text",
+                    type: "text",
                     category: "settings"
                 },
                 startAngle: {
-                    val: -90,
+                    val: -110,
                     component: "form-input",
-                    tye: "number",
+                    type: "range",
+                    min: -180,
+                    max: 0,
+                    category: "history"
+                },
+                endAngle: {
+                    val: 110,
+                    component: "form-input",
+                    type: "range",
+                    min: 0,
+                    max: 180,
                     category: "history"
                 },
                 zoom: {
-                    val: 80,
+                    val: 110,
                     component: "form-input",
-                    tye: "number",
+                    type: "range",
+                    min: 0,
+                    max: 200,
+                    category: "history"
+                },
+                yOffset: {
+                    val: 65,
+                    component: "form-input",
+                    type: "range",
+                    min: 0,
+                    max: 100,
+                    category: "history"
+                },
+                outerRadius: {
+                    val: 100,
+                    component: "form-input",
+                    type: "range",
+                    min: 0,
+                    max: 100,
+                    category: "history"
+                },
+                innerRadius: {
+                    val: 75,
+                    component: "form-input",
+                    type: "range",
+                    min: 0,
+                    max: 100,
                     category: "history"
                 }  
             },
             chartData: [],
             chart: undefined,
+            canZoom: false
         }
     },
     computed: {
-        chartCenter() {
-            const chart = this.chart
-            if (!chart) {
-                return ["50%", "50%"]
-            }
-            const r = Math.min(chart.plotSizeX, chart.plotSizeY) / 2
-            const chartHeight = chart.chartHeight
-            const padding = (chartHeight - chart.plotSizeY) / 2
-            const startAngle = Math.abs(+this.loadSetting("startAngle")) - 90
-            // const zoomOffset = (100 - +this.loadSetting("zoom")) / 2
+        // zoom: {
+        //     get() {
+        //         return +this.loadSetting('zoom')
+        //     },
+        //     set(newValue) {
 
-            let dy = Math.sin(startAngle * (Math.PI / 180)) * r
-            console.log(dy)
-            return ["50%", chartHeight / 2 + (r - dy) - padding]
-        },
+        //     }
+        // },
         chartOptions() {
             let vm = this
             return  Highcharts.merge(gaugeOptions, {
                 pane: {
-                    center: vm.chartCenter,
-                    size: `${+vm.loadSetting('zoom')}%`,
+                    center: ["50%", `${vm.loadSetting('yOffset')}%`],
+                    size: `${vm.canZoom? 100 : +vm.loadSetting('zoom')}%`,
                     startAngle: +vm.loadSetting('startAngle'),
-                    // endAngle: 110,
-                    // background: {
-                    //     // backgroundColor:
-                    //     //     Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                    //     innerRadius: '60%',
-                    //     outerRadius: '100%',
-                    //     shape: 'circle'
-                    // }
+                    endAngle: +vm.loadSetting('endAngle'),
+                    background: {
+                        innerRadius: `${+vm.loadSetting('innerRadius')}%`,
+                        outerRadius: `${+vm.loadSetting('outerRadius')}%`,
+                    }
                 },
                 yAxis: {
                     min: +vm.loadSetting("min"),
                     max: +vm.loadSetting("max"),
-                    title: {
-                        text: null
+                },
+                plotOptions: {
+                    solidgauge: {
+                        innerRadius: `${+vm.loadSetting('innerRadius')}%`,
                     }
                 },
-                credits: {
-                    enabled: false
-                },
                 series: [{
-                    name: 'Speed',
+                    name: undefined,
                     data: vm.chartData,
                     dataLabels: {
-                        format:
-                            '<div style="text-align:center">' +
-                            '<span style="font-size:25px">{y}</span><br/>' +
-                            `<span class="text-secondary" style="font-size:12px">${this.loadSetting('unit')}</span>` +
-                            '</div>',
+                        formatter: function () {
+                            return `
+                                <div style="text-align:center">
+                                    <span style="font-size:2.5rem">${abbreviateNumber(this.y)}</span><br/>
+                                    <span class="text-secondary" style="font-size:12px">${vm.loadSetting('unit')}</span>
+                                </div>`
+                        },
                         className: "gauge-datalabels",
-                    },
-                    tooltip: {
-                        valueSuffix: ' km/h'
                     }
                 }]
             })
@@ -189,12 +215,20 @@ export default {
                 let point = chart.series[0].points[0];
                 point.update(newVal)
             }
-        }
+        },
     },
     methods: {
         // Store reference to chart
         onChartLoad(chart) {
             this.chart = chart
+        },
+        // Set zoom to 100% if chart width < chart height to prevent chart from overflowing
+        resize(chart) {
+            if (this.loadSetting('zoom') > 100 && chart.chartWidth - 5 < chart.chartHeight) {
+                this.canZoom = true
+            } else {
+                this.canZoom = false
+            }
         }
     },
     mounted() {
@@ -215,7 +249,6 @@ export default {
 </script>
 <style lang="scss">
 .gauge-datalabels {
-    /* font-size: 8px; */
     span {
         @include themify($themes) {
             color: themed('textColor');

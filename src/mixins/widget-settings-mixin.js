@@ -13,7 +13,7 @@ export default {
                     iconUrl: "web_asset"
                 },
                 history: {
-                    name: "History",
+                    name: "Chart",
                     iconUrl: "show_chart"
                 }   
             }

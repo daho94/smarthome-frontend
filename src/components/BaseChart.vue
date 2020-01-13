@@ -21,6 +21,9 @@ export default {
             updateArgs: [true, true, {duration: 1000}],
             defaultOptions: {
                 chart: {
+                    style: {
+                        fontFamily: "\"Unica One\", sans-serif" 
+                    }
                 },
                 colors: ["#19A2A5", "#154775", "#02BFFE", "#4E8BB8", "#00643F", "#9ECAE3"],
                 credits: {
