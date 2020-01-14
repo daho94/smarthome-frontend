@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style lang="scss">
+::-webkit-scrollbar { /* for Mac OS X support */
+    width: 0;
+}
 .v-sidebar-menu {
     background-color: $sidebar-background-color;
     top: $navbar-height;
