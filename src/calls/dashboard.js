@@ -72,12 +72,12 @@ async function deleteDashboard(id) {
     return response.ok
 }
 
-async function createDashboard(name, icon, isDefault) {
+async function createDashboard(name, icon, isDefault, folderId) {
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
-        body: JSON.stringify({ name, icon, is_default: isDefault }),
+        body: JSON.stringify({ name, icon, is_default: isDefault, dashboard_folder_id: +folderId }),
     };
     let response = await fetch(`${ENTRYPOINT}/create`, requestOptions)
     return response.ok
