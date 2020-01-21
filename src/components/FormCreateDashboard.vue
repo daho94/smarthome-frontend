@@ -8,7 +8,7 @@
         @hidden="resetModal"
         @ok="handleOk"
     >
-    <form ref="form" @submit.stop.prevent="handleSubmit">
+    <form ref="form" @submit.stop.prevent="handleSubmit" class="no-outline">
         <b-form-group invalid-feedback="Name is required" :state="nameState">
             <label for="dashboard-name">Dashboard Name:</label>
             <b-form-input id="dashboard-name" v-model="dashboard.name" :state="nameState" required></b-form-input>
@@ -23,6 +23,8 @@
                     </b-form-select>
                 </b-col>
             </b-row>
+            <label>Folder:</label>
+            <dashboard-folder :folder="folder" :model="dashboard.folderId" @onselect="updateFolderId"/>
         </b-form-group>
     </form>
     </b-modal>
@@ -30,29 +32,40 @@
 
 <script>
 import { getIcons } from '../utils/iconParser'
+import { getFolders } from '../calls/folder'
+import DashboardFolder from './DashboardFolder';
 
 export default {
     name: "form-create-dashboard",
+    components: {
+        DashboardFolder
+    },
     data() {
         return {
             dashboard: {},
             nameState: null,
+            folder: {},
             icons: []
         }
     },
     async mounted() {
         this.icons = await getIcons("/icons/squidink.svg")
+        this.folder = await getFolders()
     },
     methods: {
+        updateFolderId(folderId) {
+            this.dashboard.folderId = folderId
+        },
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
-            this.nameState = valid ? 'valid' : 'invalid'
+            this.nameState = valid ? true : false
             return valid
         },
         resetModal() {
             this.dashboard = {
                 name: "",
                 icon: "setting-roll",
+                folderId: 2,
             } 
             this.nameState = null
         },
@@ -75,6 +88,8 @@ export default {
 </script>
 
 <style lang="scss">
-
+.no-outline :focus {
+    outline: none;
+}
 
 </style>

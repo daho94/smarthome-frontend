@@ -144,7 +144,7 @@ export default {
       })
     },
     async createDashboard(dashboard) {
-      let success = await createDashboard(dashboard.name, dashboard.icon, this.dashboards.length === 0 ? true : false)
+      let success = await createDashboard(dashboard.name, dashboard.icon, this.dashboards.length === 0 ? true : false, dashboard.folderId)
       if(success) {
         // refresh dashboards
         this.loadDashboards()
