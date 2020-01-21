@@ -3,10 +3,10 @@
     'padding-left': `20px`,
 }">
 <b-row class="folder-wrapper">
-    <div @click="select(folder.Folder.id)" class="cursor-pointer icon-wrapper">
+    <div @click="select(folder.Folder)" class="cursor-pointer icon-wrapper">
         <squid-icon class="folder-icon" icon="folder" 
             :style="{
-                'stroke': model == folder.Folder.id ? '#17a2b8' : '#f8f9fa',
+                'stroke': model.id == folder.Folder.id && model.parent_id == folder.Folder.parent_id ? '#17a2b8' : '#f8f9fa',
             }"
         />
     </div> 
@@ -29,8 +29,8 @@ export default {
         }
     },
     methods: {
-        select(folderId) {
-            this.$emit('onselect', folderId)
+        select(folder) {
+            this.$emit('onselect', folder)
         }
     }
 }

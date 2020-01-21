@@ -16,4 +16,19 @@ async function getFolders() {
     }
 }
 
-export { getFolders }
+async function createFolder({ name, parentId, icon }) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+            name,
+            parent_id: parentId,
+            icon
+        })
+    }
+    let response = await fetch(`${ENTRYPOINT}`, requestOptions)
+    return response.ok 
+}
+
+export { getFolders, createFolder }

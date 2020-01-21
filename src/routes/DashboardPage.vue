@@ -31,12 +31,18 @@
                         <i class="material-icons">add</i>
                       </b-button> 
                       Add dashboard
-                    </b-dropdown-item>
+                    </b-dropdown-item>                   
                     <b-dropdown-item  @click="deleteDashboard()">
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
                         <i class="material-icons">delete</i>
                       </b-button> 
                       Delete Dashboard
+                    </b-dropdown-item>
+                    <b-dropdown-item v-b-modal.modal-create-folder>                  
+                      <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn"  >
+                        <i class="material-icons">add</i>
+                      </b-button> 
+                      Add Folder
                     </b-dropdown-item>
                     <b-dropdown-item  @click="logout()">
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
@@ -63,6 +69,7 @@
     </div>
     <dashboard-sidebar-menu :dashboards="dashboards" />
     <form-create-dashboard @on-submit="createDashboard" />
+    <form-create-folder @on-submit="createFolder" />
   </div>
 </template>
 
@@ -70,10 +77,13 @@
 import DashboardContent from '../components/DashboardContent'
 import cloneDeep from 'lodash/cloneDeep'
 import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard, deleteDashboard } from '../calls/dashboard'
+import { createFolder } from '../calls/folder'
 import { logout } from '../calls/auth'
 import CalendarComponent from '../components/CalendarComponent'
 import DashboardSidebarMenu from '../components/DashboardSidebarMenu'
 import FormCreateDashboard from '../components/FormCreateDashboard'
+import FormCreateFolder from '../components/FormCreateFolder'
+
 
 export default {
   components: {
@@ -81,6 +91,7 @@ export default {
     CalendarComponent,
     DashboardSidebarMenu,
     FormCreateDashboard,
+    FormCreateFolder
   },
   props: {
     activeTheme: String
@@ -145,6 +156,13 @@ export default {
     },
     async createDashboard(dashboard) {
       let success = await createDashboard(dashboard.name, dashboard.icon, this.dashboards.length === 0 ? true : false, dashboard.folderId)
+      if(success) {
+        // refresh dashboards
+        this.loadDashboards()
+      }
+    },
+    async createFolder(folder) {
+      let success = await createFolder(folder)
       if(success) {
         // refresh dashboards
         this.loadDashboards()
