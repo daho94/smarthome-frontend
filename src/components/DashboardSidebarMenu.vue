@@ -1,6 +1,7 @@
 <template>
     <sidebar-menu class="sidebar-menu" :menu="menu"  disable-hover @item-click="onItemClick" :collapsed="collapsed" @collapse="onCollapse">
         <span slot="toggle-icon"><squid-icon class="icon-sidebar-collapse" icon="side-arrow"/></span>
+        <span slot="dropdown-icon"><font-awesome-icon icon="chevron-down" size="xs" /></span>
     </sidebar-menu>
 </template>
 
@@ -23,15 +24,26 @@ export default {
     },
     computed: {
         menu() {
-            const dashboardUrl = "/"
-            let menu = [{
-                header: true,
-                title: "Dashboards",
-                hiddenOnCollapse: true
-            }]
+            if(this.dashboards.length == 0) {
+                return []
+            }
 
-            for (const dashboard of this.dashboards) {
-                menu.push({
+            return this.buildMenu(this.dashboards)            
+        }
+    },
+    methods: {
+        onItemClick(event, item) {
+            this.$emit("changeDashboard", item.dashboardId)
+        },
+        onCollapse (collapsed) {
+            this.collapsed = collapsed
+        },
+        appendDashboards(folderId, child) {
+            const dashboardUrl = "/"
+            let self = this
+            let dashboardsInFolder = self.dashboards.filter((d) => d.folder.id == folderId)
+            for (let dashboard of dashboardsInFolder) {
+                child.push({
                     href: dashboardUrl + dashboard.id,
                     title: dashboard.name,
                     dashboardId: dashboard.id,
@@ -44,17 +56,53 @@ export default {
                     }
                 })
             }
-
-            return  menu
-            
-        }
-    },
-    methods: {
-        onItemClick(event, item) {
-            this.$emit("changeDashboard", item.dashboardId)
         },
-        onCollapse (collapsed) {
-            this.collapsed = collapsed
+        buildTree(tree, root, folders) {
+            let children = folders.filter((f) => f.parent_id == root.id)
+
+            for (let child of children) {
+                let subTree = {
+                    title: child.name,
+                    icon: {
+                        element: "squid-icon",
+                        class: "icon-sidebar",
+                        attributes: {
+                            icon: child.icon
+                        }
+                    },
+                    child: []
+                }
+                this.appendDashboards(child.id, subTree.child)
+                this.buildTree(subTree, child, folders)
+                if (tree.child) tree.child.push(subTree)
+            }
+
+        },
+        buildMenu(dashboards) {
+            let root = dashboards.find((d) => d.folder.name === "root")
+            if (!root) return
+
+            let folders = dashboards.map((d) => d.folder).filter((f) => f.name != "root")
+            let uniqueFolders = []
+            for (let folder of folders) {
+                if (uniqueFolders.findIndex((f) => f.id == folder.id) == -1) {
+                    uniqueFolders.push(folder)
+                }
+            }
+
+            let tree = {
+                title: root.folder.name,
+                icon: "settings",
+                child: []
+            }
+            tree.child.push({
+                header: true,
+                title: "Dashboards",
+                hiddenOnCollapse: true
+            })
+            this.appendDashboards(root.folder.id, tree.child)
+            this.buildTree(tree, root.folder, uniqueFolders)
+            return tree.child
         },
     }
 }
@@ -74,6 +122,7 @@ export default {
     stroke: $light-color;
     stroke-width: 3px;
     fill: none;
+    height: 30px !important;
 }
 .icon-sidebar-collapse {
     width: 100%;
