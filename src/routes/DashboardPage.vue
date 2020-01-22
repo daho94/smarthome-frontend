@@ -1,7 +1,10 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="dashboard-row bg-nav">
+      <div class="bg-nav nav-left">
+        <img src="/img/favicon-96x96.png">
+      </div>
+      <div class="bg-nav nav-right">
         <section class="dashboard-header">
             <b-navbar toggleable="lg"  class="bg-nav z-index-10">
               <b-navbar-brand>{{ currentDashboardInfo.name }}</b-navbar-brand>
@@ -11,7 +14,6 @@
               <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                  <calendar-component/>
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" :class="{'edit-active': isEditLayout}" v-on:click="isEditLayout = !isEditLayout">
                     <i class="material-icons">create</i>
                   </b-button>
@@ -24,13 +26,13 @@
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
                     <i class="material-icons">{{activeTheme === 'dark' ? 'brightness_3' : 'wb_sunny'}}</i>
                   </b-button>    
-                  <div class="seperator" ></div>    
-                  <b-nav-item-dropdown text="Actions" right>
+                  <b-nav-item-dropdown right no-caret toggle-class="custom-toggle" menu-class="custom-menu">
+                    <i slot="button-content" class="material-icons">account_circle</i>
                     <b-dropdown-item v-b-modal.modal-create-dashboard>                  
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn"  >
-                        <i class="material-icons">add</i>
+                        <i class="material-icons">dashboard</i>
                       </b-button> 
-                      Add dashboard
+                      Create Dashboard
                     </b-dropdown-item>                   
                     <b-dropdown-item  @click="deleteDashboard()">
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
@@ -40,9 +42,9 @@
                     </b-dropdown-item>
                     <b-dropdown-item v-b-modal.modal-create-folder>                  
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn"  >
-                        <i class="material-icons">add</i>
+                        <i class="material-icons">folder</i>
                       </b-button> 
-                      Add Folder
+                      Create Folder
                     </b-dropdown-item>
                     <b-dropdown-item  @click="logout()">
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
@@ -79,7 +81,6 @@ import cloneDeep from 'lodash/cloneDeep'
 import { getDashboards, getDashboard, getDefaultDashboard, saveDashboard, createDashboard, deleteDashboard } from '../calls/dashboard'
 import { createFolder } from '../calls/folder'
 import { logout } from '../calls/auth'
-import CalendarComponent from '../components/CalendarComponent'
 import DashboardSidebarMenu from '../components/DashboardSidebarMenu'
 import FormCreateDashboard from '../components/FormCreateDashboard'
 import FormCreateFolder from '../components/FormCreateFolder'
@@ -88,7 +89,6 @@ import FormCreateFolder from '../components/FormCreateFolder'
 export default {
   components: {
     DashboardContent,
-    CalendarComponent,
     DashboardSidebarMenu,
     FormCreateDashboard,
     FormCreateFolder
@@ -204,9 +204,13 @@ export default {
 </script>
 
 <style lang="scss" >
-.seperator {
-  border-left: 1px solid $secondary-color;
-  height: auto;
+.custom-toggle {
+  padding-bottom: 0px !important;
+  padding-right: 0px !important;
+  padding-top: 5px !important;
+  :focus {
+    outline: none;
+  }
 }
 .z-index-10 {
   z-index: 10;
@@ -260,13 +264,40 @@ export default {
   padding: 5px 1rem !important;
 }
 .bg-nav {
-  background-color: $sidebar-background-color !important;  
+  background-color: $navbar-background-color !important;  
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
+  z-index: 1000;
 }
-
+.nav-right {
+  width: calc(100% - 50px);
+}
+.nav-left {
+  width: 50px;
+  img {
+    height: auto;
+    width: 50px;
+    padding: 8px;
+  }
+}
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 .navbar-light .navbar-nav .nav-link {
   color: $light-color !important;
+}
+.custom-menu:focus {
+  outline: none !important;
+}
+.custom-menu {
+  background-color: $navbar-background-color !important; 
+  .dropdown-item, button {
+    color: $light-color !important; 
+  }
+  .dropdown-item:hover {
+    color: $light-color !important; 
+    background-color: $sidebar-background-color !important;
+  }
 }
 </style>

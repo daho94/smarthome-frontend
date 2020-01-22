@@ -24,7 +24,7 @@
         <button class="widget-actions" ref="button-3">●●●</button>
         <b-tooltip ref="tooltip" variant="dark" :target="() => $refs['button-3']" title="Devices" placement="bottomleft" triggers="click blur">
             <div class="widget-actions-menu">
-              <div @click="toggleFullscreen">
+              <div @click="toggleFullscreen" class="no-outline">
                 <squid-icon :icon="isFullscreen ? 'close-move' : 'expand-middle'"/>
               </div>
             </div>

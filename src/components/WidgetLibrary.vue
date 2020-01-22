@@ -149,7 +149,7 @@ export default {
   display: inline-block;
 }
 .category-btn-container {
-  background: #343a40;
+  background: $sidebar-background-color;
 }
 .category-btn i {
   position: absolute;

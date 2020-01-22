@@ -142,7 +142,7 @@ export default {
     max-width: 250px;
     z-index: 9;
     color: $light-color;
-    background-color: $sidebar-background-color;  
+    background-color: $navbar-background-color;  
 }
 .vue-grid-item>.vue-resizable-handle {
   z-index: 3;
