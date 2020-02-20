@@ -23,9 +23,9 @@
                   <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-show="isEditLayout" v-on:click="restoreDashboard">
                     <i class="material-icons">clear</i>
                   </b-button>
-                  <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
+                  <!-- <b-button size="sm" variant="transparent" class="my-2 my-sm-0 nav-btn edit-btn" v-on:click="$emit('themeChanged')">
                     <i class="material-icons">{{activeTheme === 'dark' ? 'brightness_3' : 'wb_sunny'}}</i>
-                  </b-button>    
+                  </b-button>     -->
                   <b-nav-item-dropdown right no-caret toggle-class="custom-toggle" menu-class="custom-menu">
                     <i slot="button-content" class="material-icons">account_circle</i>
                     <b-dropdown-item v-b-modal.modal-create-dashboard>                  
@@ -45,6 +45,19 @@
                         <i class="material-icons">folder</i>
                       </b-button> 
                       Create Folder
+                    </b-dropdown-item>
+                    <b-dropdown-item @click="$emit('themeChanged')">
+                      <div class="theme-switch">
+                        <div>
+                          <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
+                            <i class="material-icons">brightness_3</i>
+                        </b-button> 
+                        Dark Mode
+                        </div>
+                        <div>                        
+                          <b-form-checkbox :checked="activeTheme === 'dark'" switch></b-form-checkbox>
+                        </div>
+                      </div>
                     </b-dropdown-item>
                     <b-dropdown-item  @click="logout()">
                       <b-button size="sm" variant="transparent" class="my-2 my-sm-0 edit-btn add-btn">
@@ -204,6 +217,14 @@ export default {
 </script>
 
 <style lang="scss" >
+.theme-switch {
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  .custom-switch {
+    padding-left: 3.25rem;
+  }
+}
 .custom-toggle {
   padding-bottom: 0px !important;
   padding-right: 0px !important;
@@ -222,7 +243,9 @@ export default {
 }
 
 .nav-btn {
-  color: $light-color !important;
+  @include themify($themes) {
+    color: themed('textColor') !important;
+  }
 }
 .edit-btn:focus {
   outline: none !important;
@@ -258,13 +281,20 @@ export default {
   width: 60px;
 }
 .navbar-brand {
-  color: $light-color !important;
+  @include themify($themes) {
+    color: themed('textColor') !important;  
+  }
 }
 .navbar {
   padding: 5px 1rem !important;
 }
 .bg-nav {
-  background-color: $navbar-background-color !important;  
+  @include themify($themes) {
+    background-color: themed('navbar-background-color') !important;  
+    -webkit-box-shadow: themed('navbar-background-shadow');
+    -moz-box-shadow: themed('navbar-background-shadow');
+    box-shadow: themed('navbar-background-shadow');
+  }
   -webkit-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.75);
@@ -285,19 +315,23 @@ export default {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 .navbar-light .navbar-nav .nav-link {
-  color: $light-color !important;
+  @include themify($themes) {
+    color: themed('textColor') !important;  
+  }
 }
 .custom-menu:focus {
   outline: none !important;
 }
 .custom-menu {
-  background-color: $navbar-background-color !important; 
-  .dropdown-item, button {
-    color: $light-color !important; 
-  }
-  .dropdown-item:hover {
-    color: $light-color !important; 
-    background-color: $sidebar-background-color !important;
+  @include themify($themes) {
+    background-color: themed('navbar-background-color') !important; 
+    .dropdown-item, button {
+      color: themed('textColor') !important;  
+    }
+    .dropdown-item:hover {
+      color: themed('textColor') !important;  
+      background-color: themed('sidebar-icon-background-color') !important;
+    }
   }
 }
 </style>
