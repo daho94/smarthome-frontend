@@ -21,7 +21,12 @@ $themes: (
     clockSecondsColor: #edbec5,
     clockHandColor: #7392a0,
     clockTextColor: #daf6ff,
-    clockTextShadow: rgba(10, 175, 230, 1)
+    clockTextShadow: rgba(10, 175, 230, 1),
+    navbar-background-color: #18181b,
+    navbar-background-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.75),
+    sidebar-background-color: #2a2a2e,
+    sidebar-icon-background-color: #1e1e21,
+    sidebar-dropdown-background-color: #1e1e21,
   ),
   light: (
     backgroundColor: #eeeef4,
@@ -44,7 +49,12 @@ $themes: (
     clockSecondsColor:  $primary-color,
     clockHandColor: $gray-medium,
     clockTextColor: #0a5d77,
-    clockTextShadow: $dark-color
+    clockTextShadow: $dark-color,
+    navbar-background-color: #ffffff,
+    navbar-background-shadow: 0px 2px 0px 0px rgb(197, 197, 197),
+    sidebar-background-color: #ffffff,
+    sidebar-icon-background-color: #d7dee4,
+    sidebar-dropdown-background-color: #c3c3c3,
   ),
 );
 

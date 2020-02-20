@@ -1,6 +1,6 @@
 <template>
     <sidebar-menu class="sidebar-menu" :menu="menu"  disable-hover @item-click="onItemClick" :collapsed="collapsed" @collapse="onCollapse">
-        <span slot="toggle-icon"><squid-icon class="icon-sidebar-collapse" icon="side-arrow"/></span>
+        <span slot="toggle-icon"><squid-icon class="icon-sidebar" icon="side-arrow"/></span>
         <span slot="dropdown-icon"><font-awesome-icon icon="chevron-down" size="xs" /></span>
     </sidebar-menu>
 </template>
@@ -113,20 +113,45 @@ export default {
     width: 0;
 }
 .v-sidebar-menu {
-    background-color: $sidebar-background-color;
+    @include themify($themes) {
+        background-color: themed('sidebar-background-color');
+    }
     top: $navbar-height;
     height: calc(100vh - #{$navbar-height})
 }
+.vsm--title, .vsm--header {
+    @include themify($themes) {
+        color: themed('textColor');
+    }
+}
+.v-sidebar-menu .vsm--dropdown>.vsm--list {
+    @include themify($themes) {
+        background-color: themed('sidebar-dropdown-background-color');
+    }
+}
+.v-sidebar-menu .vsm--icon {
+    @include themify($themes) {
+        background-color: themed('sidebar-icon-background-color');
+    }
+}
+.v-sidebar-menu .vsm--link.vsm--link_active .vsm--icon {
+    @include themify($themes) {
+        background-color: themed('sidebar-icon-background-color');
+    }
+}
 .icon-sidebar {
     padding: 2px;
-    stroke: $light-color;
+    @include themify($themes) {
+        stroke: themed('textColor');
+    }
     stroke-width: 3px;
     fill: none;
     height: 30px !important;
 }
-.icon-sidebar-collapse {
-    width: 100%;
-    stroke: $light-color;
+.v-sidebar-menu .vsm--toggle-btn {
+    @include themify($themes) {
+        background-color: themed('sidebar-icon-background-color');
+    }
 }
 
 </style>
