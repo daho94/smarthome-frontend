@@ -1,4 +1,6 @@
-import { logout } from './auth'
+import {
+    logout
+} from './auth'
 
 const ENTRYPOINT = '/api/iobroker';
 
@@ -11,17 +13,21 @@ const ENTRYPOINT = '/api/iobroker';
 function hasHistory(objId) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json'
+        },
         credentials: 'include',
-        body: JSON.stringify({ name: objId }),
+        body: JSON.stringify({
+            name: objId
+        }),
     }
 
     return fetch(`${ENTRYPOINT}/history`, requestOptions)
 
-    .then(handleResponse)
-    .then(data => {
-        return data
-    })
+        .then(handleResponse)
+        .then(data => {
+            return data
+        })
 
 }
 
@@ -36,9 +42,15 @@ function hasHistory(objId) {
 function getData(objId, from, to) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json'
+        },
         credentials: 'include',
-        body: JSON.stringify({ name: objId, from, to }),
+        body: JSON.stringify({
+            name: objId,
+            from,
+            to
+        }),
     };
 
     return fetch(`${ENTRYPOINT}/datapoints`, requestOptions)
@@ -56,7 +68,7 @@ function getData(objId, from, to) {
  * @returns Promise: Array of datapoints
  */
 function getLast24Hours(objId) {
-    const now = + new Date()
+    const now = +new Date()
     return getData(objId, now - 86400000, now)
 }
 
@@ -67,7 +79,7 @@ function getLast24Hours(objId) {
  * @returns Promise: Array of datapoints
  */
 function getLastHour(objId) {
-    const now = + new Date()
+    const now = +new Date()
     return getData(objId, now - 3600000, now)
 }
 
@@ -109,7 +121,7 @@ function getState(socket, objId) {
  */
 function getStates(socket, pattern) {
     return new Promise(resolve => {
-        socket.emit('getStates', pattern, function(_err, states) {
+        socket.emit('getStates', pattern, function (_err, states) {
             resolve(states)
         })
     })
@@ -124,10 +136,18 @@ function getStates(socket, pattern) {
  */
 function setState(socket, id, state) {
     return new Promise(resolve => {
-        socket.emit('setState', id, state, function(_err, res) {
+        socket.emit('setState', id, state, function (_err, res) {
             resolve(res)
         })
     })
 }
 
-export { getData, getLast24Hours, getLastHour, hasHistory, getState, getStates, setState }
+export {
+    getData,
+    getLast24Hours,
+    getLastHour,
+    hasHistory,
+    getState,
+    getStates,
+    setState
+}
