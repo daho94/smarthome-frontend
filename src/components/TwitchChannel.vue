@@ -32,6 +32,11 @@
   </div>
 </template>
 <script>
+/**
+ * Iobroker states used:
+ * lgtv.0.states.openURL
+ */
+
 import { setState } from "../calls/iobroker";
 export default {
   props: ["metaData"],
