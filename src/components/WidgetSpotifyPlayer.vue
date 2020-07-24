@@ -225,6 +225,7 @@ $controls-height: 80px;
     padding: 10px;
     >img {
         max-height: 100%;
+	height: 100%;
     }
 }
 .context-type {
